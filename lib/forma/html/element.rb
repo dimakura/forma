@@ -41,6 +41,22 @@ module Forma::Html
       self.children << child
     end
 
+    def [](k)
+      self.attributes[k]
+    end
+
+    def []=(k,v)
+      self.attributes[k] = v
+    end
+
+    def add_class(k)
+      self.attributes.add_class(k)
+    end
+
+    def add_style(k,v)
+      self.attributes.add_style(k,v)
+    end
+
     def html
       generate_html
     end
