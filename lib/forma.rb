@@ -1,6 +1,4 @@
 # -*- encoding : utf-8 -*-
-require "forma/version"
-
-module Forma
-  # Your code goes here...
-end
+require 'active_support/core_ext'
+require 'forma/version'
+require 'forma/html'
