@@ -14,8 +14,10 @@ describe 'Element html generation' do
     @el1 = Element.new('div')
     @el2 = Element.new('div', text: 'text')
     @el3 = Element.new('div', text: 'text', attrs: { class: 'class1' })
+    @el4 = Element.new('div', children: [ @el1 ])
   end
   specify { @el1.html.should == '<div/>' }
   specify { @el2.html.should == '<div>text</div>' }
   specify { @el3.html.should == '<div class="class1">text</div>' }
+  specify { @el4.html.should == '<div><div/></div>' }
 end

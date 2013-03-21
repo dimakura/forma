@@ -15,6 +15,7 @@ module Forma::Html
       self.text = h[:text]
       self.safe = h[:safe]
       @attributes = Attributes.new(h[:attrs] || h[:attributes])
+      h[:children].each { |c| self << c } if h[:children]
     end
 
     def tag
@@ -32,6 +33,14 @@ module Forma::Html
 
     alias_method :attrs, :attributes
 
+    def children
+      @children ||= []
+    end
+
+    def << (child)
+      self.children << child
+    end
+
     def html
       generate_html
     end
@@ -39,7 +48,7 @@ module Forma::Html
     private
 
     def has_inner_content?
-      not self.text.blank? or not self.safe.blank?
+      self.text.present? or self.safe.present? or self.children.present?
     end
 
     def generate_html
@@ -66,6 +75,13 @@ module Forma::Html
       h = ''
       h << ERB::Util.html_escape(self.text) unless self.text.blank?
       h << self.safe unless self.safe.blank?
+      h << generate_children unless self.children.blank?
+      h
+    end
+
+    def generate_children
+      h = ''
+      self.children.each { |c| h << c.html }
       h
     end
 
