@@ -29,7 +29,9 @@ module Forma::Form
       h = h.symbolize_keys
       cell = Element.new('div', attrs: { class: 'ff-cell' })
       cell << before_element
-      cell << content_element(h[:edit] == true)
+      cont = content_element(h[:edit] == true)
+      cont.add_class('ff-content') if cont
+      cell << cont
       cell << after_element
       cell
     end

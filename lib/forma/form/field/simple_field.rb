@@ -4,6 +4,31 @@ module Forma::Form
 
   class SimpleField < Field
     attr_accessor :name
+
+    def value
+      raise 'name not defined' if self.name.blank?
+      val = self.model
+      self.name.to_s.split('.').each { |k| val = val.send k } if val
+      val
+    end
+
+    def view_element
+      view = Element.new(tag: 'span')
+      content = view_content_element
+      if content.is_a?(Element)
+        view << content
+      else
+        view.text = content.to_s
+      end
+      view
+    end
+
+    protected
+
+    def view_element_content
+      self.value
+    end
+
   end
 
 end
