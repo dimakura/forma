@@ -3,17 +3,12 @@ module Forma::Html
 
   class Element
 
-    # Text for this element.
     attr_accessor :text
-
-    # Safe text for this element.
-    attr_accessor :safe
 
     def initialize(tag, h = {})
       self.tag = tag
       h = h.symbolize_keys
       self.text = h[:text]
-      self.safe = h[:safe]
       @attributes = Attributes.new(h[:attrs] || h[:attributes])
       h[:children].each { |c| self << c } if h[:children]
     end
@@ -64,7 +59,7 @@ module Forma::Html
     private
 
     def has_inner_content?
-      self.text.present? or self.safe.present? or self.children.present?
+      self.text.present? or self.children.present?
     end
 
     def generate_html
@@ -89,8 +84,11 @@ module Forma::Html
 
     def generate_inner_html
       h = ''
-      h << ERB::Util.html_escape(self.text) unless self.text.blank?
-      h << self.safe unless self.safe.blank?
+      if self.text.html_safe?
+        h << self.text
+      else
+        h << ERB::Util.html_escape(self.text)
+      end
       h << generate_children unless self.children.blank?
       h
     end

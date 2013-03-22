@@ -3,10 +3,10 @@ require 'spec_helper'
 include Forma::Html
 
 describe 'Element creation' do
-  compare_object(Element.new('div'), { tag: 'div', text: nil, safe: nil, html: '<div/>' })
-  compare_object(Element.new('SPAN', text: 'some text'), { tag: 'span', text: 'some text', safe: nil, html: '<span>some text</span>' } )
+  compare_object(Element.new('div'), { tag: 'div', text: nil, html: '<div/>' })
+  compare_object(Element.new('SPAN', text: 'some text'), { tag: 'span', text: 'some text', html: '<span>some text</span>' } )
   compare_object(Element.new('div', text: '<a>b</a>'), { html: '<div>&lt;a&gt;b&lt;/a&gt;</div>' })
-  compare_object(Element.new('div', safe: '<a>b</a>'), { html: '<div><a>b</a></div>' })
+  compare_object(Element.new('div', text: '<a>b</a>'.html_safe), { html: '<div><a>b</a></div>' })
 end
 
 describe 'Element html generation' do
