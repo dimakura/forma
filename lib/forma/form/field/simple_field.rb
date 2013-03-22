@@ -23,6 +23,10 @@ module Forma::Form
       view
     end
 
+    def edit_element
+      Element.new('input', attrs: { type: 'text', val: self.value.to_s })
+    end
+
     protected
 
     def view_element_content
