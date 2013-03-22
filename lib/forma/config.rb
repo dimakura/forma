@@ -7,14 +7,26 @@ module Forma
     include Singleton
 
     def num
-      @num ||= Forma::NumberConfig.new(delimiter: ',', separator: '.')
+      @num ||= NumberConfig.new(delimiter: ',', separator: '.')
     end
 
     def date
-      @date ||= Forma::DateConfig.new(formatter: '%d-%b-%Y')
+      @date ||= DateConfig.new(formatter: '%d-%b-%Y')
+    end
+
+    def texts
+      @texts ||= TextsConfig.new(empty: '(empty)')
     end
 
   end
+
+  class << self
+    def config
+      Forma::Config.instance
+    end
+  end
+
+  private
 
   class NumberConfig
     include Forma::Init
@@ -27,10 +39,9 @@ module Forma
     attr_accessor :formatter
   end
 
-  class << self
-    def config
-      Forma::Config.instance
-    end
-  end
+  class TextsConfig
+    include Forma::Init
+    attr_accessor :empty
+  end  
 
 end

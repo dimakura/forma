@@ -9,3 +9,7 @@ end
 describe 'Date configuration' do
   specify { Forma.config.date.formatter.should == '%d-%b-%Y' }
 end
+
+describe 'Texts configuration' do
+  specify { Forma.config.texts.empty.should == '(empty)' }
+end
