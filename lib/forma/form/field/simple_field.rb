@@ -13,14 +13,18 @@ module Forma::Form
     end
 
     def view_element
-      view = Element.new('span')
       content = view_element_content
-      if content.is_a?(Element)
-        view << content
+      if content
+        view = Element.new('span')
+        if content.is_a?(Element)
+          view << content
+        else
+          view.text = content.to_s
+        end
+        view
       else
-        view.text = content.to_s
+        empty_element
       end
-      view
     end
 
     def edit_element

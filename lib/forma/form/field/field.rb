@@ -38,6 +38,10 @@ module Forma::Form
 
     protected
 
+    def empty_element
+      span_element('ff-empty', Forma.config.texts.empty)
+    end
+
     def span_element(klass, content)
       span = Element.new('span', attrs: { class: klass })
       content = content.call(self.model) if content.is_a?(Proc) and self.model

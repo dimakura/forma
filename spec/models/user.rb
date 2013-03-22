@@ -4,6 +4,7 @@ class User
   attr_accessor :email
   attr_accessor :first_name
   attr_accessor :last_name
+  attr_accessor :mobile
 
   def full_name
     "#{first_name} #{last_name}"
