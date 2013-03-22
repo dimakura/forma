@@ -12,9 +12,20 @@ describe 'Simple field' do
         @f = SimpleField.new(name: f)
         @f.model = @u
       end
-      subject { @f }
-      its(:model) { should == @u }
-      its(:value) { should == @u.send(f) }
+      context do
+        subject { @f }
+        its(:model) { should == @u }
+        its(:value) { should == @u.send(f) }
+      end
+      context do
+        subject { @f.cell_element }
+        its(:tag) { should == 'div' }
+        specify { subject[:class].should == [ 'ff-cell' ] }
+        specify { subject.children.size.should == 1 }
+        specify { subject.children[0][:class].should == [ 'ff-content' ] }
+        specify { subject.children[0].text.should == @f.value }
+        specify { subject.children[0].tag.should == 'span' }
+      end
     end
   end
 

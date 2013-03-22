@@ -13,8 +13,8 @@ module Forma::Form
     end
 
     def view_element
-      view = Element.new(tag: 'span')
-      content = view_content_element
+      view = Element.new('span')
+      content = view_element_content
       if content.is_a?(Element)
         view << content
       else
