@@ -33,7 +33,7 @@ module Forma::Html
     end
 
     def << (child)
-      self.children << child
+      self.children << child if child
     end
 
     def [](k)

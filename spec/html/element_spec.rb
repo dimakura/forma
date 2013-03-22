@@ -21,3 +21,15 @@ describe 'Element html generation' do
   specify { @el3.html.should == '<div class="class1">text</div>' }
   specify { @el4.html.should == '<div><div/></div>' }
 end
+
+describe 'Element children' do
+  before(:all) do
+    @el = Element.new('span')
+    @el << Element.new('a')
+    @el << nil
+    @el << Element.new('em')
+  end
+  specify { @el.children.size.should == 2 }
+  specify { @el.children[0].tag.should == 'a' }
+  specify { @el.children[1].tag.should == 'em' }
+end
