@@ -28,7 +28,8 @@ module Forma::Form
     end
 
     def edit_element
-      Element.new('input', attrs: { type: 'text', val: self.value.to_s })
+      style = { width: "#{self.options.width}px" } if self.options.width
+      Element.new('input', attrs: { type: 'text', val: self.value.to_s, style: style })
     end
 
     protected

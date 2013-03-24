@@ -71,7 +71,7 @@ module Forma::Html
     end
 
     def assign_style(v)
-      raise 'style should be a hash' unless v.is_a? Hash
+      raise 'style should be a hash' unless v.nil? or v.is_a? Hash
       @style = v
     end
 
