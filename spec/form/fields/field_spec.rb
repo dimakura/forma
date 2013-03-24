@@ -3,8 +3,17 @@ require 'spec_helper'
 include Forma::Form
 
 describe 'Field creation' do
-  compare_object(Field.new(caption: 'Name', before: 'Mr.', required: true), { caption: 'Name', before: 'Mr.', after: nil, readonly: false, required: true })
-  compare_object(Field.new(caption: 'Amount', after: 'GEL', required: true), { caption: 'Amount', before: nil, after: 'GEL', readonly: false, required: true })
+  compare_object(Field.new(caption: 'Name', before: 'Mr.', required: true, options: {width: 100, height: 300}),
+    {
+      caption: 'Name', before: 'Mr.', after: nil, readonly: false, required: true,
+      'options.width' => 100, 'options.height' => 300
+    }
+  )
+  compare_object(Field.new(caption: 'Amount', after: 'GEL', required: true),
+    {
+      caption: 'Amount', before: nil, after: 'GEL', readonly: false, required: true
+    }
+  )
   compare_object(Field.new(caption: 'Created', readonly: true), { caption: 'Created', before: nil, after: nil, readonly: true, required: false })
 end
 

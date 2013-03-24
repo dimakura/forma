@@ -9,6 +9,10 @@ end
 
 def compare_object(obj, properties)
   properties.each do |k, v|
-    specify { obj.send(k).should == v }
+    val = obj
+    k.to_s.split('.').each do |key|
+      val = val.send(key)
+    end
+    specify { val.should == v }
   end
 end

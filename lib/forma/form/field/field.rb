@@ -17,11 +17,13 @@ module Forma::Form
     attr_accessor :required
     attr_accessor :readonly
     attr_accessor :tooltip
+    attr_accessor :options
 
     def initialize(h = {})
       h = h.symbolize_keys
       h[:required] = h[:required] == true
       h[:readonly] = h[:readonly] == true
+      self.options = FieldOptions.new(h.delete(:options))
       super(h)
     end
 
@@ -69,6 +71,12 @@ module Forma::Form
       end
     end
 
+  end
+
+  class FieldOptions
+    include Forma::Init
+    attr_accessor :width
+    attr_accessor :height
   end
 
 end
