@@ -30,7 +30,10 @@ module Forma::Form
       cell = Element.new('div', attrs: { class: 'ff-cell' })
       cell << before_element
       cont = content_element(h[:edit] == true)
-      cont.add_class('ff-content') if cont
+      if cont
+        cont.add_class('ff-content')
+        cont[:title] = self.tooltip if self.tooltip.present?
+      end
       cell << cont
       cell << after_element
       cell

@@ -9,7 +9,7 @@ describe 'Simple field' do
   ['email', 'first_name', 'last_name', 'full_name', 'mobile'].each do |f|
     describe do
       before(:all) do
-        @f = SimpleField.new(name: f)
+        @f = SimpleField.new(name: f, tooltip: f)
         @f.model = @u
       end
       context 'field values' do
@@ -26,6 +26,7 @@ describe 'Simple field' do
         specify do
           if @f.value.present?
             subject.children[0][:class].should == [ 'ff-content' ]
+            subject.children[0][:title].should == f
             subject.children[0].text.should == @f.value
           else
             subject.children[0][:class].should == [ 'ff-empty', 'ff-content' ]
