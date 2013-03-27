@@ -53,7 +53,7 @@ module Forma::Html
     end
 
     def html
-      generate_html
+      generate_html.html_safe
     end
 
     private

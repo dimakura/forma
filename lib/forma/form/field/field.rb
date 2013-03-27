@@ -6,10 +6,11 @@
 # `Forma::Form::Field` directly, then nothing will be rendered.
 #
 module Forma::Form
-  include Forma::Html
 
   class Field
+    include Forma::Html
     include Forma::Init
+
     attr_accessor :model
     attr_accessor :caption
     attr_accessor :before
