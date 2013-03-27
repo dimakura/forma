@@ -41,6 +41,20 @@ module Forma::Form
       cell
     end
 
+    def caption_element(h = {})
+      h = h.symbolize_keys
+      label = Element.new('div', attrs: { class: 'ff-caption' }, text: self.caption)
+      label.add_class('ff-required') if self.required
+      label
+    end
+
+    def field_element(h = {})
+      field = Element.new('div', attrs: { class: 'ff-field' })
+      field << caption_element(h)
+      field << cell_element(h)
+      field
+    end
+
     protected
 
     def empty_element
