@@ -2,7 +2,7 @@
 require 'spec_helper'
 include Forma::Form
 
-describe 'Column' do
+describe 'Form Column' do
   before(:all) do
     @col = FormColumn.new
   end
