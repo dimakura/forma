@@ -1,7 +1,42 @@
 # -*- encoding : utf-8 -*-
 module Forma::Form
-  include Forma::Html
 
-  
+  # Form.
+  class Form
+    include Forma::Html
+
+    attr_accessor :fields
+
+    def Form(h = {})
+      fields = FormFields.new
+    end
+
+  end
+
+  # Form's tab.
+  class FormTab
+    # TODO:
+  end
+
+  # Form's column.
+  class FormColumn
+
+    def initialize
+      @fields = []
+    end
+
+    def fields
+      @fields
+    end
+
+    def empty?
+      self.fields.empty?
+    end
+
+    def << f
+      @fields << f
+    end
+
+  end
 
 end
