@@ -28,6 +28,15 @@ module Forma::Form
       super(h)
     end
 
+    # Convert given field to `Forma::Html::Element`.
+    #
+    # You should pass `type` parameter to define what kind of element is intended for use.
+    # Valid options for `type` parameter are `cell`, `caption` and `field` (default).
+    # `nil` is returned for illegal option.
+    def to_e(type = 'field', h = {})
+      self.send("#{type}_element", h) if ['cell', 'caption', 'field'].include?(type.to_s)
+    end
+
     def cell_element(h = {})
       h = h.symbolize_keys
       cell = Element.new('div', attrs: { class: 'ff-cell' })

@@ -41,8 +41,8 @@ module Forma::Form
       @fields << f
     end
 
-    def column_element
-      
+    def to_e
+      # TODO:
     end
 
   end
