@@ -3,22 +3,23 @@ module Forma::Html
 
   class Attributes
 
-    def initialize(attrs = {})
-      self.update_attributes(attrs) if attrs.present?
-    end
+    # Set this flag to `true` if `id` parameter
+    # should be automatically provided for an element 
+    # if not set explicitly.
+    attr_accessor :ensure_id
 
-    def update_attributes(attrs)
-      attrs.each { |k, v| self[k] = v }
+    def initialize(attrs = {})
+      update_ensure_id(attrs)
+      update_attributes(attrs)
     end
 
     def [](k)
-      k = k.to_s
-      v = attributes[k.to_s]
-      case k
-      when 'class' then v = @klass ||= []
-      when 'style' then v = @style ||= {}
+      case k.to_s
+        when 'class' then v = @klass ||= []
+        when 'style' then v = @style ||= {}
+        when 'id'    then v = attributes['id'] ||= (next_id if self.ensure_id)
+        else attributes[k.to_s]
       end
-      v
     end
 
     def []=(k,v)
@@ -55,6 +56,14 @@ module Forma::Html
     end
 
     private
+
+    def update_ensure_id(attrs)
+      self.ensure_id = attrs.delete(:ensure_id) || attrs.delete('ensure_id')
+    end
+
+    def update_attributes(attrs)
+      attrs.each { |k, v| self[k] = v }
+    end
 
     def attributes
       @attributes ||= {}
@@ -95,8 +104,17 @@ module Forma::Html
 
     def generate_attributes_html
       s = []
+      attributes['id'] ||= next_id if self.ensure_id
       attributes.each { |k,v| s << %Q{#{k}="#{v}"} }
       s.join(' ')
+    end
+
+    @@id_counter = 0
+
+    def next_id
+      @@id_counter = 0 if @@id_counter > 10000
+      @@id_counter += 1
+      "ff-#{@@id_counter}"
     end
 
   end

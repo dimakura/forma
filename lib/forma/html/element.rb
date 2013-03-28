@@ -9,7 +9,7 @@ module Forma::Html
       self.tag = tag
       h = h.symbolize_keys
       self.text = h[:text]
-      @attributes = Attributes.new(h[:attrs] || h[:attributes])
+      @attributes = Attributes.new(h[:attrs] || h[:attributes] || {})
       h[:children].each { |c| self << c } if h[:children]
     end
 

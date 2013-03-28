@@ -52,3 +52,10 @@ describe 'Html generation' do
   specify { @attr5.html.should == 'class="class1 class2" style="font-size:14px;color:red" id="id1"' }
   specify { @attr6.html.should == 'class="class1 class2" style="font-size:14px;color:red" id="id1" data-method="delete"' }
 end
+
+describe 'Ensure attribute id' do
+  before(:all) do
+    @a = Attributes.new(class: 'myclass', ensure_id: true)
+  end
+  specify { @a.ensure_id.should == true }
+end
