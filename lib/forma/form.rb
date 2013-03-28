@@ -1,3 +1,3 @@
 # -*- encoding : utf-8 -*-
 require 'forma/form/field'
-require 'forma/form/form'
+require 'forma/form/main'
