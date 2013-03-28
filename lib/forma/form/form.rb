@@ -33,8 +33,16 @@ module Forma::Form
       self.fields.empty?
     end
 
+    def size
+      self.fields.size
+    end
+
     def << f
       @fields << f
+    end
+
+    def column_element
+      
     end
 
   end

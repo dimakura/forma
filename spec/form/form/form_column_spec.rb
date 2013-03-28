@@ -20,6 +20,7 @@ describe 'Column' do
       its(:fields) { should_not be_nil }
       its(:fields) { should_not be_empty }
       specify { subject.fields.last.name.should == f }
+      its(:size) { should == @col.fields.size }
     end
   end
 end
