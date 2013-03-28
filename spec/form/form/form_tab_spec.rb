@@ -23,6 +23,7 @@ describe 'Form Tab' do
       end
       specify { @tab.col1.should_not be_empty }
       specify { @tab.col2.should be_empty }
+      specify { @tab.fields.size.should == @tab.col1.size }
       specify { @tab_e.should_not be_nil }
       specify { @tab_e[:id].should_not be_nil }
       specify { @tab_e[:class].should == [ 'ff-form-tab-content' ] }

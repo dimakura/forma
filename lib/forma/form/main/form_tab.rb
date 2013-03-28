@@ -14,20 +14,29 @@ module Forma::Form
       super(h)
     end
 
+    # Are there any fields in any of the columns?
     def empty?
       self.col1.empty? and self.col2.empty?
     end
 
+    # Returns the first column of this tab.
     def col1
       @columns[0]
     end
 
+    # Returns the second column of this tab.
     def col2
       @columns[1]
     end
 
+    # Adds field to the first column of this tab.
     def << f
       self.col1 << f
+    end
+
+    # Returns all fields in this tab.
+    def fields
+      col1.fields + col2.fields
     end
 
     def to_e
