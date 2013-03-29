@@ -1,9 +1,6 @@
-/**
- * forma.css
- * (C) 2013 Dimitri Kurashvili (dimitri@c12.ge)
- */
-
-/* placement and positions */
+@import "vendor/less/mixins.less";
+@import "vendor/less/colors.less";
+@import "vendor/less/images.less";
 
 @font-size: 14px;
 
@@ -33,46 +30,14 @@
   }
 }
 
-/* background images */
-
-.ff-collapse {
-  background-image: url("/assets/ff-icons.png");
-  display: inline-block;
-  width: 14px;
-  height: 14px;
-}
-
-.ff-collapse {
-  background-position: -313px -119px;
-  margin-right: 4px;
-  &.ff-collapsed {
-    background-position: -456px -72px;
-  }
-}
-
-/* colors */
-
-@caption-background: #fafad0;
-@title-color: #fcfca0;
-@border-color: #28a830;
-
-.ff-form {
-  .ff-title {
-    background: @title-color;
-    border-top: 2px solid @border-color;
-    border-bottom: 2px solid @border-color;
-  }
-  .ff-field {
-    border-bottom: 1px solid #aaa;
-    &:first-child {
-      border-top: 1px solid #aaa;
-    }
-    .ff-caption {
-      background: @caption-background;
-      border-left: 4px solid transparent;
-      &.ff-required {
-        border-left: 4px solid #cc3300;
-      }
+.ff-collapsible {
+  .user-select-none;
+  cursor: pointer;
+  .ff-collapse {
+    background-position: -313px -119px;
+    margin-right: 4px;
+    &.ff-collapsed {
+      background-position: -456px -72px;
     }
   }
 }
