@@ -40,13 +40,27 @@ module Forma::Form
     end
 
     def to_e(h = {})
-      # TODO
+      form = Element.new('div', attrs: { class: 'ff-form' })
+      form << title_element
+      form << form_body_element
+      form
     end
 
     private
 
-    def update_fields
-      self.fields
+    def title_element
+      if self.title
+        title = Element.new('div', attrs: { class: 'ff-title' })
+        title << Element.new('img', attrs: { class: 'ff-icon', src: self.icon } ) if self.icon
+        title << Element.new('span', attrs: { class: 'ff-title-text' }, text: self.title)
+        title
+      end
+    end
+
+    def form_body_element
+      body = Element.new('div', attrs: { class: 'ff-form-body' })
+      self.tabs.each { |t|  body << t.to_e }
+      body
     end
 
   end

@@ -29,3 +29,39 @@ describe 'Form' do
     end
   end
 end
+
+def check_form_title_element(form, model, title_element)
+  icon_element = title_element.children[0]
+  text_element = title_element.children[1]
+  describe do
+    specify { title_element[:class].should == [ 'ff-title' ] }
+    specify { title_element.children.size.should == 2 }
+    specify { icon_element[:class].should == [ 'ff-icon' ] }
+    specify { icon_element[:src].should == form.icon }
+    specify { text_element[:class].should == [ 'ff-title-text' ] }
+    specify { text_element.text.should == form.title }
+  end
+end
+
+def check_form_body_element(form, model, body_element)
+  describe do
+    specify { body_element[:class].should == [ 'ff-form-body' ] }
+  end
+end
+
+def check_form_element(form, model, form_element)
+  title_element = form_element.children[0]
+  body_element = form_element.children[1]
+  describe do
+    specify { form_element[:class].should == [ 'ff-form' ] }
+    specify { form_element.children.size.should == 2 }
+  end
+  check_form_title_element(form, model, title_element)
+  check_form_body_element(form, model, body_element)
+end
+
+describe 'Form Generation' do
+  user = User.new(email: 'dimakura@gmail.com', first_name: 'Dimitri', last_name: 'Kurashvili', mobile: '595335514')
+  form = Form.new(title: 'User Properties', icon: 'user.png', model: user)
+  check_form_element(form, user, form.to_e)
+end
