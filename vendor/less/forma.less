@@ -1,11 +1,60 @@
 /**
- * forma.less
- * ==========
- * (C) 2013 Dimitri Kurashvili
+ * forma.css
+ * (C) 2013 Dimitri Kurashvili (dimitri@c12.ge)
  */
 
 @font-size: 14px;
+@main-color: #fafad0;
+@border-color: darken(@main-color, 40%);
+@caption-background: #fafad0;
 
-.ff {
+/* form-factors */
+
+.ff-form {
   font-size: @font-size;
+  .ff-title {
+    font-weight: bold;
+    font-size: @font-size + 3px;
+    padding: 5px;
+    margin-bottom: 4px;
+    .ff-title-text {
+      padding: 0 5px;
+    }
+  }
+  .ff-form-body {
+    .ff-field {
+      .ff-caption {
+        display: table-cell;
+        width: 150px;
+        padding: 5px;
+      }
+      .ff-cell {
+        display: table-cell;
+        padding: 5px;
+      }
+    }
+  }
+}
+
+/* colors */
+
+.ff-form {
+  .ff-title {
+    background: @main-color;
+    border-top: 2px solid @border-color;
+    border-bottom: 2px solid @border-color;
+  }
+  .ff-field {
+    border-bottom: 1px solid @border-color;
+    &:first-child {
+      border-top: 1px solid @border-color;
+    }
+    .ff-caption {
+      background: @caption-background;
+      border-left: 4px solid transparent;
+      &.ff-required {
+        border-left: 4px solid #cc3300;
+      }
+    }
+  }
 }
