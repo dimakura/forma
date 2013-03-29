@@ -2,13 +2,11 @@
 require 'action_controller'
 
 module Forma::Form
-  include Forma::Html
 
   class NumberField < SimpleField
     include Forma::Html
     include Forma::Init
     include ActionView::Helpers::NumberHelper
-    
 
     attr_accessor :precision
     attr_accessor :delimiter
@@ -26,7 +24,7 @@ module Forma::Form
       prec = self.precision || 2
       dlmt = self.delimiter || Forma.config.num.delimiter
       sprt = self.separator || Forma.config.num.separator
-      number_with_precision(0, precision: prec, delimiter: dlmt, separator: sprt)
+      number_with_precision(self.value, precision: prec, delimiter: dlmt, separator: sprt)
     end
 
   end
