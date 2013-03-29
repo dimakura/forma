@@ -42,6 +42,7 @@ module Forma::Form
     end
 
     def to_e(h = {})
+      update_fields
       form = Element.new('div', attrs: { class: 'ff-form', ensure_id: true })
       form << title_element
       form << form_body_element
@@ -49,6 +50,10 @@ module Forma::Form
     end
 
     private
+
+    def update_fields
+      self.fields.each {|f| f.model = self.model }
+    end
 
     def title_element
       if self.title
