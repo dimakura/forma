@@ -6,4 +6,7 @@
 .ff-form{font-size:14px;}.ff-form .ff-title{font-weight:bold;font-size:17px;padding:5px;margin-bottom:4px;}.ff-form .ff-title .ff-title-text{padding:0 5px;}
 .ff-form .ff-form-body .ff-field .ff-caption{display:table-cell;width:150px;padding:5px;}
 .ff-form .ff-form-body .ff-field .ff-cell{display:table-cell;padding:5px;}
+.ff-form .ff-form-body .ff-form-cols{position:relative;}.ff-form .ff-form-body .ff-form-cols .ff-col50{float:left;width:50%;}.ff-form .ff-form-body .ff-form-cols .ff-col50:first-child .ff-form-col-inner{padding-right:4px;}
+.ff-form .ff-form-body .ff-form-cols .ff-col50:last-child .ff-form-col-inner{padding-left:4px;}
+.ff-form .ff-form-body .ff-form-cols:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
 .ff-collapsible{-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;cursor:pointer;}.ff-collapsible .ff-collapse{background-position:-313px -119px;margin-right:4px;}.ff-collapsible .ff-collapse.ff-collapsed{background-position:-456px -72px;}

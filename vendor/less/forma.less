@@ -27,8 +27,34 @@
         padding: 5px;
       }
     }
+    .ff-form-cols {
+      position: relative;
+      .ff-col50 {
+        float: left;
+        width: 50%;
+        &:first-child { .ff-form-col-inner { padding-right: 4px; } }
+        &:last-child { .ff-form-col-inner { padding-left: 4px; } }
+      }
+      &:after {
+        content: ".";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+      }
+    }
   }
 }
+
+/*
+.clear:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+*/
 
 .ff-collapsible {
   .user-select-none;
