@@ -58,4 +58,5 @@ describe 'Ensure attribute id' do
     @a = Attributes.new(class: 'myclass', ensure_id: true)
   end
   specify { @a.ensure_id.should == true }
+  specify { @a.html.index('id').should_not be_nil }
 end

@@ -64,13 +64,9 @@ module Forma::Html
 
     def generate_html
       h = ''
-      if has_inner_content?
-        h << '<' << generate_tag_and_attributes << '>'
-        h << generate_inner_html
-        h << '</' << self.tag << '>'
-      else
-        h << '<' << generate_tag_and_attributes << '/>'
-      end
+      h << '<' << generate_tag_and_attributes << '>'
+      h << generate_inner_html
+      h << '</' << self.tag << '>'
       h
     end
 

@@ -2,7 +2,7 @@
  * forma.css
  * (C) 2013 Dimitri Kurashvili (dimitri@c12.ge)
  */
-/* form-factors */
+/* placement and positions */
 .ff-form {
   font-size: 14px;
 }
@@ -23,6 +23,20 @@
 .ff-form .ff-form-body .ff-field .ff-cell {
   display: table-cell;
   padding: 5px;
+}
+/* background images */
+.ff-collapse {
+  background-image: url("/assets/ff-icons.png");
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+}
+.ff-collapse {
+  background-position: -313px -119px;
+  margin-right: 4px;
+}
+.ff-collapse.ff-collapsed {
+  background-position: -456px -72px;
 }
 /* colors */
 .ff-form .ff-title {

@@ -7,6 +7,8 @@ module Forma::Form
     include Forma::Init
     attr_accessor :title
     attr_accessor :icon
+    attr_accessor :collapsible
+    attr_accessor :collapsed
 
     def initialize(h = {})
       h = h.symbolize_keys
@@ -40,7 +42,7 @@ module Forma::Form
     end
 
     def to_e(h = {})
-      form = Element.new('div', attrs: { class: 'ff-form' })
+      form = Element.new('div', attrs: { class: 'ff-form', ensure_id: true })
       form << title_element
       form << form_body_element
       form
@@ -50,15 +52,24 @@ module Forma::Form
 
     def title_element
       if self.title
-        title = Element.new('div', attrs: { class: 'ff-title' })
-        title << Element.new('img', attrs: { class: 'ff-icon', src: self.icon } ) if self.icon
-        title << Element.new('span', attrs: { class: 'ff-title-text' }, text: self.title)
+        active = title = Element.new('div', attrs: { class: 'ff-title' })
+        if self.collapsible
+          active = Element.new('span', attrs: { class: 'ff-collapsible'} )
+          collapse = Element.new('span', attrs: {class: 'ff-collapse'})
+          collapse.add_class('ff-collapsed') if self.collapsed
+          # active.add_class('ff-collapsed') if self.collapsed
+          active << collapse
+          title << active
+        end
+        active << Element.new('img', attrs: { class: 'ff-icon', src: self.icon } ) if self.icon
+        active << Element.new('span', attrs: { class: 'ff-title-text' }, text: self.title)
         title
       end
     end
 
     def form_body_element
       body = Element.new('div', attrs: { class: 'ff-form-body' })
+      body[:style][:display] = 'none' if self.collapsed
       self.tabs.each { |t|  body << t.to_e }
       body
     end

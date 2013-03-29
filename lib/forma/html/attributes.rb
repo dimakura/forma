@@ -48,7 +48,7 @@ module Forma::Html
     end
 
     def empty?
-      attributes.empty? and klass.empty? and style.empty?
+      attributes.empty? and klass.empty? and style.empty? and not self.ensure_id
     end
 
     def html
@@ -88,7 +88,7 @@ module Forma::Html
       h = ''
       h << ' ' << generate_class_html unless klass.empty?
       h << ' ' << generate_style_html unless style.empty?
-      h << ' ' << generate_attributes_html unless attributes.empty?
+      h << ' ' << generate_attributes_html
       h.strip
     end
 
@@ -104,7 +104,7 @@ module Forma::Html
 
     def generate_attributes_html
       s = []
-      attributes['id'] ||= next_id if self.ensure_id
+      attributes['id'] = next_id if self.ensure_id and attributes['id'].blank?
       attributes.each { |k,v| s << %Q{#{k}="#{v}"} }
       s.join(' ')
     end

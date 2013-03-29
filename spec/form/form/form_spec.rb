@@ -30,12 +30,38 @@ describe 'Form' do
   end
 end
 
+def form_user(user)
+  form = Form.new(title: 'User Properties', icon: 'user.png', model: user)
+  form << TextField.new(name: 'email', caption: 'Email')
+  form << TextField.new(name: 'first_name', caption: 'First Name')
+  form << TextField.new(name: 'last_name', caption: 'Last Name')
+  form
+end
+
 def check_form_title_element(form, model, title_element)
-  icon_element = title_element.children[0]
-  text_element = title_element.children[1]
+  if form.collapsible
+    colapsible_element = title_element.children[0]
+    clps_element = colapsible_element.children[0]
+    icon_element = colapsible_element.children[1]
+    text_element = colapsible_element.children[2]
+    children_cnt = 1
+  else
+    icon_element = title_element.children[0]
+    text_element = title_element.children[1]
+    children_cnt = 2
+  end
   describe do
+    if clps_element
+      if form.collapsed
+        specify { clps_element[:class].should == [ 'ff-collapse', 'ff-collapsed' ] }
+      else
+        specify { clps_element[:class].should == [ 'ff-collapse' ] }
+      end
+      specify { colapsible_element[:class].should == [ 'ff-collapsible' ] }
+      specify { clps_element.tag.should == 'span' }
+    end
     specify { title_element[:class].should == [ 'ff-title' ] }
-    specify { title_element.children.size.should == 2 }
+    specify { title_element.children.size.should == children_cnt }
     specify { icon_element[:class].should == [ 'ff-icon' ] }
     specify { icon_element[:src].should == form.icon }
     specify { text_element[:class].should == [ 'ff-title-text' ] }
@@ -55,13 +81,24 @@ def check_form_element(form, model, form_element)
   describe do
     specify { form_element[:class].should == [ 'ff-form' ] }
     specify { form_element.children.size.should == 2 }
+    specify { form_element[:id].should_not be_nil }
+    specify { form_element.attributes.ensure_id.should == true }
   end
   check_form_title_element(form, model, title_element)
   check_form_body_element(form, model, body_element)
 end
 
-describe 'Form Generation' do
+describe 'Simple Form' do
   user = User.new(email: 'dimakura@gmail.com', first_name: 'Dimitri', last_name: 'Kurashvili', mobile: '595335514')
-  form = Form.new(title: 'User Properties', icon: 'user.png', model: user)
+  form = form_user(user)
+  check_form_element(form, user, form.to_e)
+end
+
+describe 'Form with collapsible title' do
+  user = User.new(email: 'dimakura@gmail.com', first_name: 'Dimitri', last_name: 'Kurashvili', mobile: '595335514')
+  form = form_user(user)
+  form.collapsible = true
+  check_form_element(form, user, form.to_e)
+  form.collapsed = true
   check_form_element(form, user, form.to_e)
 end
