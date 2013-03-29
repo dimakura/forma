@@ -9,8 +9,21 @@ module Forma::Form
     attr_accessor :icon
 
     def initialize(h = {})
-      super(h)
+      h = h.symbolize_keys
       @tabs = [ FormTab.new ]
+      @model = h.delete(:model)
+      fields = h.delete(:fields)
+      super(h)
+      fields.each { |f| self << f } if fields
+    end
+
+    def model
+      @model
+    end
+
+    def model=(m)
+      @model = m
+      self.fields.each {|f| f.model = m }
     end
 
     def tabs
@@ -23,6 +36,7 @@ module Forma::Form
 
     def << f
       tabs[0] << f
+      f.model = @model
     end
 
     def to_e(h = {})
@@ -31,10 +45,8 @@ module Forma::Form
 
     private
 
-    def generate_title
-      if self.title
-        
-      end
+    def update_fields
+      self.fields
     end
 
   end
