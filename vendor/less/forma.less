@@ -3,13 +3,14 @@
 @import "vendor/less/images.less";
 
 @font-size: 14px;
+@label-width: 150px;
 
 .ff-form {
   font-size: @font-size;
   .ff-title {
     font-weight: bold;
     font-size: @font-size + 3px;
-    padding: 5px;
+    padding: 4px;
     margin-bottom: 4px;
     .ff-title-text {
       padding: 0 5px;
@@ -19,12 +20,12 @@
     .ff-field {
       .ff-caption {
         display: table-cell;
-        width: 150px;
-        padding: 5px;
+        width: @label-width;
+        padding: 4px;
       }
       .ff-cell {
         display: table-cell;
-        padding: 5px;
+        padding: 4px;
       }
     }
     .ff-form-cols {
@@ -39,22 +40,22 @@
         content: ".";
         display: block;
         height: 0;
+        width: 0;
         clear: both;
         visibility: hidden;
+        margin: 0;
+        padding: 0;
       }
     }
   }
 }
 
-/*
-.clear:after {
-    content: ".";
-    display: block;
-    height: 0;
-    clear: both;
-    visibility: hidden;
+.ff-after {
+  padding-left: 4px;
 }
-*/
+.ff-before {
+  padding-right: 4px;
+}
 
 .ff-collapsible {
   .user-select-none;

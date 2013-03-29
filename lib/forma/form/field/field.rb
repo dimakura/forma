@@ -40,14 +40,16 @@ module Forma::Form
     def cell_element(h = {})
       h = h.symbolize_keys
       cell = Element.new('div', attrs: { class: 'ff-cell' })
-      cell << before_element
       cont = content_element(h[:edit] == true)
       if cont
+        cell << before_element
         cont.add_class('ff-content')
         cont[:title] = self.tooltip if self.tooltip.present?
+        cell << cont
+        cell << after_element
+      else
+        cell << empty_element
       end
-      cell << cont
-      cell << after_element
       cell
     end
 
@@ -68,7 +70,7 @@ module Forma::Form
     protected
 
     def empty_element
-      span_element('ff-empty', Forma.config.texts.empty)
+      span_element([ 'ff-empty', 'ff-content' ], Forma.config.texts.empty)
     end
 
     def span_element(klass, content)

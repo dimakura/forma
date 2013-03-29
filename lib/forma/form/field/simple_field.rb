@@ -23,7 +23,7 @@ module Forma::Form
         end
         view
       else
-        empty_element
+        nil
       end
     end
 
