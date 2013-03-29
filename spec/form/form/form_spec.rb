@@ -20,6 +20,7 @@ describe 'Form' do
       specify { @form.tabs.size.should == 1 }
       specify { @tab.fields.should_not be_empty }
       specify { @tab.fields.size.should == @tab.col1.fields.size }
+      specify { @form.fields.size.should == @tab.fields.size }
     end
   end
 end

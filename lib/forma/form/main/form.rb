@@ -17,6 +17,10 @@ module Forma::Form
       @tabs
     end
 
+    def fields
+      @tabs.inject([]) { |fields, tab| fields += tab.fields }
+    end
+
     def << f
       tabs[0] << f
     end
