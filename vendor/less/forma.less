@@ -4,9 +4,6 @@
  */
 
 @font-size: 14px;
-@main-color: #fafad0;
-@border-color: darken(@main-color, 40%);
-@caption-background: #fafad0;
 
 /* form-factors */
 
@@ -38,16 +35,20 @@
 
 /* colors */
 
+@caption-background: #fafad0;
+@title-color: #fcfca0;
+@border-color: #28a830;
+
 .ff-form {
   .ff-title {
-    background: @main-color;
+    background: @title-color;
     border-top: 2px solid @border-color;
     border-bottom: 2px solid @border-color;
   }
   .ff-field {
-    border-bottom: 1px solid @border-color;
+    border-bottom: 1px solid #aaa;
     &:first-child {
-      border-top: 1px solid @border-color;
+      border-top: 1px solid #aaa;
     }
     .ff-caption {
       background: @caption-background;

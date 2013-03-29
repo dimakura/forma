@@ -26,15 +26,15 @@
 }
 /* colors */
 .ff-form .ff-title {
-  background: #fafad0;
-  border-top: 2px solid #e6e618;
-  border-bottom: 2px solid #e6e618;
+  background: #fcfca0;
+  border-top: 2px solid #28a830;
+  border-bottom: 2px solid #28a830;
 }
 .ff-form .ff-field {
-  border-bottom: 1px solid #e6e618;
+  border-bottom: 1px solid #aaa;
 }
 .ff-form .ff-field:first-child {
-  border-top: 1px solid #e6e618;
+  border-top: 1px solid #aaa;
 }
 .ff-form .ff-field .ff-caption {
   background: #fafad0;
