@@ -4,3 +4,4 @@ require 'forma/version'
 require 'forma/utils'
 require 'forma/html'
 require 'forma/form'
+require 'forma/railtie' if defined?(Rails)
