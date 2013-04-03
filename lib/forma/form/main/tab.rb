@@ -24,12 +24,16 @@ module Forma::Form
 
     # Returns the first column of this tab.
     def col1
-      @columns[0]
+      col = @columns[0]
+      yield col if block_given?
+      col
     end
 
     # Returns the second column of this tab.
     def col2
-      @columns[1]
+      col = @columns[1]
+      yield col if block_given?
+      col
     end
 
     # Adds field to the first column of this tab.

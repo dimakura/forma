@@ -2,6 +2,7 @@
 module Forma
   module Form
     module FieldHelper
+
       def text_field(name, opts={})
         opts[:name] = name
         self << Forma::Form::TextField.new(opts)

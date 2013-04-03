@@ -1,9 +1,12 @@
 # -*- encoding : utf-8 -*-
+require 'forma/form/main/field_helper'
+
 module Forma::Form
 
   # Form's column.
   class FormColumn
     include Forma::Html
+    include Forma::Form::FieldHelper
 
     def initialize
       @fields = []
