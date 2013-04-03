@@ -1,10 +1,13 @@
 # -*- encoding : utf-8 -*-
+require 'forma/form/main/field_helper'
+
 module Forma::Form
 
   # Form's tab.
   class FormTab
     include Forma::Html
     include Forma::Init
+    include Forma::Form::FieldHelper
 
     attr_accessor :title
     attr_accessor :icon
