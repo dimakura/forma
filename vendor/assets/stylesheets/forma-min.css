@@ -1,5 +1,5 @@
 .user-select-none{-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}
-.ff-form .ff-title{background:#fcfca0;border-top:2px solid #28a830;border-bottom:2px solid #28a830;}
+.ff-form .ff-title{background:#fcfca0;border-top:2px solid #28a830;border-bottom:2px solid #28a830;}.ff-form .ff-title img{vertical-align:middle;}
 .ff-form .ff-field{border-bottom:1px solid #aaa;}.ff-form .ff-field:first-child{border-top:1px solid #aaa;}
 .ff-form .ff-field .ff-caption{background:#fafad0;border-left:4px solid transparent;}.ff-form .ff-field .ff-caption.ff-required{border-left:4px solid #cc3300;}
 .ff-empty{color:#aaa;}
@@ -13,5 +13,6 @@
 .ff-after{padding-left:4px;}
 .ff-before{padding-right:4px;}
 .ff-collapsible{-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;cursor:pointer;}.ff-collapsible .ff-collapse{background-position:-313px -119px;margin-right:4px;}.ff-collapsible .ff-collapse.ff-collapsed{background-position:-456px -72px;}
-.ff-tabs-header{margin:5px 0;padding:0 16px;border-bottom:2px solid #28a830;}.ff-tabs-header li{-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;cursor:pointer;padding:4px 8px 6px;margin-bottom:-2px;margin-right:4px;display:inline-block;border-top:1px solid #28a830;border-left:1px solid #28a830;border-right:1px solid #28a830;font-weight:bold;}.ff-tabs-header li.ff-selected{background:#fcfca0;}
+.ff-tabs-header{margin:5px 0;padding:0 16px;border-bottom:2px solid #28a830;}.ff-tabs-header li{-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;cursor:pointer;padding:4px 8px 6px;margin-bottom:-2px;margin-right:4px;display:inline-block;border-top:1px solid #28a830;border-left:1px solid #28a830;border-right:1px solid #28a830;font-weight:bold;height:18px;}.ff-tabs-header li img{vertical-align:middle;margin-right:4px;}
+.ff-tabs-header li.ff-selected{background:#fcfca0;}
 .ff-hidden-tab{display:none;}

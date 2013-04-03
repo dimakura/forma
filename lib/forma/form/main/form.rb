@@ -86,7 +86,9 @@ module Forma::Form
         self.tabs.each do |t|
           index = tabsHeader.children.size
           tabid = tabs.children[index][:id]
-          tab = Element.new('li', text: t.title, attrs: { 'data-tabid' => tabid })
+          tab = Element.new('li', attrs: { 'data-tabid' => tabid })
+          tab << Element.new('img', attrs: { src: t.icon }) if t.icon.present?
+          tab << Element.new('span', text: t.title)
           tab.add_class('ff-selected') if index == 0
           tabs.children[index].add_class('ff-hidden-tab') unless index == 0
           tabsHeader << tab

@@ -10,6 +10,9 @@
   border-top: 2px solid #28a830;
   border-bottom: 2px solid #28a830;
 }
+.ff-form .ff-title img {
+  vertical-align: middle;
+}
 .ff-form .ff-field {
   border-bottom: 1px solid #aaa;
 }
@@ -117,6 +120,11 @@
   border-left: 1px solid #28a830;
   border-right: 1px solid #28a830;
   font-weight: bold;
+  height: 18px;
+}
+.ff-tabs-header li img {
+  vertical-align: middle;
+  margin-right: 4px;
 }
 .ff-tabs-header li.ff-selected {
   background: #fcfca0;

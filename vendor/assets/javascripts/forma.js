@@ -37,7 +37,10 @@
 
   var initializeTabs = function() {
     $('.ff-tabs-header li').click(function(evt) {
-      openTab( $(evt.target).attr('data-tabid') );
+      var element = $(evt.target);
+      var tabid = element.attr('data-tabid');
+      if (!tabid) { tabid = element.parent().attr('data-tabid'); }
+      openTab(tabid);
     });
   };
 
