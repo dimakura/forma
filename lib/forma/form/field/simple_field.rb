@@ -5,6 +5,10 @@ module Forma::Form
   class SimpleField < Field
     attr_accessor :name
 
+    def caption_text
+      self.caption || self.name.to_s.humanize
+    end
+
     def value
       raise 'name not defined' if self.name.blank?
       val = self.model

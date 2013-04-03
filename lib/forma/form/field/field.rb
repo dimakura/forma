@@ -55,7 +55,8 @@ module Forma::Form
 
     def caption_element(h = {})
       h = h.symbolize_keys
-      label = Element.new('div', attrs: { class: 'ff-caption' }, text: self.caption)
+      txt = self.respond_to?(:caption_text) ? self.caption_text : self.caption
+      label = Element.new('div', attrs: { class: 'ff-caption' }, text: txt)
       label.add_class('ff-required') if self.required
       label
     end
