@@ -46,11 +46,11 @@ module Forma::Form
       col1.fields + col2.fields
     end
 
-    def to_e
+    def to_e(h = {})
       unless self.empty?
         cols = Element.new('div', attrs: { class: 'ff-form-cols' })
-        c1 = self.col1.to_e
-        c2 = self.col2.to_e
+        c1 = self.col1.to_e(h)
+        c2 = self.col2.to_e(h)
         if c1 and c2
           c1.add_class('ff-col50')
           c2.add_class('ff-col50')

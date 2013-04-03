@@ -1,5 +1,6 @@
 # -*- encoding : utf-8 -*-
 require 'forma/helpers/view_helpers'
+require 'forma/helpers/edit_helpers'
 
 module Forma
 
@@ -7,8 +8,9 @@ module Forma
   end
 
   class Railtie < Rails::Railtie
-    initializer 'forma.view_helpers' do
+    initializer 'forma.forma_helpers' do
       ActionView::Base.send :include, Forma::ViewHelpers
+      ActionView::Base.send :include, Forma::EditHelpers
     end
   end
 

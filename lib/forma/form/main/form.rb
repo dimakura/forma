@@ -49,7 +49,7 @@ module Forma::Form
       update_fields
       form = Element.new('div', attrs: { class: 'ff-form', ensure_id: true })
       form << title_element
-      form << form_body_element
+      form << form_body_element(h)
       form
     end
 
@@ -76,11 +76,11 @@ module Forma::Form
       end
     end
 
-    def form_body_element
+    def form_body_element(h)
       body = Element.new('div', attrs: { class: 'ff-form-body' })
       body[:style][:display] = 'none' if self.collapsed
       tabs = Element.new('div', attrs: { class: 'ff-tabs' })
-      self.tabs.each { |t|  tabs << t.to_e }
+      self.tabs.each { |t|  tabs << t.to_e(h) }
       if tabs.children.size > 1
         tabsHeader = Element.new('ul', attrs: { class: 'ff-tabs-header' })
         self.tabs.each do |t|
