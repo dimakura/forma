@@ -1,4 +1,5 @@
 (function() {
+  var frm = {};
 
   var initilizeCollapsibleElement = function() {
     $('.ff-collapsible').click(function(evt) {
@@ -17,19 +18,26 @@
     });
   };
 
+  /**
+   * Opens tab by given ID (tabid).
+   */
+  var openTab = function(tabid) {
+    var clickedTab = $('[data-tabid=' + tabid + ']');
+    if (clickedTab && !clickedTab.hasClass('ff-selected')) {
+      var tabId = clickedTab.attr('data-tabid');
+      var tabsHeader = clickedTab.parents('.ff-tabs-header');
+      var selectedTab = tabsHeader.find('.ff-selected');
+      var selectedId = selectedTab.attr('data-tabid');
+      $('#' + selectedId).hide();
+      selectedTab.removeClass('ff-selected');
+      $('#' + tabId).show();
+      clickedTab.addClass('ff-selected');
+    }
+  };
+
   var initializeTabs = function() {
     $('.ff-tabs-header li').click(function(evt) {
-      var clickedTab = $(evt.target);
-      if (!clickedTab.hasClass('ff-selected')) {
-        var tabId = clickedTab.attr('data-tabid');
-        var tabsHeader = clickedTab.parents('.ff-tabs-header');
-        var selectedTab = tabsHeader.find('.ff-selected');
-        var selectedId = selectedTab.attr('data-tabid');
-        $('#' + selectedId).hide();
-        selectedTab.removeClass('ff-selected');
-        $('#' + tabId).show();
-        clickedTab.addClass('ff-selected');
-      }
+      openTab( $(evt.target).attr('data-tabid') );
     });
   };
 
@@ -37,5 +45,8 @@
     initilizeCollapsibleElement();
     initializeTabs();
   });
+
+  frm.openTab = openTab;
+  window.Forma = frm;
 
 })();
