@@ -75,7 +75,21 @@ module Forma::Form
     def form_body_element
       body = Element.new('div', attrs: { class: 'ff-form-body' })
       body[:style][:display] = 'none' if self.collapsed
-      self.tabs.each { |t|  body << t.to_e }
+      tabs = Element.new('div', attrs: { class: 'ff-tabs' })
+      self.tabs.each { |t|  tabs << t.to_e }
+      if tabs.children.size > 1
+        tabsHeader = Element.new('ul', attrs: { class: 'ff-tabs-header' })
+        self.tabs.each do |t|
+          index = tabsHeader.children.size
+          tabid = tabs.children[index][:id]
+          tab = Element.new('li', text: t.title, attrs: { 'data-tabid' => tabid })
+          tab.add_class('ff-selected') if index == 0
+          tabs.children[index].add_class('ff-hidden-tab') unless index == 0
+          tabsHeader << tab
+        end
+        body << tabsHeader
+      end
+      body << tabs
       body
     end
 

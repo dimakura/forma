@@ -70,8 +70,21 @@ def check_form_title_element(form, model, title_element)
 end
 
 def check_form_body_element(form, model, body_element)
+  has_multiple_tabs = form.tabs.size > 1
+  tabs_element = has_multiple_tabs ? body_element.children[1] : body_element.children[0]
+  tabsHeader_element = has_multiple_tabs ? body_element.children[0] : nil
   describe do
     specify { body_element[:class].should == [ 'ff-form-body' ] }
+    specify { body_element.children.size.should == (has_multiple_tabs ? 2 : 1) }
+    specify { tabs_element.should_not be_nil }
+    specify { tabs_element.children.size.should == form.tabs.size }
+    specify { tabs_element[:class].should == [ 'ff-tabs' ] }
+    if has_multiple_tabs
+      specify { tabsHeader_element.should_not be_nil }
+      specify { tabsHeader_element.tag.should == 'ul' }
+      specify { tabsHeader_element[:class].should == [ 'ff-tabs-header' ] }
+      specify { tabsHeader_element.children.size.should == form.tabs.size }
+    end
   end
 end
 
@@ -100,5 +113,17 @@ describe 'Form with collapsible title' do
   form.collapsible = true
   check_form_element(form, user, form.to_e)
   form.collapsed = true
+  check_form_element(form, user, form.to_e)
+end
+
+describe 'Form with two tabs' do
+  user = User.new(email: 'dimakura@gmail.com', first_name: 'Dimitri', last_name: 'Kurashvili', mobile: '595335514')
+  form = Form.new(title: 'User Properties', icon: 'user.png', model: user)
+  form.tabs[0].title = 'General'
+  form << TextField.new(name: 'email', caption: 'Email')
+  tab2 = FormTab.new(title: 'Name')
+  tab2 << TextField.new(name: 'first_name', caption: 'First Name')
+  tab2 << TextField.new(name: 'last_name', caption: 'Last Name')
+  form.tabs << tab2
   check_form_element(form, user, form.to_e)
 end

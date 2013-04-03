@@ -97,3 +97,30 @@
 .ff-collapsible .ff-collapse.ff-collapsed {
   background-position: -456px -72px;
 }
+.ff-tabs-header {
+  margin: 5px 0;
+  padding: 0 16px;
+  border-bottom: 2px solid #28a830;
+}
+.ff-tabs-header li {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  padding: 4px 8px 6px;
+  margin-bottom: -2px;
+  margin-right: 4px;
+  display: inline-block;
+  border-top: 1px solid #28a830;
+  border-left: 1px solid #28a830;
+  border-right: 1px solid #28a830;
+  font-weight: bold;
+}
+.ff-tabs-header li.ff-selected {
+  background: #fcfca0;
+}
+.ff-hidden-tab {
+  display: none;
+}

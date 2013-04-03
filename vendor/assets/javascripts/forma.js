@@ -1,6 +1,6 @@
 (function() {
 
-  function initilizeCollapsibleElement() {
+  var initilizeCollapsibleElement = function() {
     $('.ff-collapsible').click(function(evt) {
       var formElement = $(evt.target).parents('.ff-form');
       var formId = formElement.attr('id');
@@ -17,8 +17,25 @@
     });
   };
 
+  var initializeTabs = function() {
+    $('.ff-tabs-header li').click(function(evt) {
+      var clickedTab = $(evt.target);
+      if (!clickedTab.hasClass('ff-selected')) {
+        var tabId = clickedTab.attr('data-tabid');
+        var tabsHeader = clickedTab.parents('.ff-tabs-header');
+        var selectedTab = tabsHeader.find('.ff-selected');
+        var selectedId = selectedTab.attr('data-tabid');
+        $('#' + selectedId).hide();
+        selectedTab.removeClass('ff-selected');
+        $('#' + tabId).show();
+        clickedTab.addClass('ff-selected');
+      }
+    });
+  };
+
   $(function() {
     initilizeCollapsibleElement();
+    initializeTabs();
   });
 
 })();
