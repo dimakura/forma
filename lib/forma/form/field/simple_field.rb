@@ -9,11 +9,16 @@ module Forma::Form
       self.caption || self.name.to_s.humanize
     end
 
+    def value=(val)
+      @value = val
+    end
+
     def value
-      raise 'name not defined' if self.name.blank?
-      val = self.model
-      self.name.to_s.split('.').each { |k| val = val.send k } if val
-      val
+      if defined?(@value)
+        @value
+      else
+        value_from_model
+      end
     end
 
     def view_element
@@ -40,6 +45,15 @@ module Forma::Form
 
     def view_element_content
       self.value
+    end
+
+    private
+
+    def value_from_model
+      raise 'name not defined' if self.name.blank?
+      val = self.model
+      self.name.to_s.split('.').each { |k| val = val.send k } if val
+      val
     end
 
   end

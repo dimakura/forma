@@ -89,3 +89,14 @@ describe 'Simple field' do
     simple_field_element_checking(field, field.to_e)
   end
 end
+
+describe 'Simple field: manual assignment of a value' do
+  before(:all) do
+    @user = User.new(email: 'dimitri@c12.ge')
+    @email = "dimakura@gmail.com"
+    @f1 = TextField.new(name: 'email', model: @user)
+    @f2 = TextField.new(name: 'email', model: @user, value: @email)
+  end
+  specify { @f1.value.should == @user.email }
+  specify { @f2.value.should == @email }
+end
