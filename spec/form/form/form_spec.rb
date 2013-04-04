@@ -138,6 +138,13 @@ def check_form_body_element(form, model, body_element)
   tabsHeader_element = has_multiple_tabs ? body_element.children[0] : nil
   describe do
     specify { body_element[:class].should == [ 'ff-form-body' ] }
+    if form.edit
+      specify { body_element.tag.should == 'form' }
+      specify { body_element[:method].should == (form.method || 'get') }
+      specify { body_element[:action].should == form.url }
+    else
+      specify { body_element.tag.should == 'div' }
+    end
     specify { body_element.children.size.should == (has_multiple_tabs ? 2 : 1) }
     specify { tabs_element.should_not be_nil }
     specify { tabs_element.children.size.should == form.tabs.size }

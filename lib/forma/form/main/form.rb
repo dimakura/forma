@@ -16,6 +16,9 @@ module Forma::Form
     attr_accessor :edit
     attr_accessor :collapsible
     attr_accessor :collapsed
+    # form options
+    attr_accessor :method
+    attr_accessor :url
 
     def initialize(h = {})
       h = h.symbolize_keys
@@ -83,7 +86,12 @@ module Forma::Form
     end
 
     def form_body_element(h)
-      body = Element.new('div', attrs: { class: 'ff-form-body' })
+      tag = self.edit ? 'form' : 'div'
+      body = Element.new(tag, attrs: { class: 'ff-form-body' })
+      if self.edit
+        body[:action] = self.url
+        body[:method] = self.method || 'get'
+      end
       body[:style][:display] = 'none' if self.collapsed
       tabs = Element.new('div', attrs: { class: 'ff-tabs' })
       self.tabs.each { |t|  tabs << t.to_e(h) }
