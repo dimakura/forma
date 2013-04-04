@@ -130,6 +130,6 @@
 .ff-tabs-header li.ff-selected {
   background: #fcfca0;
 }
-.ff-hidden-tab {
+.ff-hidden {
   display: none;
 }

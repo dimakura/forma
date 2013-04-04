@@ -19,6 +19,7 @@ module Forma::Form
     attr_accessor :readonly
     attr_accessor :tooltip
     attr_accessor :options
+    attr_accessor :edit
 
     def initialize(h = {})
       h = h.symbolize_keys
@@ -40,7 +41,7 @@ module Forma::Form
     def cell_element(h = {})
       h = h.symbolize_keys
       cell = Element.new('div', attrs: { class: 'ff-cell' })
-      cont = content_element(h[:edit] == true)
+      cont = content_element(self.edit)
       if cont
         cell << before_element
         cont.add_class('ff-content')

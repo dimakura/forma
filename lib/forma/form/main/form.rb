@@ -9,8 +9,11 @@ module Forma::Form
     include Forma::Init
     include Forma::Form::TabHelper
 
+    # Title for this form.
     attr_accessor :title
     attr_accessor :icon
+    # Edit/view mode for this form.
+    attr_accessor :edit
     attr_accessor :collapsible
     attr_accessor :collapsed
 
@@ -56,7 +59,10 @@ module Forma::Form
     private
 
     def update_fields
-      self.fields.each {|f| f.model = self.model }
+      self.fields.each do |f|
+        f.model = self.model
+        f.edit = self.edit
+      end
     end
 
     def title_element
@@ -90,7 +96,7 @@ module Forma::Form
           tab << Element.new('img', attrs: { src: t.icon }) if t.icon.present?
           tab << Element.new('span', text: t.title)
           tab.add_class('ff-selected') if index == 0
-          tabs.children[index].add_class('ff-hidden-tab') unless index == 0
+          tabs.children[index].add_class('ff-hidden') unless index == 0
           tabsHeader << tab
         end
         body << tabsHeader

@@ -69,6 +69,65 @@ def check_form_title_element(form, model, title_element)
   end
 end
 
+def check_text_field(form, model, fld, cell_e)
+  specify { cell_e.children.size.should == 1 }
+  if form.edit
+    # TODO
+  else
+    # TODO
+  end
+end
+
+def check_field_element(form, model, fld, fld_e)
+  specify { fld_e[:class].should == [ 'ff-field' ] }
+  specify { fld_e.children.size.should == 2 }
+  caption_e = fld_e.children[0]
+  cell_e = fld_e.children[1]
+  if fld.required
+    specify { caption_e[:class].should == [ 'ff-caption', 'ff-required' ] }
+  else
+    specify { caption_e[:class].should == [ 'ff-caption' ] }
+  end
+  specify { cell_e[:class].should == [ 'ff-cell' ] }
+  specify { cell_e.children.size.should == 1 }
+  check_text_field(form, model, fld, cell_e) if fld.class == Forma::Form::TextField
+end
+
+def check_column_element(form, model, col, col_element)
+  specify { col_element.children.size.should == 1 }
+  inner_e = col_element.children[0]
+  specify { inner_e[:class].should == [ 'ff-form-col-inner' ] }
+  specify { inner_e.children.size.should == col.fields.size }
+  (0..col.fields.size-1).each do |i|
+    fld = col.fields[i]
+    fld_e = inner_e.children[i]
+    check_field_element(form, model, fld, fld_e)
+  end
+end
+
+def check_tab_elemet(form, model, tab, tab_element, index)
+  specify { tab_element[:id].should_not be_nil }
+  specify { tab_element[:id].should_not be_nil }
+  classes = index == 0 ? [ 'ff-form-tab-content' ] : [ 'ff-form-tab-content', 'ff-hidden' ]
+  specify { tab_element[:class].should == classes }
+  specify { tab_element.children.size.should == 1 }
+  cols_wrapper = tab_element.children[0]
+  specify { cols_wrapper[:class].should == ['ff-form-cols'] }
+  cols_size = tab.col2.empty? ? 1 : 2
+  specify { cols_wrapper.children.size.should == cols_size }
+  col1_e = cols_wrapper.children[0]
+  col2_e = cols_wrapper.children[1] if cols_size == 2
+  if col2_e
+    specify { col1_e[:class].should == [ 'ff-form-col', 'ff-col50' ] }
+    specify { col2_e[:class].should == [ 'ff-form-col', 'ff-col50' ] }
+    check_column_element(form, model, tab.col1, col1_e)
+    check_column_element(form, model, tab.col1, col2_e)
+  else
+    specify { col1_e[:class].should == [ 'ff-form-col', 'ff-col100' ] }
+    check_column_element(form, model, tab.col1, col1_e)
+  end
+end
+
 def check_form_body_element(form, model, body_element)
   has_multiple_tabs = form.tabs.size > 1
   tabs_element = has_multiple_tabs ? body_element.children[1] : body_element.children[0]
@@ -86,17 +145,22 @@ def check_form_body_element(form, model, body_element)
       specify { tabsHeader_element.children.size.should == form.tabs.size }
     end
   end
+  index = 0
+  form.tabs.each do |tab|
+    check_tab_elemet(form, model, tab, tabs_element.children[index], index)
+    index += 1
+  end
 end
 
 def check_form_element(form, model, form_element)
-  title_element = form_element.children[0]
-  body_element = form_element.children[1]
   describe do
     specify { form_element[:class].should == [ 'ff-form' ] }
     specify { form_element.children.size.should == 2 }
     specify { form_element[:id].should_not be_nil }
     specify { form_element.attributes.ensure_id.should == true }
   end
+  title_element = form_element.children[0]
+  body_element = form_element.children[1]
   check_form_title_element(form, model, title_element)
   check_form_body_element(form, model, body_element)
 end
@@ -126,4 +190,19 @@ describe 'Form with two tabs' do
   tab2 << TextField.new(name: 'last_name', caption: 'Last Name')
   form.tabs << tab2
   check_form_element(form, user, form.to_e)
+end
+
+describe 'Edit form' do
+  user = User.new(email: 'dimakura@gmail.com', first_name: 'Dimitri', last_name: 'Kurashvili', mobile: '595335514')
+  form = Form.new(title: 'User Properties', icon: 'user.png', model: user, edit: true)
+  form.tabs[0].title = 'General'
+  form << TextField.new(name: 'email', caption: 'Email')
+  tab2 = FormTab.new(title: 'Name')
+  tab2 << TextField.new(name: 'first_name', caption: 'First Name', required: true)
+  tab2 << TextField.new(name: 'last_name', caption: 'Last Name', required: true)
+  form.tabs << tab2
+  check_form_element(form, user, form.to_e)
+  context do
+    specify { form.edit.should == true }
+  end
 end

@@ -77,8 +77,10 @@ describe 'Simple field' do
     simple_field_cell_checking(field, field.cell_element)
     simple_field_cell_checking(field, field.to_e(:cell))
     # cell[edit: true]
-    simple_field_editcell_checking(field, field.cell_element(edit: true))
-    simple_field_editcell_checking(field, field.to_e(:cell, edit: true))
+    field.edit = true
+    simple_field_editcell_checking(field, field.cell_element)
+    simple_field_editcell_checking(field, field.to_e(:cell))
+    field.edit = false
     # caption
     simple_field_caption_checking(field.caption.capitalize, field.caption_element)
     simple_field_caption_checking(field.caption.capitalize, field.to_e(:caption))
