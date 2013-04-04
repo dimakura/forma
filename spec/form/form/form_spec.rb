@@ -134,32 +134,37 @@ end
 
 def check_form_body_element(form, model, body_element)
   has_multiple_tabs = form.tabs.size > 1
+  has_bottom_actions = form.edit
   tabs_element = has_multiple_tabs ? body_element.children[1] : body_element.children[0]
   tabsHeader_element = has_multiple_tabs ? body_element.children[0] : nil
-  describe do
-    specify { body_element[:class].should == [ 'ff-form-body' ] }
-    if form.edit
-      specify { body_element.tag.should == 'form' }
-      specify { body_element[:method].should == (form.method || 'get') }
-      specify { body_element[:action].should == form.url }
-    else
-      specify { body_element.tag.should == 'div' }
-    end
-    specify { body_element.children.size.should == (has_multiple_tabs ? 2 : 1) }
-    specify { tabs_element.should_not be_nil }
-    specify { tabs_element.children.size.should == form.tabs.size }
-    specify { tabs_element[:class].should == [ 'ff-tabs' ] }
-    if has_multiple_tabs
-      specify { tabsHeader_element.should_not be_nil }
-      specify { tabsHeader_element.tag.should == 'ul' }
-      specify { tabsHeader_element[:class].should == [ 'ff-tabs-header' ] }
-      specify { tabsHeader_element.children.size.should == form.tabs.size }
-    end
+  specify { body_element[:class].should == [ 'ff-form-body' ] }
+  if form.edit
+    specify { body_element.tag.should == 'form' }
+    specify { body_element[:method].should == (form.method || 'get') }
+    specify { body_element[:action].should == form.url }
+  else
+    specify { body_element.tag.should == 'div' }
   end
-  index = 0
-  form.tabs.each do |tab|
-    check_tab_elemet(form, model, tab, tabs_element.children[index], index)
-    index += 1
+  child_count = 1
+  child_count += 1 if has_multiple_tabs
+  child_count += 1 if has_bottom_actions
+  specify { body_element.children.size.should == child_count }
+  specify { tabs_element.should_not be_nil }
+  specify { tabs_element.children.size.should == form.tabs.size }
+  specify { tabs_element[:class].should == [ 'ff-tabs' ] }
+  if has_multiple_tabs
+    specify { tabsHeader_element.should_not be_nil }
+    specify { tabsHeader_element.tag.should == 'ul' }
+    specify { tabsHeader_element[:class].should == [ 'ff-tabs-header' ] }
+    specify { tabsHeader_element.children.size.should == form.tabs.size }
+  end
+  if has_bottom_actions
+    bottom_actions = body_element.children[child_count - 1]
+    specify { bottom_actions.should_not be_nil }
+    specify { bottom_actions[:class].should == [ 'ff-form-actions' ] }
+  end
+  (0..form.tabs.size-1).each do |i|
+    check_tab_elemet(form, model, form.tabs[i], tabs_element.children[i], i)
   end
 end
 

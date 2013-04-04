@@ -2,6 +2,7 @@
 .ff-form .ff-title{background:#fcfca0;border-top:2px solid #28a830;border-bottom:2px solid #28a830;}.ff-form .ff-title img{vertical-align:middle;}
 .ff-form .ff-field{border-bottom:1px solid #aaa;}.ff-form .ff-field:first-child{border-top:1px solid #aaa;}
 .ff-form .ff-field .ff-caption{background:#fafad0;border-left:4px solid transparent;}.ff-form .ff-field .ff-caption.ff-required{border-left:4px solid #cc3300;}
+.ff-form .ff-form-actions{border-top:2px solid #aaa;background:#f0f0f0;}
 .ff-empty{color:#aaa;}
 .ff-collapse{background-image:url("/assets/ff-icons.png");display:inline-block;width:14px;height:14px;}
 .ff-form{font-size:14px;margin-bottom:8px;}.ff-form .ff-title{font-weight:bold;font-size:17px;padding:4px;margin-bottom:4px;}.ff-form .ff-title .ff-title-text{padding:0 5px;}
@@ -10,6 +11,7 @@
 .ff-form .ff-form-body .ff-form-cols{position:relative;}.ff-form .ff-form-body .ff-form-cols .ff-col50{float:left;width:50%;}.ff-form .ff-form-body .ff-form-cols .ff-col50:first-child .ff-form-col-inner{padding-right:4px;}
 .ff-form .ff-form-body .ff-form-cols .ff-col50:last-child .ff-form-col-inner{padding-left:4px;}
 .ff-form .ff-form-body .ff-form-cols:after{content:".";display:block;height:0;width:0;clear:both;visibility:hidden;margin:0;padding:0;}
+.ff-form .ff-form-actions{margin-top:4px;padding:8px;}
 .ff-after{padding-left:4px;}
 .ff-before{padding-right:4px;}
 .ff-collapsible{-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;cursor:pointer;}.ff-collapsible .ff-collapse{background-position:-313px -119px;margin-right:4px;}.ff-collapsible .ff-collapse.ff-collapsed{background-position:-456px -72px;}

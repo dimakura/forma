@@ -19,6 +19,7 @@ module Forma::Form
     # form options
     attr_accessor :method
     attr_accessor :url
+    attr_accessor :submit
 
     def initialize(h = {})
       h = h.symbolize_keys
@@ -86,6 +87,13 @@ module Forma::Form
     end
 
     def form_body_element(h)
+      body = generate_base_body
+      generate_tabs(body)
+      generate_bottom_actions(body)
+      body
+    end
+
+    def generate_base_body
       tag = self.edit ? 'form' : 'div'
       body = Element.new(tag, attrs: { class: 'ff-form-body' })
       if self.edit
@@ -93,8 +101,12 @@ module Forma::Form
         body[:method] = self.method || 'get'
       end
       body[:style][:display] = 'none' if self.collapsed
+      body
+    end
+
+    def generate_tabs(body)
       tabs = Element.new('div', attrs: { class: 'ff-tabs' })
-      self.tabs.each { |t|  tabs << t.to_e(h) }
+      self.tabs.each { |t|  tabs << t.to_e }
       if tabs.children.size > 1
         tabsHeader = Element.new('ul', attrs: { class: 'ff-tabs-header' })
         self.tabs.each do |t|
@@ -110,7 +122,14 @@ module Forma::Form
         body << tabsHeader
       end
       body << tabs
-      body
+    end
+
+    def generate_bottom_actions(body)
+      if self.edit
+        actions = Element.new('div', attrs: { class: 'ff-form-actions' })
+        actions << Element.new('button', attrs: { type: 'submit' }, text: (self.submit || 'Save'))
+        body << actions
+      end
     end
 
   end
