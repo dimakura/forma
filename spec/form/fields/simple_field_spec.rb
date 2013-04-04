@@ -39,7 +39,7 @@ def simple_field_editcell_checking(field, element)
     specify { subject.children[0][:class].should == [ 'ff-content' ] }
     specify { subject.children[0].tag.should == 'input' }
     specify { subject.children[0][:type].should == 'text' }
-    specify { subject.children[0][:val].should == (field.value || '') }
+    specify { subject.children[0][:value].should == (field.value || '') }
     specify { subject.children[0][:style].should == { width: "200px" } }
   end
 end

@@ -72,7 +72,11 @@ end
 def check_text_field(form, model, fld, cell_e)
   specify { cell_e.children.size.should == 1 }
   if form.edit
-    # TODO
+    input_e = cell_e.children[0]
+    specify { input_e.tag.should == 'input' }
+    specify { input_e[:type].should == 'text' }
+    specify { input_e[:class].should == [ 'ff-content' ] }
+    specify { input_e[:value].should == model.send(fld.name) }
   else
     # TODO
   end
