@@ -5,7 +5,7 @@ module Forma::Form
 
   class NumberField < SimpleField
     include Forma::Html
-    include Forma::Init
+    #include Forma::Init
     include ActionView::Helpers::NumberHelper
 
     attr_accessor :precision

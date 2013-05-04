@@ -9,7 +9,7 @@ module Forma::Form
 
   class Field
     include Forma::Html
-    include Forma::Init
+    #include Forma::Init
 
     attr_accessor :model
     attr_accessor :caption
@@ -102,7 +102,7 @@ module Forma::Form
   end
 
   class FieldOptions
-    include Forma::Init
+    #include Forma::Init
     attr_accessor :width
     attr_accessor :height
   end
