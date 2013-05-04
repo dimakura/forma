@@ -122,6 +122,14 @@ module Forma::Html
       @classes = @attrs.select { |x| x.is_a?(ClassAttr) }.map{ |x| x.values }.flatten
     end
 
+    def tag
+      @tag
+    end
+
+    def text
+      @text
+    end
+
     def id
       @id
     end
