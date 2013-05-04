@@ -15,9 +15,9 @@ module Forma::Html
 
   module_function :attr
 
-  class Attr; end
-
   private
+
+  class Attr; end
 
   # Simple attribute.
   class SimpleAttr < Attr
