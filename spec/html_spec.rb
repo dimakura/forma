@@ -15,6 +15,7 @@ describe 'element creation' do
   specify { el('div', attrs: { id: 'forma4' }).to_s.should == '<div id="forma4"></div>' }
   specify { el('div', attrs: { id: 'forma4', class: 'main' }).to_s.should == '<div id="forma4" class="main"></div>' }
   specify { el('div', attrs: { id: 'forma4', class: ['main', 'very-important'], style: {'font-size' => '10px'} }).to_s.should == '<div id="forma4" class="main very-important" style="font-size:10px"></div>' }
+  specify { el('div', children: [el('div')]).to_s.should == '<div><div></div></div>' }
 end
 
 describe 'element id' do
