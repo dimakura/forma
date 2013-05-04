@@ -55,6 +55,14 @@ module Forma::Html
       @value = value
     end
 
+    def name
+      @name
+    end
+
+    def value
+      @value
+    end
+
     def to_s
       if @name.present? and @value.present?
         %Q{#{@name}="#{@value}"}
@@ -66,6 +74,10 @@ module Forma::Html
   class ClassAttr < Attr
     def initialize(values)
       @values = values
+    end
+
+    def values
+      @values
     end
 
     def to_s
@@ -85,6 +97,10 @@ module Forma::Html
       @styles = styles
     end
 
+    def styles
+      @styles
+    end
+
     def to_s
       if @styles.present?
         %Q{style="#{@styles.map{ |k,v| "#{k}:#{v}" }.join(";")}"}
@@ -101,6 +117,15 @@ module Forma::Html
       @attrs = h[:attrs] || []
       @children = []
       h[:children].each { |c| @children << c } if h[:children]
+    end
+
+    def id
+      ids = @attrs.select { |x| x.is_a?(SimpleAttr) and x.name == "id" }.map { |x| x.value }
+      ids[0] if ids.length > 0
+    end
+
+    def html_class
+      # TODO:
     end
 
     def to_s
