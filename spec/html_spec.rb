@@ -20,4 +20,6 @@ end
 describe 'element id' do
   specify { el('div').id.should be_nil }
   specify { el('div', attrs: { id: 'forma4' }).id.should == 'forma4' }
+  specify { el('div', attrs: { class: 'myform1' }).klass.should == [ 'myform1' ] }
+  specify { el('div', attrs: { class: ['myform1', 'myform2'] }).klass.should == [ 'myform1', 'myform2' ] }
 end

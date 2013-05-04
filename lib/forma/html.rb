@@ -117,15 +117,17 @@ module Forma::Html
       @attrs = h[:attrs] || []
       @children = []
       h[:children].each { |c| @children << c } if h[:children]
+      ids = @attrs.select { |x| x.is_a?(SimpleAttr) and x.name == "id" }.map { |x| x.value }
+      @id = ids[0] if ids.length > 0
+      @classes = @attrs.select { |x| x.is_a?(ClassAttr) }.map{ |x| x.values }.flatten
     end
 
     def id
-      ids = @attrs.select { |x| x.is_a?(SimpleAttr) and x.name == "id" }.map { |x| x.value }
-      ids[0] if ids.length > 0
+      @id
     end
 
-    def html_class
-      # TODO:
+    def klass
+      @classes
     end
 
     def to_s
