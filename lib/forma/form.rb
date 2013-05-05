@@ -1,9 +1,10 @@
 # -*- encoding : utf-8 -*-
 module Forma
-  include Forma::Html
 
   # Form.
   class Form
+    include Forma::Html
+
     def initialize(h = {})
       h = h.symbolize_keys
       # general
@@ -18,10 +19,11 @@ module Forma
       @url = h[:url]
       @submit = h[:submit] || 'Save'
       @method = h[:method] || 'get'
-      # tabs and model
+      # tabs
       @tabs = h[:tabs] || []
-      @model = h[:model]
+      @selected_tab = h[:selected_tab] || 0
       # other methods
+      @model = h[:model]
       @edit = h[:edit]
     end
 
@@ -78,10 +80,11 @@ module Forma
     end
 
     def field_element(fld)
-      label_element =  el('div', attrs: { class: (fld.required ? ['ff-label', 'ff-required'] : ['ff-label']) }, text: fld.label)
-      el('div', attrs: { id: fld.id, class: 'ff-field' }, children: [
-        label_element,
+      label_element = el('div', attrs: { class: (fld.required ? ['ff-label', 'ff-required'] : ['ff-label']) }, text: fld.label)
+      value_element = el('div', attrs: { class: (fld.required ? ['ff-value', 'ff-required'] : ['ff-value']) }, children: [
+        fld.to_html(@edit, @model)
       ])
+      el('div', attrs: { id: fld.id, class: 'ff-field' }, children: [ label_element, value_element ])
     end
 
     def tabs_element
@@ -96,14 +99,14 @@ module Forma
         hasSecondCol = tab.col2.present?
         col1 = column_element(tab.col1, hasSecondCol)
         col2 = column_element(tab.col2, hasSecondCol)
-        el('div', attrs: { class: 'ff-tab-content' }, children: [
+        el('div', attrs: { class: 'ff-tab-content',style: ({ display: 'none' } if @tabs.index(tab) != @selected_tab) }, children: [
           el('div', attrs: { class: 'ff-cols'}, children: [col1, col2])
         ])
       end
       def tabs_header
         if @tabs.length > 1
           el('ul', attrs: { class: 'ff-tabs-header' }, children: @tabs.map { |tab|
-            el('li', children: [
+            el('li', attrs: { class: ('ff-selected' if @tabs.index(tab) == @selected_tab) }, children: [
               (el('img', attrs: { src: tab.icon }) if tab.icon),
               (el('span', text: tab.title || 'No Title'))
             ])
@@ -169,7 +172,8 @@ module Forma
 
   # Text field.
   class TextField
-    attr_reader :id, :label, :required
+    include Forma::Html
+    attr_reader :id, :name, :label, :required
 
     def initialize(h = {})
       h = h.symbolize_keys
@@ -179,8 +183,13 @@ module Forma
       @required = h[:required]
     end
 
-    def to_html
-      el('span')
+    def empty_element
+      el('span', attrs: { class: 'ff-empty' }, text: Forma.config.texts.empty)
+    end
+
+    def to_html(edit, model)
+      empty_element
+      #el('span', children: )
     end
   end
 

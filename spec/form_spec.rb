@@ -15,6 +15,7 @@ describe 'simple form' do
       edit: true,
       url: '/login',
       method: 'post',
+      selected_tab: 0,
       tabs: [
         Tab.new(title: 'Login', icon: '/assets/user.png', col1: Col.new([
           TextField.new(name: 'username', label: 'Username', required: true),
