@@ -4,6 +4,7 @@ module Forma
   class Field
     include Forma::Html
     attr_reader :id, :label, :required, :autofocus
+    attr_reader :width, :height
 
     def initialize(h = {})
       h = h.symbolize_keys
@@ -11,6 +12,8 @@ module Forma
       @label = h[:label]
       @required = h[:required]
       @autofocus = h[:autofocus]
+      @width = h[:width]
+      @height = h[:height]
     end
 
     def to_html(model, edit)
@@ -69,9 +72,16 @@ module Forma
     end
 
     def edit_element(model, val)
-      el('input', attrs: { name: name, type: (password ? 'password' : 'text'), value: val.to_s, autofocus: @autofocus })
+      el('input', attrs: {
+        name: name,
+        type: (password ? 'password' : 'text'),
+        value: val.to_s,
+        autofocus: @autofocus,
+        style: {
+          width: ("#{width}px" if width)
+        }
+      })
     end
-
   end
 
 end

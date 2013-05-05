@@ -1,5 +1,5 @@
 .user-select-none{user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;}
-.ff-form .ff-title{font-weight:bold;font-size:14px;}.ff-form .ff-title .ff-active-title{user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;cursor:pointer;display:inline-block;padding:4px;}.ff-form .ff-title .ff-active-title .ff-collapse{display:inline-block;height:14px;width:14px;margin-right:4px;margin-top:2px;}
+.ff-form .ff-title{font-weight:bold;font-size:14px;}.ff-form .ff-title .ff-active-title{user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;cursor:pointer;display:inline-block;padding:4px 8px;}.ff-form .ff-title .ff-active-title .ff-collapse{display:inline-block;height:14px;width:14px;margin-right:4px;margin-top:2px;}
 .ff-form .ff-title .ff-active-title img{height:16px;width:16px;overflow:hidden;margin-right:4px;}
 .ff-form .ff-collapse{background:url(/assets/glyphicons-halflings.png) -313px -119px;}
 .ff-form .ff-collapsed.ff-collapse{background:url(/assets/glyphicons-halflings.png) -456px -72px;}
@@ -12,6 +12,7 @@
 .ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-value{display:table-cell;padding:4px;}
 .ff-form .ff-tabs .ff-cols:after{content:".";display:block;clear:both;width:0;height:0;overflow:hidden;}
 .ff-form .ff-tabs input{padding:4px;margin:0;}
+.ff-form .ff-bottom-actions{padding:8px;border-top:1px solid #b1b1b1;background:#e0e0e0;}
 .ff-empty{color:#a0a0a0;}
 .ff-theme-red .ff-title{background-color:#ffc8c8;border-bottom:3px solid #ff1616;}
 .ff-theme-blue .ff-title{background-color:#cfc8ff;border-bottom:3px solid #3316ff;}

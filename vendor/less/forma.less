@@ -9,16 +9,14 @@
 // form
 
 .ff-form {
-  // Title element
   .ff-title {
     font-weight: bold; font-size: 14px;
-    .ff-active-title { .user-select-none; cursor: pointer; display: inline-block; padding: 4px;
+    .ff-active-title { .user-select-none; cursor: pointer; display: inline-block; padding: 4px 8px;
       .ff-collapse { display: inline-block; height: 14px; width: 14px; margin-right: 4px; margin-top: 2px; }
       img { height: 16px; width: 16px; overflow: hidden; margin-right: 4px; }
   }}
   .ff-collapse { background:  @halflings -313px -119px }
   .ff-collapsed.ff-collapse { background: @halflings -456px -72px }
-  // Tabs
   .ff-tabs {
     padding: 4px 0;
     ul.ff-tabs-header {
@@ -54,6 +52,7 @@
     }
     input { padding: 4px; margin: 0; }
   }
+  .ff-bottom-actions { padding: 8px; border-top: 1px solid @border-color; background: #e0e0e0; }
 }
 
 .ff-empty { color: #a0a0a0; }

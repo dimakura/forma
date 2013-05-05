@@ -19,6 +19,7 @@ module Forma
       @url = h[:url]
       @submit = h[:submit] || 'Save'
       @method = h[:method] || 'get'
+      @auth_token = h[:auth_token]
       # tabs
       @tabs = h[:tabs] || []
       @selected_tab = h[:selected_tab] || 0
@@ -73,10 +74,19 @@ module Forma
           style: ({display: 'none'} if @collapsible && @collapsed)
         },
         children: [
+          (auth_token_element if @edit),
           tabs_element,
-          # TODO: place botom actions
+          (bottom_actions if @edit),
         ]
       )
+    end
+
+    def auth_token_element
+      if @auth_token.present?
+        el('div', attrs: { style: {padding: 0, margin: 0, height: 0, width: 0, display: 'inline'} }, children: [
+          el('input', attrs: { type: 'hidden', name: 'authenticity_token', value: @auth_token })
+        ])
+      end
     end
 
     def field_element(fld)
@@ -123,12 +133,10 @@ module Forma
       )
     end
 
-    def generate_bottom_actions(body)
-      if self.edit
-        actions = Element.new('div', attrs: { class: 'ff-form-actions' })
-        actions << Element.new('button', attrs: { type: 'submit' }, text: (self.submit || 'Save'))
-        body << actions
-      end
+    def bottom_actions
+      el('div', attrs: { class: 'ff-bottom-actions' }, children: [
+        el('button', attrs: { type: 'submit', class: 'btn btn-primary' }, text: @submit)
+      ])
     end
 
   end
