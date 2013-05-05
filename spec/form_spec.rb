@@ -30,4 +30,5 @@ describe 'simple form' do
   specify { @element.tag.should == 'div' }
   specify { @element.id.should == 'user-login' }
   specify { @element.klass.should == ['ff-form', 'ff-theme-blue'] }
+  # TODO: check other elements
 end

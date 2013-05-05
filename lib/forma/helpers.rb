@@ -1,13 +1,13 @@
-# -*- encoding : utf-8 -*-
 module Forma
 
-  module ViewHelpers
+  module Helpers
 
-    def view_for(model, opts = {}, &block)
+    def forma_for(model, opts = {}, &block)
       opts[:model] = model
+      opts[:edit] = true
       f = Forma::Form::Form.new(opts)
       yield f
-      f.to_e.html
+      f.to_html.to_s
     end
 
   end
