@@ -1,9 +1,22 @@
 # -*- encoding : utf-8 -*-
 module Forma
 
+  module FieldHelper
+    def text_field(name, opts={})
+      opts[:name] = name
+      add_field(Forma::TextField.new(opts))
+    end
+
+    def password_field(name, opts={})
+      opts[:password] = true
+      text_field(name, opts)
+    end
+  end
+
   # Form.
   class Form
     include Forma::Html
+    include Forma::FieldHelper
 
     def initialize(h = {})
       h = h.symbolize_keys
@@ -37,6 +50,11 @@ module Forma
           body_element,
         ]
       )
+    end
+
+    def add_field(f)
+      @tabs = [ Tab.new ] if @tabs.empty?
+      @tabs[0].col1.add_field(f)
     end
 
     private
@@ -154,16 +172,16 @@ module Forma
 
     # Returns the first column of this tab.
     def col1
-      col = @col1
-      yield col if block_given?
-      col
+      @col1 = Col.new if @col1.blank?
+      yield @col1 if block_given?
+      @col1
     end
 
     # Returns the second column of this tab.
     def col2
-      col = @col2
-      yield col if block_given?
-      col
+      @col2 = Col.new if @col2.blank?
+      yield @col2 if block_given?
+      @col2
     end
   end
 
@@ -173,6 +191,10 @@ module Forma
 
     def initialize(fields = [])
       @fields = fields
+    end
+
+    def add_field(f)
+      @fields << f
     end
   end
 
