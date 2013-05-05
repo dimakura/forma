@@ -5,7 +5,7 @@ module Forma
     def forma_for(model, opts = {}, &block)
       opts[:model] = model
       opts[:edit] = true
-      f = Forma::Form::Form.new(opts)
+      f = Forma::Form.new(opts)
       yield f
       f.to_html.to_s
     end

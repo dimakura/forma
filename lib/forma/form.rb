@@ -124,7 +124,7 @@ module Forma
         end
       end
       def tab_element(tab)
-        hasSecondCol = tab.col2.present?
+        hasSecondCol = (not tab.col2.fields.empty?)
         col1 = column_element(tab.col1, hasSecondCol)
         col2 = column_element(tab.col2, hasSecondCol)
         el('div', attrs: { class: 'ff-tab-content',style: ({ display: 'none' } if @tabs.index(tab) != @selected_tab) }, children: [
