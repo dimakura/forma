@@ -108,6 +108,10 @@
   height: 0;
   overflow: hidden;
 }
+.ff-form .ff-tabs input {
+  padding: 4px;
+  margin: 0;
+}
 .ff-empty {
   color: #a0a0a0;
 }

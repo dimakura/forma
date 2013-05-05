@@ -11,6 +11,7 @@
 .ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-label{display:table-cell;width:150px;padding:4px;background-color:#c8ffb0;border-right:3px solid transparent;}.ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-label.ff-required{border-right:3px solid #cf0000;}
 .ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-value{display:table-cell;padding:4px;}
 .ff-form .ff-tabs .ff-cols:after{content:".";display:block;clear:both;width:0;height:0;overflow:hidden;}
+.ff-form .ff-tabs input{padding:4px;margin:0;}
 .ff-empty{color:#a0a0a0;}
 .ff-theme-red .ff-title{background-color:#ffc8c8;border-bottom:3px solid #ff1616;}
 .ff-theme-blue .ff-title{background-color:#cfc8ff;border-bottom:3px solid #3316ff;}

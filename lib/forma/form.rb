@@ -82,7 +82,7 @@ module Forma
     def field_element(fld)
       label_element = el('div', attrs: { class: (fld.required ? ['ff-label', 'ff-required'] : ['ff-label']) }, text: fld.label)
       value_element = el('div', attrs: { class: (fld.required ? ['ff-value', 'ff-required'] : ['ff-value']) }, children: [
-        fld.to_html(@edit, @model)
+        fld.to_html(@model, @edit)
       ])
       el('div', attrs: { id: fld.id, class: 'ff-field' }, children: [ label_element, value_element ])
     end
@@ -165,31 +165,6 @@ module Forma
 
     def initialize(fields = [])
       @fields = fields
-    end
-  end
-
-# TODO: general 
-
-  # Text field.
-  class TextField
-    include Forma::Html
-    attr_reader :id, :name, :label, :required
-
-    def initialize(h = {})
-      h = h.symbolize_keys
-      @id = h[:id]
-      @label = h[:label]
-      @name = h[:name]
-      @required = h[:required]
-    end
-
-    def empty_element
-      el('span', attrs: { class: 'ff-empty' }, text: Forma.config.texts.empty)
-    end
-
-    def to_html(edit, model)
-      empty_element
-      #el('span', children: )
     end
   end
 
