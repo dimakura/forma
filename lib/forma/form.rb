@@ -36,8 +36,9 @@ module Forma
       # tabs
       @tabs = h[:tabs] || []
       @selected_tab = h[:selected_tab] || 0
-      # other methods
+      # model, errors and editing options
       @model = h[:model]
+      @errors = h[:errors]
       @edit = h[:edit]
     end
 
@@ -92,11 +93,18 @@ module Forma
           style: ({display: 'none'} if @collapsible && @collapsed)
         },
         children: [
-          (auth_token_element if @edit),
+          (errors_element if @errors.present?),
+          (auth_token_element if @edit == true),
           tabs_element,
-          (bottom_actions if @edit),
+          (bottom_actions if @edit == true),
         ]
       )
+    end
+
+    def errors_element
+      many = @errors.is_a?(Array)
+      children = (many ? @errors.map { |e| el('li', text: e.to_s) } : [ el('span', text: @errors.to_s) ])
+      el((many ? 'ul' : 'div'), attrs: { class: 'ff-form-errors' }, children: children)
     end
 
     def auth_token_element

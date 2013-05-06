@@ -112,6 +112,15 @@
   padding: 4px;
   margin: 0;
 }
+.ff-form .ff-form-errors {
+  margin: 8px;
+  padding: 8px;
+  border: 1px solid red;
+  background: #fee;
+}
+.ff-form ul.ff-form-errors li {
+  margin-left: 16px;
+}
 .ff-form .ff-bottom-actions {
   padding: 8px;
   border-top: 1px solid #b1b1b1;

@@ -12,6 +12,8 @@
 .ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-value{display:table-cell;padding:4px;}
 .ff-form .ff-tabs .ff-cols:after{content:".";display:block;clear:both;width:0;height:0;overflow:hidden;}
 .ff-form .ff-tabs input{padding:4px;margin:0;}
+.ff-form .ff-form-errors{margin:8px;padding:8px;border:1px solid red;background:#fee;}
+.ff-form ul.ff-form-errors li{margin-left:16px;}
 .ff-form .ff-bottom-actions{padding:8px;border-top:1px solid #b1b1b1;background:#e0e0e0;}
 .ff-empty{color:#a0a0a0;}
 .ff-theme-red .ff-title{background-color:#ffc8c8;border-bottom:3px solid #ff1616;}
