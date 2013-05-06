@@ -1,54 +1,47 @@
 (function() {
-  var frm = {};
 
   var initilizeCollapsibleElement = function() {
     $('.ff-collapsible').click(function(evt) {
-      var formElement = $(evt.target).parents('.ff-form');
-      var formId = formElement.attr('id');
-      var collapseSelector = '#' + formId + ' .ff-collapse';
-      var formBodySelector = '#' + formId + ' .ff-form-body';
-      var collapsed = $(collapseSelector).hasClass('ff-collapsed');
-      if (collapsed) {
-        $(collapseSelector).removeClass('ff-collapsed');
-        $(formBodySelector).show();
+      var activeTitle = $(this);
+      var formBody = $(activeTitle.parent().siblings('.ff-form-body')[0]);
+      var collapseElement = $(activeTitle.children('.ff-collapse')[0]);
+      var isCollapsed = collapseElement.hasClass('ff-collapsed');
+      if (isCollapsed) {
+        formBody.show();
+        collapseElement.removeClass('ff-collapsed');
       } else {
-        $(collapseSelector).addClass('ff-collapsed');
-        $(formBodySelector).hide();
+        formBody.hide();
+        collapseElement.addClass('ff-collapsed');
       }
     });
   };
 
-  /**
-   * Opens tab by given ID (tabid).
-   */
-  var openTab = function(tabid) {
-    var clickedTab = $('[data-tabid=' + tabid + ']');
-    if (clickedTab && !clickedTab.hasClass('ff-selected')) {
-      var tabId = clickedTab.attr('data-tabid');
-      var tabsHeader = clickedTab.parents('.ff-tabs-header');
-      var selectedTab = tabsHeader.find('.ff-selected');
-      var selectedId = selectedTab.attr('data-tabid');
-      $('#' + selectedId).hide();
-      selectedTab.removeClass('ff-selected');
-      $('#' + tabId).show();
-      clickedTab.addClass('ff-selected');
-    }
-  };
 
   var initializeTabs = function() {
-    $('.ff-tabs-header li').click(function(evt) {
-      var element = $(evt.target);
-      var tabid = element.attr('data-tabid') || element.parent().attr('data-tabid');
-      openTab(tabid);
+    $('.ff-tabs-header li').click(function(evnt) {
+      var newTab = $(this);
+      var oldTab = newTab.siblings('.ff-selected');
+      if (oldTab) {
+        var newIndex = newTab.parent().children().index(newTab);
+        var oldIndex = oldTab.parent().children().index(oldTab);
+        var newBody = $($(newTab.parent().parent().children()[1]).children()[newIndex]);
+        var oldBody = $($(newTab.parent().parent().children()[1]).children()[oldIndex]);
+        oldTab.removeClass("ff-selected");
+        oldBody.hide();
+        newTab.addClass("ff-selected");
+        newBody.show();
+      }
     });
   };
 
-  $(function() {
+  var ready = function() {
     initilizeCollapsibleElement();
     initializeTabs();
-  });
+  };
 
-  frm.openTab = openTab;
-  window.Forma = frm;
+  // turbolink initilization!
+  // http://railscasts.com/episodes/390-turbolinks?view=asciicast
+  $(document).ready(ready);
+  $(document).on('page:load', ready);
 
 })();
