@@ -48,6 +48,16 @@ module Forma
       super(h)
     end
 
+    # generate field's name by Rails convention.
+    def field_name(model)
+      if model.blank? or model.is_a?(Hash)
+        name
+      else
+        clazz = model.class.name.gsub('::', '_').downcase
+        "#{clazz}[#{name}]"
+      end
+    end
+
     def value_from_model(model)
       if model.respond_to?(name)
         model.send(name)
