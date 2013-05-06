@@ -8,23 +8,25 @@ Standard rails forms are great.
 There are also nice libraries for creating some common elements, like SimpleForms.
 
 `Forma` is intended for projects with huge amount of forms.
-It scales easily and without pain.
+It scales easily and without a pain.
 
 ## Instalation and usage
 
 Include
 
-  gem 'forma'
+    gem 'forma'
 
 into your Gemfile. Or use
 
-  gem install forma
+    gem install forma
 
 For proper functionality you should also include `jquery` (v > 1.9).
 
 TODO: css & js inclusion ... etc.
 
-## Usage
+## Examples
+
+Below are some examples with `forma`:
 
 ```ruby
 forma_for @user, title: 'Register', url: register_path do |f|
