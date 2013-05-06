@@ -31,6 +31,7 @@ module Forma
       # submit options
       @url = h[:url]
       @submit = h[:submit] || 'Save'
+      @wait_on_submit = h[:wait_on_submit].blank? ? true : (not not h[:wait_on_submit])
       @method = h[:method] || 'post'
       @auth_token = h[:auth_token]
       # tabs
@@ -88,7 +89,7 @@ module Forma
       el(
         @edit ? 'form' : 'div',
         attrs: {
-          class: 'ff-form-body',
+          class: (@wait_on_submit ? ['ff-form-body', 'ff-wait-on-submit'] : ['ff-form-body']),
           action: (@url if @edit), method: (@method if @edit),
           style: ({display: 'none'} if @collapsible && @collapsed)
         },

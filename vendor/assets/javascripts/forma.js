@@ -16,7 +16,6 @@
     });
   };
 
-
   var initializeTabs = function() {
     $('.ff-tabs-header li').click(function(evnt) {
       var newTab = $(this);
@@ -34,9 +33,19 @@
     });
   };
 
+  var initializeFormSubmit = function() {
+    $('form.ff-wait-on-submit').submit(function(evnt) {
+      var btn = $($(this).find('button[type=submit]')[0]);
+      btn.html(btn.html() + '...');
+      btn.attr('disabled', true);
+      return true;
+    });
+  };
+
   var ready = function() {
     initilizeCollapsibleElement();
     initializeTabs();
+    initializeFormSubmit();
   };
 
   // turbolink initilization!
