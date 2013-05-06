@@ -66,6 +66,16 @@ module Forma
       end
     end
 
+    def errors(model)
+      if model.respond_to?(:errors)
+        model.errors.messages[name.to_sym]
+      end || []
+    end
+
+    def has_errors?(model)
+      errors(model).any?
+    end
+
   end
 
   # Text field.

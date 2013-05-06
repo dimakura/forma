@@ -117,11 +117,22 @@ module Forma
     end
 
     def field_element(fld)
-      label_element = el('div', attrs: { class: (fld.required ? ['ff-label', 'ff-required'] : ['ff-label']) }, text: fld.label)
+      def field_error_element(errors)
+        many = errors.length > 1
+        children = (many ? errors.map { |e| el('li', text: e.to_s)  } : [el('div', text: errors[0].to_s)])
+        el('div', attrs: { class: 'ff-field-errors' }, children: children)
+      end
+      has_errors = (@edit and @model.present? and fld.respond_to?(:has_errors?) and fld.has_errors?(@model))
+      label_element = el('div', attrs: { class: (fld.required ? ['ff-label', 'ff-required'] : ['ff-label'])}, text: fld.label)
       value_element = el('div', attrs: { class: (fld.required ? ['ff-value', 'ff-required'] : ['ff-value']) }, children: [
-        fld.to_html(@model, @edit)
+        fld.to_html(@model, @edit),
+        (field_error_element(fld.errors(@model)) if has_errors),
       ])
-      el('div', attrs: { id: fld.id, class: 'ff-field' }, children: [ label_element, value_element ])
+      el(
+        'div', attrs: {
+          id: fld.id, class: (has_errors ? ['ff-field', 'ff-error'] : ['ff-field']) },
+          children: [ label_element, value_element ]
+      )
     end
 
     def tabs_element
