@@ -84,7 +84,7 @@ module Forma
 
     def edit_element(model, val)
       el('input', attrs: {
-        name: name,
+        name: field_name(model),
         type: (password ? 'password' : 'text'),
         value: val.to_s,
         autofocus: @autofocus,
