@@ -31,7 +31,7 @@ module Forma
       # submit options
       @url = h[:url]
       @submit = h[:submit] || 'Save'
-      @method = h[:method] || 'get'
+      @method = h[:method] || 'post'
       @auth_token = h[:auth_token]
       # tabs
       @tabs = h[:tabs] || []
