@@ -2,27 +2,40 @@
 
 [![Build Status](https://travis-ci.org/dimakura/forma.png?branch=master)](https://travis-ci.org/dimakura/forma)
 
-## Instalation
+`Forma` is usefull to easily create rich web forms with ruby web-frameworks.
 
-```
-gem install forma
-```
+Standard rails forms are great.
+There are also nice libraries for creating some common elements, like SimpleForms.
+
+`Forma` is intended for projects with huge amount of forms.
+It scales easily and without pain.
+
+## Instalation and usage
+
+Include
+
+  gem 'forma'
+
+into your Gemfile. Or use
+
+  gem install forma
+
+For proper functionality you should also include `jquery` (v > 1.9).
+
+TODO: css & js inclusion ... etc.
 
 ## Usage
 
 ```ruby
-view_for @customer do |f|
-  f.tab title: 'General', icon: 'general.png' do |f|
-    f.text_field :first_name
-    f.text_field :last_name
-    f.text_field :mobile
-    f.web_field :email
-  end
-  f.tab title: 'Sys Info', icon: 'sys.png' do |f|
-    f.object_field :created_by, url: user_info_url(id: @customer.created_by.id)
-    f.object_field :updated_by, url: user_info_url(id: @customer.updated_by.id)
-    f.date_field :created_at
-    f.date_field :updated_at
-  end
+forma_for @user, title: 'Register', url: register_path do |f|
+  f.text_field :username
+  f.password_field :password
+  f.password_field :password_confirmation
+  f.text_field :first_name
+  f.text_field :last_name
+  f.text_field :mobile
+  f.web_field :email
 end
 ```
+
+TODO: more advanced usage of forms
