@@ -23,7 +23,7 @@ module Forma
       if edit and not readonly
         edit_element(model, val)
       else
-        if val.present?
+        if val.present? or val == false
           view_element(model, val)
         else
           empty_element
@@ -112,7 +112,7 @@ module Forma
   end
 
   # Date feild.
-  class DateField < TextField
+  class DateField < SimpleField
     attr_reader :formatter
 
     def initialize(h = {})
@@ -134,7 +134,29 @@ module Forma
         style: { width: ("#{width}px" if width) }
       })
     end
+  end
 
+  # Boolean field.
+  class BooleanField < SimpleField
+    def view_element(model, val)
+      my_element(model, val, false)
+    end
+
+    def edit_element(model, val)
+      my_element(model, val, true)
+    end
+
+    private
+
+    def my_element(model, val, edit)
+      edit = false if readonly
+      el('input', attrs: {
+        type: 'checkbox',
+        name: (field_name(model) if edit),
+        disabled: ('disabled' unless edit),
+        checked: ('checked' if val),
+      })
+    end
   end
 
 end

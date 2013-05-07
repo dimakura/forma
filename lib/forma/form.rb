@@ -21,6 +21,11 @@ module Forma
       opts[:name] = name
       add_field(Forma::DateField.new(opts))
     end
+
+    def boolean_field(name, opts={})
+      opts[:name] = name
+      add_field(Forma::BooleanField.new(opts))
+    end
   end
 
   # Form.
