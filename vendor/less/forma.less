@@ -49,7 +49,7 @@
             position: relative;
             background-color: #c8ffb0; border-right: 3px solid transparent;
             &.ff-required { border-right: 3px solid #cf0000; }
-            .ff-field-hint { display: block; height: 16px; width: 16px; position: absolute; right: 4px; top: 8px; background-position: -96px -96px; }} 
+            .ff-field-hint { display: block; height: 16px; width: 16px; position: absolute; right: 0; top: 8px; background-position: -96px -96px; }} 
           .ff-value { display: table-cell; padding: 4px; }
         }
       }
@@ -78,3 +78,7 @@
 .ff-theme-blue { .form-theme(@blue-theme); }
 .ff-theme-yellow { .form-theme(@yellow-theme) }
 .ff-theme-green { .form-theme(@green-theme) }
+
+// bootstrap fixes
+
+.tooltip-inner { white-space: pre; max-width: none; }

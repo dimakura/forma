@@ -141,15 +141,34 @@ module Forma
     end
 
     def field_element(fld)
+      def field_label_text(fld)
+        if fld.respond_to?(:name) and fld.label.blank?
+          clazz = @model.class.name.gsub('::', '_').downcase if (@model and not @model.is_a?(Hash))
+          I18n.t(["models", clazz, fld.name].join('.'), default: fld.name)
+        else
+          fld.label
+        end
+      end
+      def field_hint_text(fld)
+        if fld.respond_to?(:name) and fld.label.blank?
+          clazz = @model.class.name.gsub('::', '_').downcase if (@model and not @model.is_a?(Hash))
+          I18n.t(["models", clazz, "#{fld.name}_hint"].join('.'), default: '')
+        else
+          fld.hint
+        end
+      end
       def field_error_element(errors)
         many = errors.length > 1
         children = (many ? errors.map { |e| el('li', text: e.to_s)  } : [el('div', text: errors[0].to_s)])
         el('div', attrs: { class: 'ff-field-errors' }, children: children)
       end
       has_errors = (@edit and @model.present? and fld.respond_to?(:has_errors?) and fld.has_errors?(@model))
+      label_text = field_label_text(fld)
+      label_hint = field_hint_text(fld)
       label_element = el('div', attrs: { class: (fld.required ? ['ff-label', 'ff-required'] : ['ff-label'])},
-        text: fld.label, children: [
-          (el('i', attrs: { class: 'ff-field-hint', 'data-toggle' => 'tooltip', title: fld.hint }) if fld.hint.present?)
+        text: label_text,
+        children: [
+          (el('i', attrs: { class: 'ff-field-hint', 'data-toggle' => 'tooltip', title: label_hint }) if label_hint.present?)
         ]
       )
       value_element = el('div', attrs: { class: (fld.required ? ['ff-value', 'ff-required'] : ['ff-value']) }, children: [
