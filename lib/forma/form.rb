@@ -56,6 +56,8 @@ module Forma
       @model = h[:model]
       @errors = h[:errors]
       @edit = h[:edit]
+      # actions
+      @title_actions = h[:title_actions] || []
     end
 
     def to_html
@@ -72,6 +74,11 @@ module Forma
     def submit(txt = nil)
       @submit = txt if txt.present?
       @submit
+    end
+
+    def title_action(url, h={})
+      h[:url] = url
+      @title_actions << Action.new(h)
     end
 
     # Adds a new tab and ibject body content.
@@ -103,14 +110,10 @@ module Forma
         )
       end
       if @title.present?
-        el(
-          'div',
-          attrs: { class: 'ff-title' },
-          children: [
-            active_title,
-            # TODO: place title actions here
-          ]
-        )
+        title_acts = el('div', attrs: { class: 'ff-title-actions' },
+          children: @title_actions.map { |a| a.to_html(@model) }
+        ) if @title_actions.any?
+        el('div', attrs: { class: 'ff-title' }, children: [ active_title, title_acts ])
       end
     end
 
@@ -278,6 +281,7 @@ module Forma
 
   # Action class.
   class Action
+    include Forma::Html
     attr_reader :label, :icon
     attr_reader :url, :method, :confirmation
 
@@ -288,6 +292,13 @@ module Forma
       @url = h[:url]
       @method = h[:method] || 'get'
       @confirmation = h[:confirmation]
+    end
+
+    def to_html(model)
+      el('a', attrs: { class: 'ff-action', href: url, 'data-method' => @method, 'data-confirm' => @confirmation }, children: [
+        (el('img', attrs: { src: @icon }) if @icon.present?),
+        el('span', text: @label)
+      ])
     end
   end
 

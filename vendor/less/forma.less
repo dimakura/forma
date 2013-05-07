@@ -11,11 +11,16 @@
 
 .ff-form {
   .ff-title {
-    font-weight: bold; font-size: 14px;
+    position: relative;
     .ff-active-title { .user-select-none; cursor: pointer; display: inline-block; padding: 4px 8px;
+      font-weight: bold; font-size: 14px;
       .ff-collapse { display: inline-block; height: 14px; width: 14px; margin-right: 4px; margin-top: 2px; }
       img { height: 16px; width: 16px; overflow: hidden; margin-right: 4px; }
-  }}
+    }
+    .ff-title-actions { position: absolute; right: 0; top: 4px; padding: 0 8px;
+      img { padding-right: 4px; }
+    }
+  }
   .ff-collapse { background:  @halflings -313px -119px }
   .ff-collapsed.ff-collapse { background: @halflings -456px -72px }
   .ff-field-hint { background: @halflings -456px -72px }

@@ -1,6 +1,7 @@
 .user-select-none{user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;}
-.ff-form .ff-title{font-weight:bold;font-size:14px;}.ff-form .ff-title .ff-active-title{user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;cursor:pointer;display:inline-block;padding:4px 8px;}.ff-form .ff-title .ff-active-title .ff-collapse{display:inline-block;height:14px;width:14px;margin-right:4px;margin-top:2px;}
+.ff-form .ff-title{position:relative;}.ff-form .ff-title .ff-active-title{user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;cursor:pointer;display:inline-block;padding:4px 8px;font-weight:bold;font-size:14px;}.ff-form .ff-title .ff-active-title .ff-collapse{display:inline-block;height:14px;width:14px;margin-right:4px;margin-top:2px;}
 .ff-form .ff-title .ff-active-title img{height:16px;width:16px;overflow:hidden;margin-right:4px;}
+.ff-form .ff-title .ff-title-actions{position:absolute;right:0;top:4px;padding:0 8px;}.ff-form .ff-title .ff-title-actions img{padding-right:4px;}
 .ff-form .ff-collapse{background:url(/assets/glyphicons-halflings.png) -313px -119px;}
 .ff-form .ff-collapsed.ff-collapse{background:url(/assets/glyphicons-halflings.png) -456px -72px;}
 .ff-form .ff-field-hint{background:url(/assets/glyphicons-halflings.png) -456px -72px;}
