@@ -42,10 +42,16 @@
     });
   };
 
+  var initializeTooltips = function() {
+    $('.ff-field-hint').tooltip({placement: 'right', trigger: 'click'});
+    // TODO: any other tooltips?
+  };
+
   var ready = function() {
     initilizeCollapsibleElement();
     initializeTabs();
     initializeFormSubmit();
+    initializeTooltips();
   };
 
   // turbolink initilization!

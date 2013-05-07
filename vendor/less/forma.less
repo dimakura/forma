@@ -18,6 +18,7 @@
   }}
   .ff-collapse { background:  @halflings -313px -119px }
   .ff-collapsed.ff-collapse { background: @halflings -456px -72px }
+  .ff-field-hint { background: @halflings -456px -72px }
   .ff-tabs {
     padding: 4px 0;
     ul.ff-tabs-header {
@@ -45,8 +46,10 @@
           border-bottom: 1px solid @border-color;
           &:first-child { border-top: 1px solid @border-color; }
           .ff-label { display: table-cell; width: 150px; padding: 4px 4px 4px 8px;
+            position: relative;
             background-color: #c8ffb0; border-right: 3px solid transparent;
-            &.ff-required { border-right: 3px solid #cf0000; }} 
+            &.ff-required { border-right: 3px solid #cf0000; }
+            .ff-field-hint { display: block; height: 16px; width: 16px; position: absolute; right: 4px; top: 8px; background-position: -96px -96px; }} 
           .ff-value { display: table-cell; padding: 4px; }
         }
       }

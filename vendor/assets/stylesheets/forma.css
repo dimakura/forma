@@ -36,6 +36,9 @@
 .ff-form .ff-collapsed.ff-collapse {
   background: url(/assets/glyphicons-halflings.png) -456px -72px;
 }
+.ff-form .ff-field-hint {
+  background: url(/assets/glyphicons-halflings.png) -456px -72px;
+}
 .ff-form .ff-tabs {
   padding: 4px 0;
 }
@@ -91,11 +94,21 @@
   display: table-cell;
   width: 150px;
   padding: 4px 4px 4px 8px;
+  position: relative;
   background-color: #c8ffb0;
   border-right: 3px solid transparent;
 }
 .ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-label.ff-required {
   border-right: 3px solid #cf0000;
+}
+.ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-label .ff-field-hint {
+  display: block;
+  height: 16px;
+  width: 16px;
+  position: absolute;
+  right: 4px;
+  top: 8px;
+  background-position: -96px -96px;
 }
 .ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-value {
   display: table-cell;

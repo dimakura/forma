@@ -6,6 +6,7 @@ module Forma
     include Forma::Html
     attr_reader :id, :label, :required, :autofocus, :readonly
     attr_reader :width, :height
+    attr_reader :hint
 
     def initialize(h = {})
       h = h.symbolize_keys
@@ -16,6 +17,7 @@ module Forma
       @width = h[:width]
       @height = h[:height]
       @readonly = (not not h[:readonly])
+      @hint = h[:hint]
     end
 
     def to_html(model, edit)
