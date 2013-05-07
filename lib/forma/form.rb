@@ -228,7 +228,6 @@ module Forma
         el('button', attrs: { type: 'submit', class: 'btn btn-primary' }, text: @submit)
       ])
     end
-
   end
 
   # This is a tab.
@@ -274,6 +273,21 @@ module Forma
 
     def add_field(f)
       @fields << f
+    end
+  end
+
+  # Action class.
+  class Action
+    attr_reader :label, :icon
+    attr_reader :url, :method, :confirmation
+
+    def initialize(h={})
+      h = h.symbolize_keys
+      @label = h[:label]
+      @icon = h[:icon]
+      @url = h[:url]
+      @method = h[:method] || 'get'
+      @confirmation = h[:confirmation]
     end
   end
 
