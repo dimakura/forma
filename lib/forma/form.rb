@@ -11,6 +11,11 @@ module Forma
       opts[:password] = true
       text_field(name, opts)
     end
+
+    def email_field(name, opts={})
+      opts[:name] = name
+      add_field(Forma::EmailField.new(opts))
+    end
   end
 
   # Form.

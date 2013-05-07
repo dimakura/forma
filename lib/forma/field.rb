@@ -106,4 +106,11 @@ module Forma
     end
   end
 
+  # Email representation.
+  class EmailField < TextField
+    def view_element(model, val)
+      el('a', attrs: { href: "mailto:#{val}" }, text: val)
+    end
+  end
+
 end
