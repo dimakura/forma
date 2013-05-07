@@ -69,6 +69,11 @@ module Forma
       )
     end
 
+    def submit(txt = nil)
+      @submit = txt if txt.present?
+      @submit
+    end
+
     # Adds a new tab and ibject body content.
     def tab(opts={})
       tab = Tab.new(opts)
