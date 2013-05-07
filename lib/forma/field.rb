@@ -4,7 +4,7 @@ module Forma
   # General field interface.
   class Field
     include Forma::Html
-    attr_reader :id, :label, :required, :autofocus
+    attr_reader :id, :label, :required, :autofocus, :readonly
     attr_reader :width, :height
 
     def initialize(h = {})
@@ -15,11 +15,12 @@ module Forma
       @autofocus = h[:autofocus]
       @width = h[:width]
       @height = h[:height]
+      @readonly = (not not h[:readonly])
     end
 
     def to_html(model, edit)
       val = value_from_model(model)
-      if edit
+      if edit and not readonly
         edit_element(model, val)
       else
         if val.present?

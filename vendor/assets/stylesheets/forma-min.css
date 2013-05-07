@@ -5,13 +5,13 @@
 .ff-form .ff-collapsed.ff-collapse{background:url(/assets/glyphicons-halflings.png) -456px -72px;}
 .ff-form .ff-tabs{padding:4px 0;}.ff-form .ff-tabs ul.ff-tabs-header{list-style-type:none;margin:0 0 4px 0;position:relative;border-bottom:1px solid #b1b1b1;}.ff-form .ff-tabs ul.ff-tabs-header li{user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;cursor:pointer;display:inline-block;padding:4px 8px;margin-left:8px;margin-bottom:-1px;border:1px solid transparent;}.ff-form .ff-tabs ul.ff-tabs-header li img{margin:0 4px;}
 .ff-form .ff-tabs ul.ff-tabs-header li.ff-selected{background:#ffff99;border:1px solid #b1b1b1;border-bottom:1px solid #ffff99;}
-.ff-form .ff-tabs .ff-cols{position:relative;}.ff-form .ff-tabs .ff-cols .ff-col-100{width:100%;}
+.ff-form .ff-tabs .ff-cols{position:relative;font-size:13px;}.ff-form .ff-tabs .ff-cols .ff-col-100{width:100%;}
 .ff-form .ff-tabs .ff-cols .ff-col-50{width:50%;float:left;}
 .ff-form .ff-tabs .ff-cols .ff-col-inner{padding:0;position:relative;}.ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field{position:relative;border-bottom:1px solid #b1b1b1;}.ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field:first-child{border-top:1px solid #b1b1b1;}
 .ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-label{display:table-cell;width:150px;padding:4px 4px 4px 8px;background-color:#c8ffb0;border-right:3px solid transparent;}.ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-label.ff-required{border-right:3px solid #cf0000;}
 .ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-value{display:table-cell;padding:4px;}
 .ff-form .ff-tabs .ff-cols:after{content:".";display:block;clear:both;width:0;height:0;overflow:hidden;}
-.ff-form .ff-tabs input{padding:4px;margin:0;}
+.ff-form .ff-tabs input{padding:4px;margin:0;font-size:13px;}
 .ff-form .ff-tabs .ff-error input{border:1px solid red;color:red;background:#fff8f8;}
 .ff-form .ff-form-errors{margin:8px;padding:8px;border:1px solid red;background:#fee;color:red;}
 .ff-form ul.ff-form-errors li{margin-left:16px;}

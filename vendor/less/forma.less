@@ -5,6 +5,7 @@
 @halflings-white: url(/assets/glyphicons-halflings-white.png);
 @border-color: #b1b1b1;
 @selected-tab-color: #ffff99;
+@base-font-size: 13px;
 
 // form
 
@@ -34,6 +35,7 @@
     }
     .ff-cols {
       position: relative;
+      font-size: @base-font-size;
       .ff-col-100 { width: 100%; }
       .ff-col-50 { width: 50%; float: left; }
       .ff-col-inner {
@@ -50,7 +52,7 @@
       }
       &:after { content: "."; display: block; clear: both;  width: 0; height: 0; overflow: hidden; }
     }
-    input { padding: 4px; margin: 0; }
+    input { padding: 4px; margin: 0; font-size: @base-font-size; }
     .ff-error input { border: 1px solid red; color: red; background: #fff8f8; }
   }
   .ff-form-errors { margin: 8px; padding: 8px; border: 1px solid red; background: #fee; color: red;}

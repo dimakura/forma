@@ -67,6 +67,7 @@
 }
 .ff-form .ff-tabs .ff-cols {
   position: relative;
+  font-size: 13px;
 }
 .ff-form .ff-tabs .ff-cols .ff-col-100 {
   width: 100%;
@@ -111,6 +112,7 @@
 .ff-form .ff-tabs input {
   padding: 4px;
   margin: 0;
+  font-size: 13px;
 }
 .ff-form .ff-tabs .ff-error input {
   border: 1px solid red;
