@@ -16,6 +16,11 @@ module Forma
       opts[:name] = name
       add_field(Forma::EmailField.new(opts))
     end
+
+    def date_field(name, opts={})
+      opts[:name] = name
+      add_field(Forma::DateField.new(opts))
+    end
   end
 
   # Form.
@@ -59,6 +64,15 @@ module Forma
       )
     end
 
+    # Adds a new tab and ibject body content.
+    def tab(opts={})
+      tab = Tab.new(opts)
+      @tabs << tab
+      yield tab if block_given?
+      tab
+    end
+
+    # Adding new field to this form.
     def add_field(f)
       @tabs = [ Tab.new ] if @tabs.empty?
       @tabs[0].col1.add_field(f)
@@ -186,13 +200,20 @@ module Forma
 
   # This is a tab.
   class Tab
+    include Forma::FieldHelper
+
     attr_reader :title, :icon
+
     def initialize(h = {})
       h = h.symbolize_keys
       @title = h[:title]
       @icon = h[:icon]
       @col1 = h[:col1]
       @col2 = h[:col2]
+    end
+
+    def add_field(f)
+      col1.add_field(f)
     end
 
     # Returns the first column of this tab.

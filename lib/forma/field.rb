@@ -36,7 +36,6 @@ module Forma
     def empty_element
       el('span', attrs: { class: 'ff-empty' }, text: Forma.config.texts.empty)
     end
-
   end
 
   # SimpleField gets it's value from it's name.
@@ -76,7 +75,6 @@ module Forma
     def has_errors?(model)
       errors(model).any?
     end
-
   end
 
   # Text field.
@@ -106,11 +104,37 @@ module Forma
     end
   end
 
-  # Email representation.
+  # Email field.
   class EmailField < TextField
     def view_element(model, val)
       el('a', attrs: { href: "mailto:#{val}" }, text: val)
     end
+  end
+
+  # Date feild.
+  class DateField < TextField
+    attr_reader :formatter
+
+    def initialize(h = {})
+      h = h.symbolize_keys
+      @formatter = h[:formatter]
+      super(h)
+    end
+
+    def view_element(model, val)
+      el('span', text: val.localtime.strftime(formatter || Forma.config.date.formatter))
+    end
+
+    def edit_element(model, val)
+      el('input', attrs: {
+        name: field_name(model),
+        type: 'text',
+        value: val.to_s,
+        autofocus: @autofocus,
+        style: { width: ("#{width}px" if width) }
+      })
+    end
+
   end
 
 end

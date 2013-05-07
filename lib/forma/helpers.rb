@@ -11,7 +11,16 @@ module Forma
       f.to_html.to_s
     end
 
+    def view_for(model, opts = {}, &block)
+      opts[:model] = model
+      opts[:edit] = false
+      f = Forma::Form.new(opts)
+      yield f
+      f.to_html.to_s
+    end
+
     module_function :forma_for
+    module_function :view_for
   end
 
 end
