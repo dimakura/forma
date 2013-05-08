@@ -47,7 +47,7 @@ module Forma
       @url = h[:url]
       @submit = h[:submit] || 'Save'
       @wait_on_submit = h[:wait_on_submit].blank? ? true : (not not h[:wait_on_submit])
-      @method = h[:method] || 'post'
+      @method = h[:method]
       @auth_token = h[:auth_token]
       # tabs
       @tabs = h[:tabs] || []

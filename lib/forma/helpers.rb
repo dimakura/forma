@@ -6,6 +6,7 @@ module Forma
       opts[:model] = model
       opts[:edit] = true
       opts[:auth_token] = form_authenticity_token if defined?(Rails)
+      opts[:method] = 'post' if opts[:method].blank?
       f = Forma::Form.new(opts)
       yield f
       f.to_html.to_s
