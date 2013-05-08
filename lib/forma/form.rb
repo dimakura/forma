@@ -290,7 +290,7 @@ module Forma
       @label = h[:label]
       @icon = h[:icon]
       @url = h[:url]
-      @method = h[:method] || 'get'
+      @method = h[:method]
       @confirmation = h[:confirmation]
     end
 
