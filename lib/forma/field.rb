@@ -141,24 +141,15 @@ module Forma
   # Boolean field.
   class BooleanField < SimpleField
     def view_element(model, val)
-      my_element(model, val, false)
+      el('input', attrs: { type: 'checkbox', disabled: true, checked: ('checked' if val) })
     end
 
     def edit_element(model, val)
-      my_element(model, val, true)
+      e1 = el('input', attrs: { type: 'hidden', name: field_name(model), value: "0"})
+      e2 = el('input', attrs: { type: 'checkbox', name: field_name(model), checked: ('checked' if val), value: "1"})
+      el('span', children: [ e1, e2 ])
     end
 
-    private
-
-    def my_element(model, val, edit)
-      edit = false if readonly
-      el('input', attrs: {
-        type: 'checkbox',
-        name: (field_name(model) if edit),
-        disabled: ('disabled' unless edit),
-        checked: ('checked' if val),
-      })
-    end
   end
 
 end
