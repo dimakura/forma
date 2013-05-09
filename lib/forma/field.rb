@@ -50,22 +50,32 @@ module Forma
       super(h)
     end
 
+    def singular_name
+      self.name.to_s.gsub('.', '_')
+    end
+
     # generate field's name by Rails convention.
     def field_name(model)
-      if model.blank? or model.is_a?(Hash)
-        name
+      if model.respond_to?(:model_name)
+        "#{model.model_name.singular_route_key}[#{singular_name}]"
       else
-        clazz = model.class.name.gsub('::', '_').downcase
-        "#{clazz}[#{name}]"
+        singular_name
       end
     end
 
     def value_from_model(model)
-      if model.respond_to?(name)
-        model.send(name)
-      elsif model.respond_to?('[]')
-        model[name] || model[name.to_sym]
+      def simple_value(model, name)
+        if model.respond_to?(name)
+          model.send(name)
+        elsif model.respond_to?('[]')
+          model[name] || model[name.to_sym]
+        end
       end
+      val = model
+      name.to_s.split('.').each do |n|
+        val = simple_value(val, n) if val
+      end
+      val
     end
 
     def errors(model)

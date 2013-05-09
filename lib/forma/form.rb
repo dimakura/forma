@@ -108,6 +108,14 @@ module Forma
       @tabs[0].col1.add_field(f)
     end
 
+    def model_singular_name
+      if @model.respond_to?(:model_name)
+        @model.model_name.singular_route_key
+      else
+        ""
+      end
+    end
+
     private
 
     def title_element
@@ -164,17 +172,15 @@ module Forma
 
     def field_element(fld)
       def field_label_text(fld)
-        if fld.respond_to?(:name) and fld.label.blank?
-          clazz = @model.class.name.gsub('::', '_').downcase if (@model and not @model.is_a?(Hash))
-          I18n.t(["models", clazz, fld.name].join('.'), default: fld.name)
+        if fld.respond_to?(:singular_name) and fld.label.blank?
+          I18n.t(["models", model_singular_name, fld.singular_name].join('.'), default: fld.name)
         else
           fld.label
         end
       end
       def field_hint_text(fld)
-        if fld.respond_to?(:name) and fld.label.blank?
-          clazz = @model.class.name.gsub('::', '_').downcase if (@model and not @model.is_a?(Hash))
-          I18n.t(["models", clazz, "#{fld.name}_hint"].join('.'), default: '')
+        if fld.respond_to?(:singular_name) and fld.hint.blank?
+          I18n.t(["models", model_singular_name, "#{fld.singular_name}_hint"].join('.'), default: '')
         else
           fld.hint
         end
