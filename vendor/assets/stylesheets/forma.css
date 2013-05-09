@@ -87,7 +87,8 @@
 .ff-form .ff-tabs .ff-tab-actions {
   padding: 4px 8px;
   background: #ffffcc;
-  border-bottom: 1px solid #b1b1b1;
+  border: 1px solid #b1b1b1;
+  margin-top: -1px;
 }
 .ff-form .ff-tabs .ff-cols {
   margin: 4px 0 0 0;

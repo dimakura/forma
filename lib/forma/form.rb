@@ -63,6 +63,7 @@ module Forma
       @edit = h[:edit]
       # actions
       @title_actions = h[:title_actions] || []
+      @bottom_actions = h[:bottom_actions] || []
     end
 
     def to_html
@@ -84,6 +85,12 @@ module Forma
     def title_action(url, h={})
       h[:url] = url
       @title_actions << Action.new(h)
+    end
+
+    def bottom_action(url, h={})
+      h[:url] = url
+      h[:as] = 'button' unless h[:as].present?
+      @bottom_actions << Action.new(h)
     end
 
     # Adds a new tab and ibject body content.
@@ -134,7 +141,7 @@ module Forma
           (errors_element if @errors.present?),
           (auth_token_element if @edit == true),
           tabs_element,
-          (bottom_actions if @edit == true),
+          bottom_actions,
         ]
       )
     end
@@ -240,9 +247,11 @@ module Forma
     end
 
     def bottom_actions
-      el('div', attrs: { class: 'ff-bottom-actions' }, children: [
-        el('button', attrs: { type: 'submit', class: 'btn btn-primary' }, text: @submit)
-      ])
+      if @edit || @bottom_actions.any?
+        children = @bottom_actions.map { |a| a.to_html(@model) }
+        save_action = el('button', attrs: { type: 'submit', class: 'btn btn-primary' }, text: @submit) if @edit
+        el('div', attrs: { class: 'ff-bottom-actions' }, children: [save_action] + children )
+      end
     end
   end
 
@@ -301,8 +310,8 @@ module Forma
   # Action class.
   class Action
     include Forma::Html
-    attr_reader :label, :icon
-    attr_reader :url, :method, :confirmation
+    # attr_reader :label, :icon, :method, :confirm, :as
+    attr_reader :url 
 
     def initialize(h={})
       h = h.symbolize_keys
@@ -310,14 +319,14 @@ module Forma
       @icon = h[:icon]
       @url = h[:url]
       @method = h[:method]
-      @confirmation = h[:confirmation]
+      @confirm = h[:confirm]
+      @as = h[:as]
     end
 
     def to_html(model)
-      el('a', attrs: { class: 'ff-action', href: url, 'data-method' => @method, 'data-confirm' => @confirmation }, children: [
-        (el('img', attrs: { src: @icon }) if @icon.present?),
-        el('span', text: @label)
-      ])
+      children = [ (el('img', attrs: { src: @icon }) if @icon.present?), el('span', text: @label) ]
+      button = (@as.to_s == 'button')
+      el('a', attrs: { class: ['ff-action', ('btn' if button)], href: url, 'data-method' => @method, 'data-confirm' => @confirm }, children: children)
     end
   end
 
