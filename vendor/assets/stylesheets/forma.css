@@ -115,9 +115,10 @@
 }
 .ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-label {
   display: table-cell;
+  vertical-align: top;
+  position: relative;
   width: 150px;
   padding: 4px 4px 4px 8px;
-  position: relative;
   background-color: #c8ffb0;
   border-right: 3px solid transparent;
 }
@@ -136,6 +137,7 @@
 .ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-value {
   display: table-cell;
   padding: 4px;
+  vertical-align: top;
 }
 .ff-form .ff-tabs .ff-cols:after {
   content: ".";

@@ -154,11 +154,14 @@ module Forma
   # Image upload field.
   class ImageField < SimpleField
     def view_element(model, val)
-      el('div', text: 'VIEW: this is image field')
+      el('img', attrs: { src: val.url } )
     end
 
     def edit_element(model, val)
-      el('div', text: 'EDIT: this is image field')
+      el('input', attrs: {
+        name: field_name(model),
+        type: 'file',
+      })
     end
   end
 

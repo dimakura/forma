@@ -59,12 +59,12 @@
           position: relative;
           border-bottom: 1px solid @border-color;
           &:first-child { border-top: 1px solid @border-color; }
-          .ff-label { display: table-cell; width: 150px; padding: 4px 4px 4px 8px;
-            position: relative;
+          .ff-label { display: table-cell; vertical-align: top;
+            position: relative; width: 150px; padding: 4px 4px 4px 8px;
             background-color: #c8ffb0; border-right: 3px solid transparent;
             &.ff-required { border-right: 3px solid #cf0000; }
             .ff-field-hint { display: block; height: 16px; width: 16px; position: absolute; right: 0; top: 8px; background-position: -96px -96px; }} 
-          .ff-value { display: table-cell; padding: 4px; }
+          .ff-value { display: table-cell; padding: 4px; vertical-align: top; }
         }
       }
       &:after { content: "."; display: block; clear: both;  width: 0; height: 0; overflow: hidden; }
@@ -77,7 +77,6 @@
   .ff-field-errors { color: red; padding: 4px 0;}
   .ff-bottom-actions { padding: 8px; border-top: 1px solid @border-color; background: #e0e0e0; }
 }
-
 .ff-empty { color: #a0a0a0; }
 
 // themes

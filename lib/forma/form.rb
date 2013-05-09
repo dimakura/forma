@@ -64,6 +64,7 @@ module Forma
       # actions
       @title_actions = h[:title_actions] || []
       @bottom_actions = h[:bottom_actions] || []
+      @multipart = (not not h[:multipart])
     end
 
     def to_html
@@ -133,6 +134,7 @@ module Forma
       el(
         @edit ? 'form' : 'div',
         attrs: {
+          enctype: ('multipart/form-data' if @multipart),
           class: (@wait_on_submit ? ['ff-form-body', 'ff-wait-on-submit'] : ['ff-form-body']),
           action: (@url if @edit), method: (@method if @edit),
           style: ({display: 'none'} if @collapsible && @collapsed)
