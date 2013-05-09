@@ -26,6 +26,11 @@ module Forma
       opts[:name] = name
       add_field(Forma::BooleanField.new(opts))
     end
+
+    def image_field(name, opts={})
+      opts[:name] = name
+      add_field(Forma::ImageField.new(opts))
+    end
   end
 
   # Form.
@@ -198,13 +203,21 @@ module Forma
           ])
         end
       end
+      def tab_actions(tab)
+        if tab.actions.any?
+          el('div', attrs: { class: 'ff-tab-actions' }, children: tab.actions.map { |a| a.to_html(@model) })
+        end
+      end
       def tab_element(tab)
         hasSecondCol = (not tab.col2.fields.empty?)
         col1 = column_element(tab.col1, hasSecondCol)
         col2 = column_element(tab.col2, hasSecondCol)
-        el('div', attrs: { class: 'ff-tab-content',style: ({ display: 'none' } if @tabs.index(tab) != @selected_tab) }, children: [
-          el('div', attrs: { class: 'ff-cols'}, children: [col1, col2])
-        ])
+        el('div', attrs: { class: 'ff-tab-content',style: ({ display: 'none' } if @tabs.index(tab) != @selected_tab) },
+          children: [
+            tab_actions(tab),
+            el('div', attrs: { class: 'ff-cols'}, children: [col1, col2])
+          ]
+        )
       end
       def tabs_header
         if @tabs.length > 1
@@ -236,8 +249,7 @@ module Forma
   # This is a tab.
   class Tab
     include Forma::FieldHelper
-
-    attr_reader :title, :icon
+    attr_reader :title, :icon, :actions
 
     def initialize(h = {})
       h = h.symbolize_keys
@@ -245,8 +257,10 @@ module Forma
       @icon = h[:icon]
       @col1 = h[:col1]
       @col2 = h[:col2]
+      @actions = h[:actions] || []
     end
 
+    # Adding field to this tab.
     def add_field(f)
       col1.add_field(f)
     end
@@ -263,6 +277,11 @@ module Forma
       @col2 = Col.new if @col2.blank?
       yield @col2 if block_given?
       @col2
+    end
+
+    def action(url, h={})
+      h[:url] = url
+      @actions << Action.new(h)
     end
   end
 

@@ -4,6 +4,9 @@
   -moz-user-select: none;
   -ms-user-select: none;
 }
+.ff-form .ff-action img {
+  padding-right: 4px;
+}
 .ff-form .ff-title {
   position: relative;
 }
@@ -37,9 +40,6 @@
   top: 4px;
   padding: 0 8px;
 }
-.ff-form .ff-title .ff-title-actions img {
-  padding-right: 4px;
-}
 .ff-form .ff-collapse {
   background: url(/assets/glyphicons-halflings.png) -313px -119px;
 }
@@ -54,7 +54,7 @@
 }
 .ff-form .ff-tabs ul.ff-tabs-header {
   list-style-type: none;
-  margin: 0 0 4px 0;
+  margin: 0;
   position: relative;
   border-bottom: 1px solid #b1b1b1;
 }
@@ -74,11 +74,17 @@
   margin: 0 4px;
 }
 .ff-form .ff-tabs ul.ff-tabs-header li.ff-selected {
-  background: #ffff99;
+  background: #ffffcc;
   border: 1px solid #b1b1b1;
-  border-bottom: 1px solid #ffff99;
+  border-bottom: 1px solid #ffffcc;
+}
+.ff-form .ff-tabs .ff-tab-actions {
+  padding: 4px 8px;
+  background: #ffffcc;
+  border-bottom: 1px solid #b1b1b1;
 }
 .ff-form .ff-tabs .ff-cols {
+  margin: 4px 0 0 0;
   position: relative;
   font-size: 13px;
 }

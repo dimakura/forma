@@ -4,12 +4,13 @@
 @halflings: url(/assets/glyphicons-halflings.png);
 @halflings-white: url(/assets/glyphicons-halflings-white.png);
 @border-color: #b1b1b1;
-@selected-tab-color: #ffff99;
+@selected-tab-color: #ffffcc;
 @base-font-size: 13px;
 
 // form
 
 .ff-form {
+  .ff-action { img { padding-right: 4px; } }
   .ff-title {
     position: relative;
     .ff-active-title { .user-select-none; cursor: pointer; display: inline-block; padding: 4px 8px;
@@ -17,9 +18,7 @@
       .ff-collapse { display: inline-block; height: 14px; width: 14px; margin-right: 4px; margin-top: 2px; }
       img { height: 16px; width: 16px; overflow: hidden; margin-right: 4px; }
     }
-    .ff-title-actions { position: absolute; right: 0; top: 4px; padding: 0 8px;
-      img { padding-right: 4px; }
-    }
+    .ff-title-actions { position: absolute; right: 0; top: 4px; padding: 0 8px; }
   }
   .ff-collapse { background:  @halflings -313px -119px }
   .ff-collapsed.ff-collapse { background: @halflings -456px -72px }
@@ -27,7 +26,7 @@
   .ff-tabs {
     padding: 4px 0;
     ul.ff-tabs-header {
-      list-style-type: none; margin: 0 0 4px 0; position: relative;
+      list-style-type: none; margin: 0; position: relative;
       border-bottom: 1px solid @border-color;
       li { .user-select-none; cursor: pointer; display: inline-block;
         padding: 4px 8px; margin-left: 8px; margin-bottom: -1px;
@@ -39,7 +38,9 @@
         border-bottom: 1px solid @selected-tab-color;
       }
     }
+    .ff-tab-actions { padding: 4px 8px; background: @selected-tab-color; border-bottom: 1px solid @border-color; }
     .ff-cols {
+      margin: 4px 0 0 0;
       position: relative;
       font-size: @base-font-size;
       .ff-col-100 { width: 100%; }

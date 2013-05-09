@@ -149,7 +149,17 @@ module Forma
       e2 = el('input', attrs: { type: 'checkbox', name: field_name(model), checked: ('checked' if val), value: "1"})
       el('span', children: [ e1, e2 ])
     end
+  end
 
+  # Image upload field.
+  class ImageField < SimpleField
+    def view_element(model, val)
+      el('div', text: 'VIEW: this is image field')
+    end
+
+    def edit_element(model, val)
+      el('div', text: 'EDIT: this is image field')
+    end
   end
 
 end
