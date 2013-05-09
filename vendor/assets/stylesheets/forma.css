@@ -4,6 +4,12 @@
   -moz-user-select: none;
   -ms-user-select: none;
 }
+.ff-form .ff-action {
+  margin-left: 12px;
+}
+.ff-form .ff-action:first-child {
+  margin-left: 0;
+}
 .ff-form .ff-action img {
   padding-right: 4px;
 }
