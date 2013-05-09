@@ -100,7 +100,7 @@ module Forma
     end
 
     def view_element(model, val)
-      el('span', text: val.to_s)
+      el('span', text: (password ? '******' : val.to_s))
     end
 
     def edit_element(model, val)
