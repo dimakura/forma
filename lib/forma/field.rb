@@ -7,6 +7,7 @@ module Forma
     attr_reader :id, :label, :required, :autofocus, :readonly
     attr_reader :width, :height
     attr_reader :hint
+    attr_reader :before, :after
 
     def initialize(h = {})
       h = h.symbolize_keys
@@ -18,6 +19,8 @@ module Forma
       @height = h[:height]
       @readonly = (not not h[:readonly])
       @hint = h[:hint]
+      @before = h[:before]
+      @after = h[:after]
     end
 
     def to_html(model, edit)
@@ -26,7 +29,11 @@ module Forma
         edit_element(model, val)
       else
         if val.present? or val == false
-          view_element(model, val)
+          el('div', children: [
+            before_element,
+            view_element(model, val),
+            after_element
+          ])
         else
           empty_element
         end
@@ -34,6 +41,14 @@ module Forma
     end
 
     protected
+
+    def before_element
+      el('span', text: before, attrs: { class: 'ff-field-before' }) if before.present?
+    end
+
+    def after_element
+      el('span', text: after, attrs: { class: 'ff-field-after' }) if after.present?
+    end
 
     def empty_element
       el('span', attrs: { class: 'ff-empty' }, text: Forma.config.texts.empty)
@@ -177,6 +192,13 @@ module Forma
         name: field_name(model),
         type: 'file',
       })
+    end
+  end
+
+  # Number field.
+  class NumberField < TextField
+    def view_element(model, val)
+      el('code', text: "#{val}")
     end
   end
 

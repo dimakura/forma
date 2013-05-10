@@ -31,6 +31,11 @@ module Forma
       opts[:name] = name
       add_field(Forma::ImageField.new(opts))
     end
+
+    def number_field(name, opts = {})
+      opts[:name] = name
+      add_field(Forma::NumberField.new(opts))
+    end
   end
 
   # Form.
