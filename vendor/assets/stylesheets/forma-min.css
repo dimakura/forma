@@ -1,13 +1,13 @@
 .user-select-none{user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;}
 .ff-form .ff-action{margin-left:12px;}.ff-form .ff-action:first-child{margin-left:0;}
-.ff-form .ff-action img{padding-right:4px;}
+.ff-form .ff-action img{padding-right:4px;height:16px;width:16px;}
 .ff-form .ff-title{position:relative;}.ff-form .ff-title .ff-active-title{user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;cursor:pointer;display:inline-block;padding:4px 8px;font-weight:bold;font-size:14px;}.ff-form .ff-title .ff-active-title .ff-collapse{display:inline-block;height:14px;width:14px;margin-right:4px;margin-top:2px;}
 .ff-form .ff-title .ff-active-title img{height:16px;width:16px;overflow:hidden;margin-right:4px;}
 .ff-form .ff-title .ff-title-actions{position:absolute;right:0;top:4px;padding:0 8px;}
 .ff-form .ff-collapse{background:url(/assets/glyphicons-halflings.png) -313px -119px;}
 .ff-form .ff-collapsed.ff-collapse{background:url(/assets/glyphicons-halflings.png) -456px -72px;}
 .ff-form .ff-field-hint{background:url(/assets/glyphicons-halflings.png) -456px -72px;}
-.ff-form .ff-tabs{padding:4px 0;}.ff-form .ff-tabs ul.ff-tabs-header{list-style-type:none;margin:0;position:relative;border-bottom:1px solid #b1b1b1;}.ff-form .ff-tabs ul.ff-tabs-header li{user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;cursor:pointer;display:inline-block;padding:4px 8px;margin-left:8px;margin-bottom:-1px;border:1px solid transparent;}.ff-form .ff-tabs ul.ff-tabs-header li img{margin:0 4px;}
+.ff-form .ff-tabs{padding:4px 0;}.ff-form .ff-tabs ul.ff-tabs-header{list-style-type:none;margin:0;position:relative;border-bottom:1px solid #b1b1b1;}.ff-form .ff-tabs ul.ff-tabs-header li{user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;cursor:pointer;display:inline-block;padding:4px 8px;margin-left:8px;margin-bottom:-1px;border:1px solid transparent;}.ff-form .ff-tabs ul.ff-tabs-header li img{margin:0 4px;height:16px;width:16px;}
 .ff-form .ff-tabs ul.ff-tabs-header li.ff-selected{background:#ffffcc;border:1px solid #b1b1b1;border-bottom:1px solid #ffffcc;}
 .ff-form .ff-tabs .ff-tab-actions{padding:4px 8px;background:#ffffcc;border:1px solid #b1b1b1;margin-top:-1px;}
 .ff-form .ff-tabs .ff-cols{margin:4px 0 0 0;position:relative;font-size:13px;}.ff-form .ff-tabs .ff-cols .ff-col-100{width:100%;}

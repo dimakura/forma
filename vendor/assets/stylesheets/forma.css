@@ -12,6 +12,8 @@
 }
 .ff-form .ff-action img {
   padding-right: 4px;
+  height: 16px;
+  width: 16px;
 }
 .ff-form .ff-title {
   position: relative;
@@ -78,6 +80,8 @@
 }
 .ff-form .ff-tabs ul.ff-tabs-header li img {
   margin: 0 4px;
+  height: 16px;
+  width: 16px;
 }
 .ff-form .ff-tabs ul.ff-tabs-header li.ff-selected {
   background: #ffffcc;
