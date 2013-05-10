@@ -205,7 +205,7 @@ module Forma
       ])
       el(
         'div', attrs: {
-          id: fld.id, class: (has_errors ? ['ff-field', 'ff-error'] : ['ff-field']) },
+          id: ("fld_#{fld.id}" if fld.id), class: (has_errors ? ['ff-field', 'ff-error'] : ['ff-field']) },
           children: [ label_element, value_element ]
       )
     end

@@ -4,7 +4,7 @@ module Forma
   # General field interface.
   class Field
     include Forma::Html
-    attr_reader :label, :required, :autofocus, :readonly
+    attr_reader :id, :label, :required, :autofocus, :readonly
     attr_reader :width, :height
     attr_reader :hint
 
@@ -18,10 +18,6 @@ module Forma
       @height = h[:height]
       @readonly = (not not h[:readonly])
       @hint = h[:hint]
-    end
-
-    def id
-      @id || @name
     end
 
     def to_html(model, edit)
@@ -52,6 +48,10 @@ module Forma
       h = h.symbolize_keys
       @name = h[:name]
       super(h)
+    end
+
+    def id
+      @id || @name
     end
 
     def singular_name
@@ -109,7 +109,7 @@ module Forma
 
     def edit_element(model, val)
       el('input', attrs: {
-        id: ("val_#{self.id}" if self.id),
+        id: self.id,
         name: field_name(model),
         type: (password ? 'password' : 'text'),
         value: val.to_s,
