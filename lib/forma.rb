@@ -5,5 +5,6 @@ require 'forma/html'
 require 'forma/config'
 require 'forma/form'
 require 'forma/field'
+require 'forma/module'
 require 'forma/helpers'
 require 'forma/railtie' if defined?(Rails)
