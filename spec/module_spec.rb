@@ -11,6 +11,7 @@ describe 'module and actions' do
     subject { @module }
     its(:name) { should == 'site' }
     its(:label) { should == 'site' }
+    its(:namespace) { should == 'site' }
     its(:i18n_key) { should == 'modules.site.name' }
     its(:parent) { should be_nil }
     its(:controller) { should == 'site' }

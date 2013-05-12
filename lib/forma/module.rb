@@ -1,6 +1,7 @@
 # -*- encoding : utf-8 -*-
 module Forma
 
+  # This creates a global module menu.
   def self.modules_menu(request)
     mods = ModuleGenerator.modules
     curr = ModuleGenerator.current_module(request)
@@ -9,6 +10,12 @@ module Forma
         Forma::Html.el('a', attrs: { href: m.path }, text: m.label)
       ])
     }).to_s
+  end
+
+  # Create menu for current module.
+  def self.module_menu(request)
+    mod = ModuleGenerator.current_module(request)
+    "TOP MENU"
   end
 
   def self.modules(app = nil, &block)
@@ -31,21 +38,22 @@ module Forma
       @@modules
     end
 
-    def self.draw_routes
-      if @@app
-        @@app.routes.draw do
-          @@modules.each do |m|
-            namespace m.name do
-              cntr = m.controller
-              actn = m.action
-              match '/', controller: cntr, action: actn, as: 'home', via: ['get']
-              key = "#{m.name}/#{cntr}##{actn}"
-              @@actions[key] = m
-              puts key
-            end
-          end
+    def self.register_action(act)
+      cntr = act.controller
+      actn = act.action
+      name = act.action_name
+      verb = act.verb
+      key = "#{act.name}/#{cntr}##{actn}"
+      @@actions[key] = act
+      @@app.routes.draw do
+        namespace (act.namespace || act.module.namespace) do
+          match act.path, controller: cntr, action: actn, as: name, via: verb
         end
       end
+    end
+
+    def self.draw_routes
+      @@modules.each { |m| register_action(m) } if @@app
     end
 
     def self.current_action(request)
@@ -62,18 +70,23 @@ module Forma
     end
 
     def module(name, h={})
-      @@modules << Forma::Module.new(name, h)
+      mod = Forma::Module.new(name, h)
+      @@modules << mod
+      if block_given?
+        yield mod
+      end
     end
   end
 
   module ModuleHelper
-    attr_reader :url, :children
+    attr_reader :url, :children, :namespace
 
     def default_init(h)
       @controller = h[:controller]
       @action = h[:action]
       @verb = h[:verb]
       @url = h[:url]
+      @namespace = h[:namespace]
       @children = []
       parent.children << self if parent
     end
@@ -89,6 +102,14 @@ module Forma
       contr
     end
 
+    def verb
+      if @verb.is_a?(Array)
+        @verb
+      else
+        [ @verb ]
+      end
+    end
+
     def action
       raise 'action not defined' if @action.blank?
       @action
@@ -97,7 +118,7 @@ module Forma
     def path
       paths = []; obj = self
       while(not obj.nil?) do
-        if obj == self or obj.is_a?(Forma::Module) or obj.is_a?(Forma::Scope)
+        if (obj == self and not obj.is_a?(Forma::Module)) or obj.is_a?(Forma::Scope)
           paths << obj.url if obj.url
         end
         obj = obj.parent
@@ -116,6 +137,8 @@ module Forma
       @name = name
       h[:url] = name if h[:url].blank?
       @label = h[:label]
+      h[:verb] = 'get'
+      h[:namespace] = name
       default_init(h)
     end
 
@@ -124,14 +147,26 @@ module Forma
     end
 
     def parent; nil end
+
+    def menu_action(name, h={})
+      h[:menu] = true
+      act = ModuleAction.new(self, name, h)
+      yield act
+    end
+
+    def action_name
+      'home'
+    end
   end
 
   class ModuleAction
     include Forma::ModuleHelper
 
     attr_reader :parent, :module
+    attr_reader :menu
 
     def initialize(parent, name, h={})
+      h = h.symbolize_keys
       @name = name
       @parent = parent
       if @parent.is_a?(Forma::Module)
@@ -139,6 +174,7 @@ module Forma
       else
         @module = @parent.module
       end
+      @menu = (not not h[:menu])
       default_init(h)
     end
 
@@ -146,9 +182,12 @@ module Forma
       "#{@parent.name}_#{@name}"
     end
 
+    def action_name
+      name[(@module.name.length + 1)..-1]
+    end
+
     def i18n_key
-      def simple_name; name[(@module.name.length + 1)..-1] end
-      "modules.#{@module.name}.actions.#{simple_name}"
+      "modules.#{@module.name}.actions.#{action_name}"
     end
   end
 
