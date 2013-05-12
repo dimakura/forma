@@ -2,11 +2,13 @@
 module Forma
 
   module ModuleHelper
+    attr_reader :url
+
     def init_routes(h)
       @controller = h[:controller]
       @action = h[:action]
       @verb = h[:verb]
-      @path = h[:path]
+      @url = h[:url]
     end
 
     def label
@@ -26,12 +28,14 @@ module Forma
     end
 
     def path
-      if is_a?(Forma::Module)
-        @path || @name
-      else
-        raise 'path not defined' if @path.blank?
-        "#{self.module.path}/#{@path}"
+      paths = []; obj = self
+      while(not obj.nil?) do
+        if obj == self or obj.is_a?(Forma::Module) or obj.is_a?(Forma::Scope)
+          paths << obj.url if obj.url
+        end
+        obj = obj.parent
       end
+      "/#{paths.reverse.join('/')}"
     end
   end
 
@@ -43,6 +47,7 @@ module Forma
     def initialize(name, h={})
       h = h.symbolize_keys
       @name = name
+      h[:url] = name if h[:url].blank?
       @label = h[:label]
       init_routes(h)
     end
@@ -77,6 +82,29 @@ module Forma
     def i18n_key
       def simple_name; name[(@module.name.length + 1)..-1] end
       "modules.#{@module.name}.actions.#{simple_name}"
+    end
+  end
+
+  class Scope
+    include Forma::ModuleHelper
+
+    attr_reader :parent, :module
+
+    def initialize(url, parent, h={})
+      h = h.symbolize_keys
+      h[:url] = url
+      @parent = parent
+      # @name = path
+      if @parent.is_a?(Forma::Module)
+        @module = @parent
+      else
+        @module = @parent.module
+      end
+      init_routes(h)
+    end
+
+    def name
+      @parent.name
     end
   end
 

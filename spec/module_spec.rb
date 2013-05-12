@@ -1,11 +1,11 @@
 # -*- encoding : utf-8 -*-
 require 'spec_helper'
 
-describe 'module' do
+describe 'module and actions' do
   before(:all) do
     @module = Forma::Module.new('site', controller: 'site', action: 'index')
-    @action = Forma::ModuleAction.new('register', @module, action: 'register', path: 'user/register')
-    @action_2 = Forma::ModuleAction.new('terms', @action, action: 'terms', path: 'terms')
+    @action = Forma::ModuleAction.new('register', @module, action: 'register', url: 'user/register')
+    @action_2 = Forma::ModuleAction.new('terms', @action, action: 'terms', url: 'terms')
   end
   context do
     subject { @module }
@@ -15,7 +15,7 @@ describe 'module' do
     its(:parent) { should be_nil }
     its(:controller) { should == 'site' }
     its(:action) { should == 'index' }
-    its(:path) { should == 'site' }
+    its(:path) { should == '/site' }
   end
   context do
     subject { @action }
@@ -26,7 +26,7 @@ describe 'module' do
     its(:label) { should == 'register' }
     its(:controller) { should == 'site' }
     its(:action) { should == 'register' }
-    its(:path) { should == 'site/user/register' }
+    its(:path) { should == '/site/user/register' }
   end
   context do
     subject { @action_2 }
@@ -37,6 +37,19 @@ describe 'module' do
     its(:label) { should == 'terms' }
     its(:controller) { should == 'site' }
     its(:action) { should == 'terms' }
-    its(:path) { should == 'site/terms' }
+    its(:path) { should == '/site/terms' }
+  end
+end
+
+describe 'scope' do
+  before(:all) do
+    @module = Forma::Module.new('admin')
+    @scope = Forma::Scope.new('users', @module, controller: 'users')
+    @action = Forma::ModuleAction.new('home', @scope, path: 'show')
+  end
+  context do
+    subject { @action }
+    its(:name) { should == 'admin_home' }
+    its(:path) { should == '/admin/users' }
   end
 end
