@@ -1,103 +1,82 @@
 # -*- encoding : utf-8 -*-
 module Forma
 
-  def self.modules(app, &block)
-    Forma::Module.clear_modules
-    gen = Forma::ModuleGenerator.new(app)
-    yield gen
-  end
-
-  class ModuleGenerator
-    attr_reader :app
-
-    def initialize(app)
-      @app = app
-    end
-
-    def module(name, h={})
-      mod = Forma::Module.new(@app, name, h)
-      yield mod if block_given?
-      mod
-    end
-  end
-
-  # `Module` is used to make your applications more modular.
-  class Module
-    @@modules = []
-    def self.clear_modules
-      @@modules = []
-    end
-    def self.modules
-      @@modules
-    end
-
-    def self.modules_menu
-      Forma::Html.el('ul', attrs: { class: 'ff-modules' },
-        children: self.modules.map do |mod|
-          Forma::Html.el('li', attrs: {  }, children: [
-            Forma::Html.el('a', attrs: { href: mod.url }, text: mod.label )
-          ])
-        end
-      )
-    end
-
-    attr_reader :app, :name, :parent
-
-    def initialize(app, name, h={})
-      @app = app
-      @name = name
-      @parent = nil # module has no parent
-      h = h.symbolize_keys
-      @label = h[:label]
-      @@modules << self
+  module ModuleHelper
+    def init_routes(h)
+      @controller = h[:controller]
+      @action = h[:action]
+      @verb = h[:verb]
+      @path = h[:path]
     end
 
     def label
-      @label || I18n.t("modules.#{name}.name", default: name)
+      @label || I18n.t(i18n_key, default: @name)
     end
 
-    def url
-      "/#{name}"
+    def controller
+      contr = @controller
+      contr = parent.controller if (parent && contr.blank?)
+      raise 'controller not defined' if contr.blank?
+      contr
+    end
+
+    def action
+      raise 'action not defined' if @action.blank?
+      @action
+    end
+
+    def path
+      if is_a?(Forma::Module)
+        @path || @name
+      else
+        raise 'path not defined' if @path.blank?
+        "#{self.module.path}/#{@path}"
+      end
     end
   end
 
-  class Group
-    attr_reader :parent
+  class Module
+    include Forma::ModuleHelper
 
-    def initialize(parent, name, h={})
+    attr_reader :name
+
+    def initialize(name, h={})
       h = h.symbolize_keys
       @name = name
-      @parent = parent
+      @label = h[:label]
+      init_routes(h)
     end
+
+    def i18n_key
+      "modules.#{@name}.name"
+    end
+
+    def parent; nil end
   end
 
-  # Action class.
-  class Action
-    include Forma::Html
-    # attr_reader :label, :icon, :method, :confirm, :as
-    attr_reader :url 
+  class ModuleAction
+    include Forma::ModuleHelper
 
-    def initialize(h={})
-      h = h.symbolize_keys
-      @label = h[:label]
-      @icon = h[:icon]
-      @url = h[:url]
-      @method = h[:method]
-      @confirm = h[:confirm]
-      @as = h[:as]
+    attr_reader :parent, :module
+
+    def initialize(name, parent, h={})
+      @name = name
+      @parent = parent
+      if @parent.is_a?(Forma::Module)
+        @module = @parent
+      else
+        @module = @parent.module
+      end
+      init_routes(h)
     end
 
-    def to_html(model)
-      children = [ (el('img', attrs: { src: @icon }) if @icon.present?), el('span', text: @label) ]
-      button = (@as.to_s == 'button')
-      el(
-        'a',
-        attrs: {
-          class: ['ff-action', ('btn' if button)],
-          href: url, 'data-method' => @method, 'data-confirm' => @confirm
-        },
-        children: children
-      )
+    def name
+      "#{@parent.name}_#{@name}"
+    end
+
+    def i18n_key
+      def simple_name; name[(@module.name.length + 1)..-1] end
+      "modules.#{@module.name}.actions.#{simple_name}"
     end
   end
 
