@@ -64,7 +64,7 @@ module Forma
 
     attr_reader :parent, :module
 
-    def initialize(name, parent, h={})
+    def initialize(parent, name, h={})
       @name = name
       @parent = parent
       if @parent.is_a?(Forma::Module)
@@ -90,7 +90,7 @@ module Forma
 
     attr_reader :parent, :module
 
-    def initialize(url, parent, h={})
+    def initialize(parent, url, h={})
       h = h.symbolize_keys
       h[:url] = url
       @parent = parent

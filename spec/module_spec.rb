@@ -4,8 +4,8 @@ require 'spec_helper'
 describe 'module and actions' do
   before(:all) do
     @module = Forma::Module.new('site', controller: 'site', action: 'index')
-    @action = Forma::ModuleAction.new('register', @module, action: 'register', url: 'user/register')
-    @action_2 = Forma::ModuleAction.new('terms', @action, action: 'terms', url: 'terms')
+    @action = Forma::ModuleAction.new(@module, 'register', action: 'register', url: 'user/register')
+    @action_2 = Forma::ModuleAction.new(@action, 'terms', action: 'terms', url: 'terms')
   end
   context do
     subject { @module }
@@ -44,8 +44,8 @@ end
 describe 'scope' do
   before(:all) do
     @module = Forma::Module.new('admin')
-    @scope = Forma::Scope.new('users', @module, controller: 'users')
-    @action = Forma::ModuleAction.new('home', @scope, url: 'show/:id', action: 'show')
+    @scope = Forma::Scope.new(@module, 'users', controller: 'users')
+    @action = Forma::ModuleAction.new(@scope, 'home', url: 'show/:id', action: 'show')
   end
   context do
     subject { @action }
