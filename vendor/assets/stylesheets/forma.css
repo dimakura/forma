@@ -189,39 +189,6 @@
 .ff-empty {
   color: #a0a0a0;
 }
-ul.ff-modules-menu {
-  z-index: 1400;
-  list-style: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  line-height: 32px;
-  font-size: 13px;
-  background: black;
-  margin: 0;
-  padding: 0;
-  text-align: center;
-}
-ul.ff-modules-menu li {
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -o-border-radius: 5px;
-  border-radius: 5px;
-  display: inline-block;
-  padding: 0 8px;
-}
-ul.ff-modules-menu li a {
-  text-decoration: none !important;
-  color: white;
-}
-ul.ff-modules-menu li.ff-active {
-  background: #505050;
-}
-ul.ff-modules-menu:after {
-  clear: both;
-}
 .ff-theme-red .ff-title {
   background-color: #ffc8c8;
   border-bottom: 3px solid #ff1616;
