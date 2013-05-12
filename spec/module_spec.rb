@@ -57,3 +57,17 @@ describe 'scope' do
     its(:action) { should == 'show' }
   end
 end
+
+describe 'module generation' do
+  before(:all) do
+    Forma.modules do |gen|
+      gen.module 'site'
+      gen.module 'support'
+      gen.module 'admin'
+    end
+  end
+  specify { Forma::ModuleGenerator.modules.size.should == 3 }
+  specify { Forma::ModuleGenerator.modules[0].name.should == 'site' }
+  specify { Forma::ModuleGenerator.modules[1].name.should == 'support' }
+  specify { Forma::ModuleGenerator.modules[2].name.should == 'admin' }
+end

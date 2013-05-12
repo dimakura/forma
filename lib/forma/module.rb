@@ -1,6 +1,45 @@
 # -*- encoding : utf-8 -*-
 module Forma
 
+  def self.modules_menu
+    "THIS SHOULD BE A MENU"
+  end
+
+  def self.modules(app = nil, &block)
+    Forma::ModuleGenerator.modules(app, &block)
+  end
+
+  class ModuleGenerator
+    @@app = nil
+    @@modules = []
+
+    def self.modules(app = nil)
+      if block_given?
+        @@app = app
+        @@modules = []
+        yield ModuleGenerator.new
+        ModuleGenerator.draw_routes
+      end
+      @@modules
+    end
+
+    def self.draw_routes
+      if @@app
+        @@app.routes.draw do
+          @@modules.each do |m|
+            namespace m.name do
+              get '/', controller: m.controller, action: m.action, as: 'home'
+            end
+          end
+        end
+      end
+    end
+
+    def module(name, h={})
+      @@modules << Forma::Module.new(name, h)
+    end
+  end
+
   module ModuleHelper
     attr_reader :url, :children
 
