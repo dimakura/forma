@@ -16,6 +16,7 @@ describe 'module and actions' do
     its(:controller) { should == 'site' }
     its(:action) { should == 'index' }
     its(:path) { should == '/site' }
+    specify { subject.children.size.should == 1 }
   end
   context do
     subject { @action }
@@ -27,6 +28,7 @@ describe 'module and actions' do
     its(:controller) { should == 'site' }
     its(:action) { should == 'register' }
     its(:path) { should == '/site/user/register' }
+    specify { subject.children.size.should == 1 }
   end
   context do
     subject { @action_2 }
@@ -38,6 +40,7 @@ describe 'module and actions' do
     its(:controller) { should == 'site' }
     its(:action) { should == 'terms' }
     its(:path) { should == '/site/terms' }
+    specify { subject.children.size.should == 0 }
   end
 end
 

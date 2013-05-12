@@ -2,13 +2,15 @@
 module Forma
 
   module ModuleHelper
-    attr_reader :url
+    attr_reader :url, :children
 
-    def init_routes(h)
+    def default_init(h)
       @controller = h[:controller]
       @action = h[:action]
       @verb = h[:verb]
       @url = h[:url]
+      @children = []
+      parent.children << self if parent
     end
 
     def label
@@ -49,7 +51,7 @@ module Forma
       @name = name
       h[:url] = name if h[:url].blank?
       @label = h[:label]
-      init_routes(h)
+      default_init(h)
     end
 
     def i18n_key
@@ -72,7 +74,7 @@ module Forma
       else
         @module = @parent.module
       end
-      init_routes(h)
+      default_init(h)
     end
 
     def name
@@ -100,7 +102,7 @@ module Forma
       else
         @module = @parent.module
       end
-      init_routes(h)
+      default_init(h)
     end
 
     def name
