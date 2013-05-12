@@ -1,28 +1,44 @@
 # -*- encoding : utf-8 -*-
 module Forma
 
-  # Helper for creating modules.
-  def self.module(app, name, h={})
-    unless Forma.module_names.include?(name)
-      mod = Forma::Module.new(app, name, h)
+  def self.modules(app, &block)
+    Forma::Module.clear_modules
+    gen = Forma::ModuleGenerator.new(app)
+    yield gen
+  end
+
+  class ModuleGenerator
+    attr_reader :app
+
+    def initialize(app)
+      @app = app
+    end
+
+    def module(name, h={})
+      mod = Forma::Module.new(@app, name, h)
       yield mod if block_given?
       mod
     end
   end
 
-  def self.modules
-    Forma::Module.modules
-  end
-
-  def self.module_names
-    Forma.modules.map { |m| m.name }
-  end
-
   # `Module` is used to make your applications more modular.
   class Module
     @@modules = []
+    def self.clear_modules
+      @@modules = []
+    end
     def self.modules
       @@modules
+    end
+
+    def self.modules_menu
+      Forma::Html.el('ul', attrs: { class: 'ff-modules' },
+        children: self.modules.map do |mod|
+          Forma::Html.el('li', attrs: {  }, children: [
+            Forma::Html.el('a', attrs: { href: mod.url }, text: mod.label )
+          ])
+        end
+      )
     end
 
     attr_reader :app, :name, :parent
@@ -38,6 +54,10 @@ module Forma
 
     def label
       @label || I18n.t("modules.#{name}.name", default: name)
+    end
+
+    def url
+      "/#{name}"
     end
   end
 

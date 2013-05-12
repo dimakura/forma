@@ -26,6 +26,8 @@
 .ff-form .ff-field-errors{color:red;padding:4px 0;}
 .ff-form .ff-bottom-actions{padding:8px;border-top:1px solid #b1b1b1;background:#e0e0e0;}
 .ff-empty{color:#a0a0a0;}
+ul.ff-modules{z-index:1400;list-style:none;position:fixed;top:0;left:0;right:0;line-height:32px;font-size:13px;background:black;margin:0;padding:0;text-align:center;}ul.ff-modules li{display:inline-block;padding:4px 8px;}
+ul.ff-modules:after{clear:both;}
 .ff-theme-red .ff-title{background-color:#ffc8c8;border-bottom:3px solid #ff1616;}
 .ff-theme-blue .ff-title{background-color:#cfc8ff;border-bottom:3px solid #3316ff;}
 .ff-theme-yellow .ff-title{background-color:#efe300;border-bottom:3px solid #3d3900;}
