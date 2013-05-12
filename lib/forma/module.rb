@@ -1,8 +1,14 @@
 # -*- encoding : utf-8 -*-
 module Forma
 
-  def self.modules_menu
-    "THIS SHOULD BE A MENU"
+  def self.modules_menu(request)
+    mods = ModuleGenerator.modules
+    curr = ModuleGenerator.current_module(request)
+    Forma::Html.el('ul', attrs: { class: 'ff-modules-menu' }, children: mods.map {|m|
+      Forma::Html.el('li', attrs: { class: ('ff-active' if m == curr) }, children: [
+        Forma::Html.el('a', attrs: { href: m.path }, text: m.label)
+      ])
+    }).to_s
   end
 
   def self.modules(app = nil, &block)
@@ -12,11 +18,13 @@ module Forma
   class ModuleGenerator
     @@app = nil
     @@modules = []
+    @@actions = {}
 
     def self.modules(app = nil)
       if block_given?
         @@app = app
         @@modules = []
+        @@actions = {}
         yield ModuleGenerator.new
         ModuleGenerator.draw_routes
       end
@@ -28,10 +36,28 @@ module Forma
         @@app.routes.draw do
           @@modules.each do |m|
             namespace m.name do
-              get '/', controller: m.controller, action: m.action, as: 'home'
+              cntr = m.controller
+              actn = m.action
+              match '/', controller: cntr, action: actn, as: 'home', via: ['get']
+              key = "#{m.name}/#{cntr}##{actn}"
+              @@actions[key] = m
+              puts key
             end
           end
         end
+      end
+    end
+
+    def self.current_action(request)
+      @@actions["#{request.params[:controller]}##{request.params[:action]}"]
+    end
+
+    def self.current_module(request)
+      action = current_action(request)
+      if action.is_a?(Forma::Module)
+        action
+      else
+        action.module
       end
     end
 

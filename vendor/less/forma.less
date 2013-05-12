@@ -1,5 +1,5 @@
-// mixin for user-select: none;
 .user-select-none { user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none;}
+.rounded-corners(@radius: 5px) { -webkit-border-radius: @radius; -moz-border-radius: @radius; -ms-border-radius: @radius; -o-border-radius: @radius; border-radius: @radius; }
 
 @halflings: url(/assets/glyphicons-halflings.png);
 @halflings-white: url(/assets/glyphicons-halflings-white.png);
@@ -81,13 +81,18 @@
 }
 .ff-empty { color: #a0a0a0; }
 
-ul.ff-modules {
+ul.ff-modules-menu {
   z-index: 1400; list-style: none; position: fixed;
   top: 0; left: 0; right: 0; line-height: 32px; font-size: 13px;
   background: black; margin: 0; padding: 0; text-align: center;
-  li { display: inline-block; padding: 4px 8px;
+  li {
+    .rounded-corners;
+    display: inline-block; padding: 0 8px;
+    a { text-decoration: none !important; color: white; }
   }
+  li.ff-active { background: #505050; }
   &:after { clear: both; }
+  
 }
 
 // themes
