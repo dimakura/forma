@@ -45,11 +45,12 @@ describe 'scope' do
   before(:all) do
     @module = Forma::Module.new('admin')
     @scope = Forma::Scope.new('users', @module, controller: 'users')
-    @action = Forma::ModuleAction.new('home', @scope, path: 'show')
+    @action = Forma::ModuleAction.new('home', @scope, url: 'show/:id', action: 'show')
   end
   context do
     subject { @action }
     its(:name) { should == 'admin_home' }
-    its(:path) { should == '/admin/users' }
+    its(:path) { should == '/admin/users/show/:id' }
+    its(:action) { should == 'show' }
   end
 end
