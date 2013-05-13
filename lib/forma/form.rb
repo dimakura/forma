@@ -2,6 +2,12 @@
 module Forma
 
   module FieldHelper
+    def complex_field(opts = {})
+      field = Forma::ComplexField.new(opts)
+      yield field if block_given?
+      add_field(field)
+    end
+
     def text_field(name, opts={})
       opts[:name] = name
       add_field(Forma::TextField.new(opts))
@@ -107,7 +113,7 @@ module Forma
       tab
     end
 
-    # Adding new field to this form.
+    # Adding a new field to this form.
     def add_field(f)
       @tabs = [ Tab.new ] if @tabs.empty?
       @tabs[0].col1.add_field(f)

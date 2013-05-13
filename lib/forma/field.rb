@@ -55,6 +55,55 @@ module Forma
     end
   end
 
+  # Complex field.
+  class ComplexField < Field
+    include Forma::FieldHelper
+
+    attr_reader :fields
+
+    def initialize(h = {})
+      h = h.symbolize_keys
+      @fields = h[:fields] || []
+      super(h)
+    end
+
+    def add_field(f)
+      @fields << f
+    end
+
+    def value_from_model(model)
+      @fields.map { |f| f.value_from_model(model) }
+    end
+
+    def edit_element(model, val)
+      el(
+        'div',
+        attrs: { class: 'ff-complex-field' },
+        children: @fields.zip(val).map { |fv|
+          el(
+            'div',
+            attrs: { class: 'ff-field' },
+            children: [ fv[0].edit_element(model, fv[1]) ]
+          )
+        }
+      )
+    end
+
+    def view_element(model, val)
+      el(
+        'div',
+        attrs: { class: 'ff-complex-field' },
+        children: @fields.zip(val).map { |fv|
+          el(
+            'div',
+            attrs: { class: 'ff-complex-part' },
+            children: [ fv[0].view_element(model, fv[1]) ]
+          )
+        }
+      )
+    end
+  end
+
   # SimpleField gets it's value from it's name.
   class SimpleField < Field
     attr_reader :name
