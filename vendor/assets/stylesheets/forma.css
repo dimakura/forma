@@ -149,6 +149,10 @@
 .ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-field-after {
   padding-left: 8px;
 }
+.ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-complex-field .ff-complex-part {
+  display: inline-block;
+  padding-right: 8px;
+}
 .ff-form .ff-tabs .ff-cols:after {
   content: ".";
   display: block;
