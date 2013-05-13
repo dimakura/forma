@@ -110,6 +110,8 @@ module Forma::Html
 
   # Element class.
   class Element
+    attr_reader :tag, :id, :attrs
+    attr_accessor :text
 
     def initialize(tag, h)
       @tag = tag.to_s
@@ -120,18 +122,6 @@ module Forma::Html
       ids = @attrs.select { |x| x.is_a?(SimpleAttr) and x.name == "id" }.map { |x| x.value }
       @id = ids[0] if ids.length > 0
       @classes = @attrs.select { |x| x.is_a?(ClassAttr) }.map{ |x| x.values }.flatten
-    end
-
-    def tag
-      @tag
-    end
-
-    def text
-      @text
-    end
-
-    def id
-      @id
     end
 
     def klass
