@@ -53,6 +53,10 @@
       font-size: @base-font-size;
       .ff-col-100 { width: 100%; }
       .ff-col-50 { width: 50%; float: left; }
+      .ff-col {
+        &:first-child { .ff-col-inner { padding-right: 4px; } }
+        &:last-child { .ff-col-inner { padding-left: 4px; } }
+      }
       .ff-col-inner {
         padding: 0; position: relative;
         .ff-field {

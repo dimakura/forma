@@ -126,6 +126,14 @@
   width: 50%;
   float: left;
 }
+.ff-form .ff-tabs .ff-cols .ff-col:first-child .ff-col-inner,
+.ff-table .ff-tabs .ff-cols .ff-col:first-child .ff-col-inner {
+  padding-right: 4px;
+}
+.ff-form .ff-tabs .ff-cols .ff-col:last-child .ff-col-inner,
+.ff-table .ff-tabs .ff-cols .ff-col:last-child .ff-col-inner {
+  padding-left: 4px;
+}
 .ff-form .ff-tabs .ff-cols .ff-col-inner,
 .ff-table .ff-tabs .ff-cols .ff-col-inner {
   padding: 0;
