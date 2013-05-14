@@ -1,49 +1,6 @@
 # -*- encoding : utf-8 -*-
 module Forma
 
-  module FieldHelper
-    def complex_field(opts = {})
-      field = Forma::ComplexField.new(opts)
-      yield field if block_given?
-      add_field(field)
-    end
-
-    def text_field(name, opts={})
-      opts[:name] = name
-      add_field(Forma::TextField.new(opts))
-    end
-
-    def password_field(name, opts={})
-      opts[:password] = true
-      text_field(name, opts)
-    end
-
-    def email_field(name, opts={})
-      opts[:name] = name
-      add_field(Forma::EmailField.new(opts))
-    end
-
-    def date_field(name, opts={})
-      opts[:name] = name
-      add_field(Forma::DateField.new(opts))
-    end
-
-    def boolean_field(name, opts={})
-      opts[:name] = name
-      add_field(Forma::BooleanField.new(opts))
-    end
-
-    def image_field(name, opts={})
-      opts[:name] = name
-      add_field(Forma::ImageField.new(opts))
-    end
-
-    def number_field(name, opts = {})
-      opts[:name] = name
-      add_field(Forma::NumberField.new(opts))
-    end
-  end
-
   # Form.
   class Form
     include Forma::Html
