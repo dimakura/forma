@@ -193,21 +193,9 @@
 .ff-empty {
   color: #a0a0a0;
 }
-.ff-theme-red .ff-title {
-  background-color: #ffc8c8;
-  border-bottom: 3px solid #ff1616;
-}
-.ff-theme-blue .ff-title {
+.ff-form .ff-title {
   background-color: #cfc8ff;
   border-bottom: 3px solid #3316ff;
-}
-.ff-theme-yellow .ff-title {
-  background-color: #efe300;
-  border-bottom: 3px solid #3d3900;
-}
-.ff-theme-green .ff-title {
-  background-color: #c8f0c3;
-  border-bottom: 3px solid #45cc34;
 }
 .tooltip-inner {
   white-space: pre;

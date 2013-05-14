@@ -24,10 +24,10 @@ describe 'simple form' do
       ]
     )
     @element = @form.to_html
-    #puts Nokogiri::XML(@element.to_s, &:noblanks).to_xhtml(indent: 2)
+    # puts Nokogiri::XML(@element.to_s, &:noblanks).to_xhtml(indent: 2)
   end
   specify { @element.tag.should == 'div' }
   specify { @element.id.should == 'user-login' }
-  specify { @element.klass.should == ['ff-form', 'ff-theme-blue'] }
+  specify { @element.klass.should == [ 'ff-form' ] }
   # TODO: check other elements
 end

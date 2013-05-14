@@ -10,7 +10,7 @@ module Forma
       h = h.symbolize_keys
       # general
       @id = h[:id]
-      @theme = h[:theme] || 'blue'
+      # @theme = h[:theme] || 'blue'
       # title properties
       @title = h[:title]
       @icon = h[:icon]
@@ -38,7 +38,7 @@ module Forma
     def to_html
       el(
         'div',
-        attrs: { id: @id, class: ['ff-form', 'ff-theme-' + @theme] },
+        attrs: { id: @id, class: [ 'ff-form' ] },
         children: [
           title_element,
           body_element,
