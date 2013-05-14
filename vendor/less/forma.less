@@ -6,7 +6,9 @@
 @border-color: #b1b1b1;
 @selected-tab-color: #ffffcc;
 @base-font-size: 13px;
-
+@blue-theme: #cfc8ff;
+@blue-theme-border: darken(@blue-theme, 35%);
+@label-background: #c8ffb0;
 // form
 
 .ff-form, .ff-table {
@@ -65,7 +67,7 @@
           &:first-child { border-top: 1px solid @border-color; }
           .ff-label { display: table-cell; vertical-align: top;
             position: relative; width: 150px; padding: 4px 4px 4px 8px;
-            background-color: #c8ffb0; border-right: 3px solid transparent;
+            background-color: @label-background; border-right: 3px solid transparent;
             &.ff-required { border-right: 3px solid #cf0000; }
             .ff-field-hint { display: block; height: 16px; width: 16px; position: absolute; right: 0; top: 8px; background-position: -96px -96px; }} 
           .ff-value { display: table-cell; padding: 4px; vertical-align: top; }
@@ -83,13 +85,27 @@
   ul.ff-form-errors { li { margin-left: 16px; } }
   .ff-field-errors { color: red; padding: 4px 0;}
   .ff-bottom-actions { padding: 8px; border-top: 1px solid @border-color; background: #e0e0e0; }
+  table.ff-common-table {
+    margin-top: 8px; width: 100%; border-collapse: collapse;
+    thead { text-align: left;
+      border-top: 1px solid @blue-theme-border;
+      border-bottom: 1px solid @blue-theme-border;
+      background: @label-background;
+      th { font-weight: normal; padding: 4px 8px; } 
+      .ff-field-hint { display: inline-block; height: 16px; width: 16px; background-position: -96px -96px; }
+    }
+    tbody {
+      td { padding: 4px 8px; border-bottom: 1px solid @blue-theme-border; }
+    }
+  }
 }
 .ff-empty { color: #a0a0a0; }
+.ff-table-empty { padding: 32px; text-align: center; }
 
 // themes
 
 // @red-theme: #ffc8c8;
-@blue-theme: #cfc8ff;
+
 // @yellow-theme: #efe300;
 // @green-theme: #c8f0c3;
 
@@ -98,7 +114,10 @@
 // .ff-theme-blue { .form-theme(@blue-theme); }
 // .ff-theme-yellow { .form-theme(@yellow-theme) }
 // .ff-theme-green { .form-theme(@green-theme) }
-.ff-form, .ff-table { .ff-title { background-color: @blue-theme; border-bottom: 3px solid darken(@blue-theme, 35%); } }
+.ff-form, .ff-table { .ff-title { background-color: @blue-theme;
+  border-bottom: 2px solid @blue-theme-border;
+  border-top: 2px solid @blue-theme-border;
+} }
 
 // bootstrap fixes
 

@@ -235,13 +235,48 @@
   border-top: 1px solid #b1b1b1;
   background: #e0e0e0;
 }
+.ff-form table.ff-common-table,
+.ff-table table.ff-common-table {
+  margin-top: 8px;
+  width: 100%;
+  border-collapse: collapse;
+}
+.ff-form table.ff-common-table thead,
+.ff-table table.ff-common-table thead {
+  text-align: left;
+  border-top: 1px solid #3316ff;
+  border-bottom: 1px solid #3316ff;
+  background: #c8ffb0;
+}
+.ff-form table.ff-common-table thead th,
+.ff-table table.ff-common-table thead th {
+  font-weight: normal;
+  padding: 4px 8px;
+}
+.ff-form table.ff-common-table thead .ff-field-hint,
+.ff-table table.ff-common-table thead .ff-field-hint {
+  display: inline-block;
+  height: 16px;
+  width: 16px;
+  background-position: -96px -96px;
+}
+.ff-form table.ff-common-table tbody td,
+.ff-table table.ff-common-table tbody td {
+  padding: 4px 8px;
+  border-bottom: 1px solid #3316ff;
+}
 .ff-empty {
   color: #a0a0a0;
+}
+.ff-table-empty {
+  padding: 32px;
+  text-align: center;
 }
 .ff-form .ff-title,
 .ff-table .ff-title {
   background-color: #cfc8ff;
-  border-bottom: 3px solid #3316ff;
+  border-bottom: 2px solid #3316ff;
+  border-top: 2px solid #3316ff;
 }
 .tooltip-inner {
   white-space: pre;

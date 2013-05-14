@@ -44,9 +44,10 @@ module Forma
   end
 
   class TextsConfig
-    attr_accessor :empty
+    attr_accessor :empty, :table_empty
     def initialize
       self.empty = '(empty)'
+      self.table_empty = '(no data)'
     end
   end  
 
