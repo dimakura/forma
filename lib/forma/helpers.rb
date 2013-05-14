@@ -1,22 +1,29 @@
 # -*- encoding : utf-8 -*-
 module Forma
   module Helpers
-    def forma_for(model, opts = {}, &block)
+    def forma_for(model, opts = {})
       opts[:model] = model
       opts[:edit] = true
       opts[:auth_token] = form_authenticity_token if defined?(Rails)
       opts[:method] = 'post' if opts[:method].blank?
       f = Forma::Form.new(opts)
-      yield f
+      yield f if block_given?
       f.to_html.to_s
     end
 
-    def view_for(model, opts = {}, &block)
+    def view_for(model, opts = {})
       opts[:model] = model
       opts[:edit] = false
       f = Forma::Form.new(opts)
-      yield f
+      yield f if block_given?
       f.to_html.to_s
+    end
+
+    def table_for(models, opts = {}, &block)
+      opts[:models] = models
+      t = Forma::Table.new(opts)
+      yield t if block_given?
+      t.to_html.to_s
     end
 
     module_function :forma_for
