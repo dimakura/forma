@@ -27,7 +27,7 @@ module Forma
         'div',
         attrs: { id: @id, class: ['ff-table'] },
         children: [
-          # title_element,
+          title_element,
           # body_element,
         ]
       )

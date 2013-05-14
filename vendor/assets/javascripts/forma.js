@@ -3,7 +3,7 @@
   var initilizeCollapsibleElement = function() {
     $('.ff-collapsible').click(function(evt) {
       var activeTitle = $(this);
-      var formBody = $(activeTitle.parent().siblings('.ff-form-body')[0]);
+      var formBody = $(activeTitle.parent().siblings('.ff-collapsible-body')[0]);
       var collapseElement = $(activeTitle.children('.ff-collapse')[0]);
       var isCollapsed = collapseElement.hasClass('ff-collapsed');
       if (isCollapsed) {

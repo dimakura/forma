@@ -92,7 +92,7 @@ module Forma
         @edit ? 'form' : 'div',
         attrs: {
           enctype: ('multipart/form-data' if @multipart),
-          class: (@wait_on_submit ? ['ff-form-body', 'ff-wait-on-submit'] : ['ff-form-body']),
+          class: (@wait_on_submit ? ['ff-form-body', 'ff-wait-on-submit', 'ff-collapsible-body'] : ['ff-form-body', 'ff-collapsible-body']),
           action: (@url if @edit), method: (@method if @edit),
           style: ({display: 'none'} if @collapsible && @collapsed)
         },
