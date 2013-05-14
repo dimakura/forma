@@ -1,10 +1,11 @@
 # -*- encoding : utf-8 -*-
 module Forma
-
   # Form.
   class Form
     include Forma::Html
     include Forma::FieldHelper
+    include Forma::WithTitleElement
+    attr_reader :collapsible, :collapsed, :icon, :title, :title_actions
 
     def initialize(h = {})
       h = h.symbolize_keys
@@ -85,26 +86,6 @@ module Forma
     end
 
     private
-
-    def title_element
-      def active_title
-        el(
-          'span',
-          attrs: { class: (@collapsible ? ['ff-active-title', 'ff-collapsible'] : ['ff-active-title']) },
-          children: [
-            (el('i', attrs: { class: (@collapsed ? ['ff-collapse', 'ff-collapsed'] : ['ff-collapse']) }) if @collapsible),
-            (el('img', attrs: { src: @icon }) if @icon),
-            (el('span', text: @title)),
-          ].reject { |x| x.blank? }
-        )
-      end
-      if @title.present?
-        title_acts = el('div', attrs: { class: 'ff-title-actions' },
-          children: @title_actions.map { |a| a.to_html(@model) }
-        ) if @title_actions.any?
-        el('div', attrs: { class: 'ff-title' }, children: [ active_title, title_acts ])
-      end
-    end
 
     def body_element
       el(
@@ -312,5 +293,4 @@ module Forma
       )
     end
   end
-
 end

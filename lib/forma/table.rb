@@ -1,9 +1,10 @@
 # -*- encoding : utf-8 -*-
 module Forma
-
   class Table
     include Forma::Html
     include Forma::FieldHelper
+    include Forma::WithTitleElement
+    attr_reader :collapsible, :collapsed, :icon, :title, :title_actions
 
     def initialize(h = {})
       h = h.symbolize_keys
@@ -32,5 +33,4 @@ module Forma
       )
     end
   end
-
 end

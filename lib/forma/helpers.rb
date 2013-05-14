@@ -1,6 +1,5 @@
 # -*- encoding : utf-8 -*-
 module Forma
-
   module Helpers
     def forma_for(model, opts = {}, &block)
       opts[:model] = model
@@ -67,4 +66,25 @@ module Forma
     end
   end
 
+  module WithTitleElement
+    def title_element
+      def active_title
+        el(
+          'span',
+          attrs: { class: (self.collapsible ? ['ff-active-title', 'ff-collapsible'] : ['ff-active-title']) },
+          children: [
+            (el('i', attrs: { class: (self.collapsed ? ['ff-collapse', 'ff-collapsed'] : ['ff-collapse']) }) if self.collapsible),
+            (el('img', attrs: { src: self.icon }) if self.icon),
+            (el('span', text: self.title)),
+          ].reject { |x| x.blank? }
+        )
+      end
+      if self.title.present?
+        title_acts = el('div', attrs: { class: 'ff-title-actions' },
+          children: self.title_actions.map { |a| a.to_html(@model) }
+        ) if self.title_actions.any?
+        el('div', attrs: { class: 'ff-title' }, children: [ active_title, title_acts ])
+      end
+    end
+  end
 end
