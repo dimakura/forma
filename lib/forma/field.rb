@@ -9,6 +9,7 @@ module Forma
     attr_reader :width, :height
     attr_reader :hint
     attr_reader :before, :after
+    attr_reader :url
 
     def initialize(h = {})
       h = h.symbolize_keys
@@ -22,6 +23,7 @@ module Forma
       @hint = h[:hint]
       @before = h[:before]
       @after = h[:after]
+      @url = h[:url]
     end
 
     def to_html(model, edit)
@@ -30,11 +32,9 @@ module Forma
         edit_element(model, val)
       else
         if val.present? or val == false
-          el('div', children: [
-            before_element,
-            view_element(model, val),
-            after_element
-          ])
+          view = view_element(model, val)
+          view = el('a', attrs: { href: eval_url(model) }, children: [ view ]) if @url
+          el('div', children: [ before_element, view, after_element ])
         else
           empty_element
         end
@@ -69,6 +69,10 @@ module Forma
 
     def empty_element
       el('span', attrs: { class: 'ff-empty' }, text: Forma.config.texts.empty)
+    end
+
+    def eval_url(model)
+      @url.is_a?(Proc) ? @url.call(model) : @url.to_s
     end
   end
 
