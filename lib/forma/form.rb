@@ -258,6 +258,7 @@ module Forma
 
   # Form may have up to two columns.
   class Col
+    include Forma::FieldHelper
     attr_reader :fields
 
     def initialize(fields = [])
