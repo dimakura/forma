@@ -32,5 +32,10 @@ module Forma
         ]
       )
     end
+
+    def title_action(url, h={})
+      h[:url] = url
+      @title_actions << Action.new(h)
+    end
   end
 end
