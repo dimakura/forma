@@ -9,7 +9,7 @@ module Forma
     attr_reader :width, :height
     attr_reader :hint
     attr_reader :before, :after
-    attr_reader :url
+    attr_reader :url, :icon
 
     def initialize(h = {})
       h = h.symbolize_keys
@@ -24,6 +24,7 @@ module Forma
       @before = h[:before]
       @after = h[:after]
       @url = h[:url]
+      @icon = h[:icon]
     end
 
     def to_html(model, edit)
@@ -34,7 +35,7 @@ module Forma
         if val.present? or val == false
           view = view_element(model, val)
           view = el('a', attrs: { href: eval_url(model) }, children: [ view ]) if @url
-          el('div', children: [ before_element, view, after_element ])
+          el('div', children: [ before_element, icon_element(model), view, after_element ])
         else
           empty_element
         end
@@ -58,6 +59,13 @@ module Forma
     end
 
     protected
+
+    def icon_element(model)
+      if @icon
+        iconpath = @icon.is_a?(Proc) ? @icon.call(model) : @icon.to_s
+        el('img', attrs: { src: iconpath, style: { 'margin-right' => '4px' } })
+      end
+    end
 
     def before_element
       el('span', text: before, attrs: { class: 'ff-field-before' }) if before.present?
