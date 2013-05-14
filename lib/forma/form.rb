@@ -5,6 +5,7 @@ module Forma
     include Forma::Html
     include Forma::FieldHelper
     include Forma::WithTitleElement
+    include Forma::Utils
     attr_reader :collapsible, :collapsed, :icon, :title, :title_actions
 
     def initialize(h = {})
@@ -78,16 +79,7 @@ module Forma
     end
 
     def model_singular_name
-      # Mongoid
-      if @model.respond_to?(:model_name)
-        @model.model_name.singular_route_key
-      # Active model
-      elsif @model.class.respond_to?(:table_name)
-        @model.class.table_name.singularize
-      # Others
-      else
-        ""
-      end
+      singular_name(@model)
     end
 
     private
@@ -126,15 +118,15 @@ module Forma
 
     def field_element(fld)
       def field_label_text(fld)
-        if fld.respond_to?(:singular_name) and fld.label.blank?
-          I18n.t(["models", model_singular_name, fld.singular_name].join('.'), default: fld.name)
+        if fld.respond_to?(:field_name) and fld.label.blank?
+          I18n.t(["models", model_singular_name, fld.field_name].join('.'), default: fld.name)
         else
           fld.label
         end
       end
       def field_hint_text(fld)
-        if fld.respond_to?(:singular_name) and fld.hint.blank?
-          I18n.t(["models", model_singular_name, "#{fld.singular_name}_hint"].join('.'), default: '')
+        if fld.respond_to?(:field_name) and fld.hint.blank?
+          I18n.t(["models", model_singular_name, "#{fld.field_name}_hint"].join('.'), default: '')
         else
           fld.hint
         end

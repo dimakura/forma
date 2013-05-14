@@ -3,6 +3,7 @@ module Forma
 
   # General field interface.
   class Field
+    include Forma::Utils
     include Forma::Html
     attr_reader :id, :label, :required, :autofocus, :readonly
     attr_reader :width, :height
@@ -118,17 +119,21 @@ module Forma
       @id || @name
     end
 
-    def singular_name
+    def field_name
       self.name.to_s.gsub('.', '_')
     end
 
     # generate field's name by Rails convention.
-    def field_name(model)
-      if model.respond_to?(:model_name)
-        "#{model.model_name.singular_route_key}[#{singular_name}]"
-      else
-        singular_name
+    def field_rails_name(model)
+      model_name = singular_name(model)
+      if model_name.present?; "#{model_name}[#{field_name}]"
+      else; field_name
       end
+      # if model.respond_to?(:model_name)
+      #   "#{model.model_name.singular_route_key}[#{field_name}]"
+      # else
+      #   field_name
+      # end
     end
 
     def value_from_model(model)
@@ -174,7 +179,7 @@ module Forma
     def edit_element(model, val)
       el('input', attrs: {
         id: self.id,
-        name: field_name(model),
+        name: field_rails_name(model),
         type: (password ? 'password' : 'text'),
         value: val.to_s,
         autofocus: @autofocus,
@@ -208,7 +213,7 @@ module Forma
 
     def edit_element(model, val)
       el('input', attrs: {
-        name: field_name(model),
+        name: field_rails_name(model),
         type: 'text',
         value: val.to_s,
         autofocus: @autofocus,
@@ -224,8 +229,8 @@ module Forma
     end
 
     def edit_element(model, val)
-      e1 = el('input', attrs: { type: 'hidden', name: field_name(model), value: "0"})
-      e2 = el('input', attrs: { type: 'checkbox', name: field_name(model), checked: ('checked' if val), value: "1"})
+      e1 = el('input', attrs: { type: 'hidden', name: field_rails_name(model), value: "0"})
+      e2 = el('input', attrs: { type: 'checkbox', name: field_rails_name(model), checked: ('checked' if val), value: "1"})
       el('span', children: [ e1, e2 ])
     end
   end
@@ -238,7 +243,7 @@ module Forma
 
     def edit_element(model, val)
       el('input', attrs: {
-        name: field_name(model),
+        name: field_rails_name(model),
         type: 'file',
       })
     end
