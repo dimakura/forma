@@ -43,7 +43,8 @@
   };
 
   var initializeTooltips = function() {
-    $('.ff-field-hint').tooltip({placement: 'right', trigger: 'click'});
+    $('.ff-field-hint').tooltip({ placement: 'right', trigger: 'click' });
+    $('.ff-action').tooltip({ placement: 'top' });
     // TODO: any other tooltips?
   };
 

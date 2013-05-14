@@ -1,5 +1,5 @@
 .user-select-none{user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;}
-.ff-form .ff-action,.ff-table .ff-action{margin-left:12px;}.ff-form .ff-action:first-child,.ff-table .ff-action:first-child{margin-left:0;}
+.ff-form .ff-action,.ff-table .ff-action{margin-left:4px;}.ff-form .ff-action:first-child,.ff-table .ff-action:first-child{margin-left:0;}
 .ff-form .ff-action img,.ff-table .ff-action img{padding-right:4px;height:16px;width:16px;}
 .ff-form .ff-title,.ff-table .ff-title{position:relative;}.ff-form .ff-title .ff-active-title,.ff-table .ff-title .ff-active-title{user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;cursor:pointer;display:inline-block;padding:4px 8px;font-weight:bold;font-size:14px;}.ff-form .ff-title .ff-active-title .ff-collapse,.ff-table .ff-title .ff-active-title .ff-collapse{display:inline-block;height:14px;width:14px;margin-right:4px;margin-top:2px;}
 .ff-form .ff-title .ff-active-title img,.ff-table .ff-title .ff-active-title img{height:16px;width:16px;overflow:hidden;margin-right:4px;}

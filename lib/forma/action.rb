@@ -12,6 +12,7 @@ module Forma
       @method = h[:method]
       @confirm = h[:confirm]
       @as = h[:as]
+      @tooltip = h[:tooltip]
     end
 
     def to_html(model)
@@ -21,7 +22,8 @@ module Forma
         'a',
         attrs: {
           class: ['ff-action', ('btn' if button)],
-          href: eval_url(model), 'data-method' => @method, 'data-confirm' => @confirm
+          href: eval_url(model), 'data-method' => @method, 'data-confirm' => @confirm,
+          'data-original-title' => @tooltip
         },
         children: children
       )
