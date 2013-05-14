@@ -78,8 +78,13 @@ module Forma
     end
 
     def model_singular_name
+      # Mongoid
       if @model.respond_to?(:model_name)
         @model.model_name.singular_route_key
+      # Active model
+      elsif @model.class.respond_to?(:table_name)
+        @model.class.table_name.singularize
+      # Others
       else
         ""
       end
