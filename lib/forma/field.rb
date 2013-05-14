@@ -41,6 +41,22 @@ module Forma
       end
     end
 
+    def label_i18n(model)
+      if self.label.blank? and self.respond_to?(:field_name)
+        I18n.t(["models", singular_name(model), self.field_name].join('.'), default: self.name)
+      else
+        self.label
+      end
+    end
+
+    def hint_i18n(model)
+      if self.hint.blank? and self.respond_to?(:field_name)
+        I18n.t(["models", singular_name(model), "#{self.field_name}_hint"].join('.'), default: '')
+      else
+        self.hint
+      end
+    end
+
     protected
 
     def before_element
@@ -119,6 +135,7 @@ module Forma
       @id || @name
     end
 
+    # field name for i18n
     def field_name
       self.name.to_s.gsub('.', '_')
     end
@@ -129,11 +146,6 @@ module Forma
       if model_name.present?; "#{model_name}[#{field_name}]"
       else; field_name
       end
-      # if model.respond_to?(:model_name)
-      #   "#{model.model_name.singular_route_key}[#{field_name}]"
-      # else
-      #   field_name
-      # end
     end
 
     def value_from_model(model)

@@ -78,10 +78,6 @@ module Forma
       @tabs[0].col1.add_field(f)
     end
 
-    def model_singular_name
-      singular_name(@model)
-    end
-
     private
 
     def body_element
@@ -117,28 +113,14 @@ module Forma
     end
 
     def field_element(fld)
-      def field_label_text(fld)
-        if fld.respond_to?(:field_name) and fld.label.blank?
-          I18n.t(["models", model_singular_name, fld.field_name].join('.'), default: fld.name)
-        else
-          fld.label
-        end
-      end
-      def field_hint_text(fld)
-        if fld.respond_to?(:field_name) and fld.hint.blank?
-          I18n.t(["models", model_singular_name, "#{fld.field_name}_hint"].join('.'), default: '')
-        else
-          fld.hint
-        end
-      end
       def field_error_element(errors)
         many = errors.length > 1
         children = (many ? errors.map { |e| el('li', text: e.to_s)  } : [el('div', text: errors[0].to_s)])
         el('div', attrs: { class: 'ff-field-errors' }, children: children)
       end
       has_errors = (@edit and @model.present? and fld.respond_to?(:has_errors?) and fld.has_errors?(@model))
-      label_text = field_label_text(fld)
-      label_hint = field_hint_text(fld)
+      label_text = fld.label_i18n(@model)
+      label_hint = fld.hint_i18n(@model)
       label_element = el('div', attrs: { class: (fld.required ? ['ff-label', 'ff-required'] : ['ff-label'])},
         text: label_text,
         children: [
