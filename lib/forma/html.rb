@@ -25,7 +25,7 @@ module Forma::Html
   # ```
   def el(tag, opts = {})
     opts = opts.symbolize_keys
-    h = { text: opts[:text] }
+    h = { text: opts[:text], html: opts[:html] }
     if opts[:attrs]
       attributes = []
       opts[:attrs].each do |k, v|
@@ -115,7 +115,9 @@ module Forma::Html
 
     def initialize(tag, h)
       @tag = tag.to_s
-      @text = h[:text]
+      if h[:text]; @text = h[:text]
+      elsif h[:html]; @text = h[:html].html_safe
+      end
       @attrs = h[:attrs] || []
       @children = []
       h[:children].each { |c| @children << c } if h[:children]
