@@ -140,6 +140,7 @@ module Forma
     def initialize(h = {})
       h = h.symbolize_keys
       @name = h[:name]
+      @i18n_name = h[:i18n]
       super(h)
     end
 
@@ -149,14 +150,15 @@ module Forma
 
     # field name for i18n
     def field_name
-      self.name.to_s.gsub('.', '_')
+      (@i18n_name || self.name).to_s.gsub('.', '_')
     end
 
     # generate field's name by Rails convention.
     def field_rails_name(model)
       model_name = singular_name(model)
-      if model_name.present?; "#{model_name}[#{field_name}]"
-      else; field_name
+      fld_name = self.name.to_s.gsub('.', '_')
+      if model_name.present?; "#{model_name}[#{fld_name}]"
+      else; fld_name
       end
     end
 
@@ -280,4 +282,30 @@ module Forma
     end
   end
 
+  # Combo field.
+  class ComboField < SimpleField
+    def initialize(h={})
+      h = h.symbolize_keys
+      @empty = h[:empty]
+      @default = h[:default]
+      @collection = (h[:collection] || [])
+      super(h)
+    end
+
+    def view_element(model, val)
+      el('span', text: val.to_s)
+    end
+
+    def edit_element(model, val)
+      data = @empty != false ? [ nil ] + @collection : @collection
+      selection = val.present? ? val : @default
+      el('select', attrs: { name: field_rails_name(model) }, children: data.map { |x|
+        if x.nil?
+          el('option', attrs: { selected: selection.blank? }, text: @empty.to_s)
+        else
+          el('option', attrs: { value: x.id, selected: (true if selection == x.id) }, text: x.to_s)
+        end
+      })
+    end
+  end
 end

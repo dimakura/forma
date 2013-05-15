@@ -206,6 +206,13 @@
   margin: 0;
   font-size: 13px;
 }
+.ff-form .ff-tabs select,
+.ff-table .ff-tabs select {
+  padding: 4px;
+  margin: 0;
+  font-size: 13px;
+  width: auto;
+}
 .ff-form .ff-tabs .ff-error input,
 .ff-table .ff-tabs .ff-error input {
   border: 1px solid red;

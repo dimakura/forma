@@ -71,6 +71,11 @@ module Forma
       opts[:name] = name
       add_field(Forma::NumberField.new(opts))
     end
+
+    def combo_field(name, opts = {})
+      opts[:name] = name
+      add_field(Forma::ComboField.new(opts))
+    end
   end
 
   module WithTitleElement
