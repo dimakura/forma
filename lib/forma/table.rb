@@ -18,9 +18,12 @@ module Forma
       # values and fields
       @models = h[:models]
       @fields = h[:fields] || []
+      @paginate = h[:paginate]
       # actions
       @title_actions = h[:title_actions] || []
       @item_actions = h[:item_actions] || []
+      # context
+      @context = h[:context]
     end
 
     def to_html
@@ -48,6 +51,11 @@ module Forma
       @fields << f
     end
 
+    def paginate(h={})
+      @paginate = true
+      @paginate_options = h
+    end
+
     private
 
     def body_element
@@ -56,7 +64,7 @@ module Forma
           class: ['ff-table-body', 'ff-collapsible-body'],
           style: ( {display: 'none'} if @collapsible && @collapsed ),
         },
-        children: [ table_element ]
+        children: [ table_element, pagination_element ]
       )
     end
 
@@ -91,6 +99,14 @@ module Forma
         el('table', attrs: { class: 'ff-common-table' }, children: [ table_header_element, table_body_element ])
       else
         el('div', attrs: { class: ['ff-empty', 'ff-table-empty'] }, text: Forma.config.texts.table_empty)
+      end
+    end
+
+    def pagination_element
+      if @paginate and @context
+        self_from_block = eval("self", @context.binding)
+        s = self_from_block.send(:will_paginate, @models, @paginate_options)
+        el('div', html: s.to_s)
       end
     end
   end
