@@ -11,8 +11,8 @@ module Forma
     attr_reader :width, :height
     attr_reader :before, :after
     attr_reader :url, :icon
-    attr_accessor :model, :value, :parent
-    attr_writer   :model_name
+    attr_accessor :model, :value, :parent, :child_model_name
+    attr_writer :model_name
 
     def initialize(h = {})
       h = h.symbolize_keys
@@ -22,7 +22,8 @@ module Forma
       @before = h[:before]; @after = h[:after]
       @name = h[:name]; @value = h[:value]
       @url = h[:url]; @icon = h[:icon]
-      @model = h[:model]; @parent = h[:parent]; @model_name = h[:model_name]
+      @model = h[:model]; @parent = h[:parent]
+      @model_name = h[:model_name]; @child_model_name = h[:child_model_name]
     end
 
     def name_as_chain
@@ -69,7 +70,10 @@ module Forma
     # Returns model name.
     # Model name can be defined by user or determined automatically, based on model class.
     def model_name
-      @model_name || singular_name(self.model)
+      if @model_name then @model_name
+      elsif @parent then @parent.child_model_name
+      else singular_name(self.model)
+      end
     end
 
     def localization_key
@@ -191,47 +195,29 @@ module Forma
     end
   end
 
-  # XXX: Subform!
+  # Subform!
   class SubformField < SimpleField
-    include Forma::Html
-    include Forma::Utils
     include Forma::FieldHelper
+    attr_reader :form
+
     def initialize(h = {})
-      h = h.symbolize_keys
       h[:label] = false
-      @fields = h[:fields] || []
+      @form = Form.new(collapsible: true)
       super(h)
     end
 
-    def add_field(f)
-      @fields << f
+    def edit_element(val)
+      @form.title = 'TEST'
+      @form.model = val
+      @form.parent_field = self
+      @form.edit = true
+      @form.icon = eval_icon if @icon
+      @form.title = localized_label
+      @form.to_html
     end
 
-    def edit_element(model, val)
-      to_subform_element(model, val, true)
-    end
-
-    def view_element(model, val)
+    def view_element(val)
       el('div', text: 'This is VIEW element.')
-    end
-
-    private
-
-    def to_subform_element(model, val, edit)
-      def title_element(model, val, edit)
-        el('div', attrs: { class: 'ff-subtitle'}, text: label_i18n(model))
-      end
-      def body_element(model, val, edit)
-        el('div', attrs: { class: 'ff-subform-body' }, children: @fields.map { |f| subform_field_element(f, model, val, edit) })
-      end
-      def subform_field_element(fld, model, val, edit)
-        fld.parent_name = singular_name(model)
-        fld.model_name = self.name
-        el('div', attrs: { class: 'ff-field' }, children: [ fld.to_html(val, edit) ])
-      end
-      el('div', attrs: { class: 'ff-subform' }, children: [
-        title_element(model, val, edit), body_element(model, val, edit)
-      ])
     end
   end
 

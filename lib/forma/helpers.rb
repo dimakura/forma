@@ -41,7 +41,7 @@ module Forma
     def subform(name, opts = {})
       opts[:name] = name
       field = Forma::SubformField.new(opts)
-      yield field if block_given?
+      yield field.form if block_given?
       add_field(field)
     end
 

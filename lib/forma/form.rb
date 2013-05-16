@@ -6,7 +6,10 @@ module Forma
     include Forma::FieldHelper
     include Forma::WithTitleElement
     include Forma::Utils
-    attr_reader :collapsible, :collapsed, :icon, :title, :title_actions
+    attr_accessor :collapsible, :collapsed
+    attr_accessor :icon, :title, :title_actions
+    attr_accessor :model, :parent_field, :edit
+    attr_accessor :model_name
 
     def initialize(h = {})
       h = h.symbolize_keys
@@ -31,6 +34,7 @@ module Forma
       @model = h[:model]
       @errors = h[:errors]
       @edit = h[:edit]
+      @model_name = h[:model_name]
       # actions
       @title_actions = h[:title_actions] || []
       @bottom_actions = h[:bottom_actions] || []
@@ -82,7 +86,7 @@ module Forma
 
     def body_element
       el(
-        @edit ? 'form' : 'div',
+        (@edit and parent_field.nil?) ? 'form' : 'div',
         attrs: {
           enctype: ('multipart/form-data' if @multipart),
           class: (@wait_on_submit ? ['ff-form-body', 'ff-wait-on-submit', 'ff-collapsible-body'] : ['ff-form-body', 'ff-collapsible-body']),
@@ -91,7 +95,7 @@ module Forma
         },
         children: [
           (errors_element if @errors.present?),
-          (auth_token_element if @edit == true),
+          (auth_token_element if (@edit == true and parent_field.nil?)),
           tabs_element,
           bottom_actions,
         ]
@@ -118,7 +122,11 @@ module Forma
         children = (many ? errors.map { |e| el('li', text: e.to_s)  } : [el('div', text: errors[0].to_s)])
         el('div', attrs: { class: 'ff-field-errors' }, children: children)
       end
+      # X---- field initialization ----X
       fld.model = @model
+      fld.parent = self.parent_field
+      fld.model_name = self.model_name
+      # X------------------------------X
       has_errors = (@edit and @model.present? and fld.respond_to?(:has_errors?) and fld.has_errors?)
       if fld.label != false
         label_text = fld.localized_label
@@ -185,9 +193,10 @@ module Forma
     end
 
     def bottom_actions
-      if @edit || @bottom_actions.any?
+      edit = (@edit and parent_field.nil?)
+      if edit || @bottom_actions.any?
         children = @bottom_actions.map { |a| a.to_html(@model) }
-        save_action = el('button', attrs: { type: 'submit', class: 'btn btn-primary' }, text: @submit) if @edit
+        save_action = el('button', attrs: { type: 'submit', class: 'btn btn-primary' }, text: @submit) if edit
         el('div', attrs: { class: 'ff-bottom-actions' }, children: [save_action] + children )
       end
     end
