@@ -191,7 +191,7 @@ module Forma
     end
   end
 
-  # Subform!
+  # XXX: Subform!
   class SubformField < SimpleField
     include Forma::Html
     include Forma::Utils
@@ -263,7 +263,7 @@ module Forma
 
   # Email field.
   class EmailField < TextField
-    def view_element(model, val)
+    def view_element(val)
       el('a', attrs: { href: "mailto:#{val}" }, text: val)
     end
   end
@@ -278,43 +278,43 @@ module Forma
       super(h)
     end
 
-    def view_element(model, val)
+    def view_element(val)
       el('span', text: val.localtime.strftime(formatter || Forma.config.date.formatter))
     end
 
-    def edit_element(model, val)
+    def edit_element(val)
       el('input', attrs: {
         name: parameter_name,
         type: 'text',
         value: val.to_s,
         autofocus: @autofocus,
-        style: { width: ("#{width}px" if width) }
+        style: { width: ("#{width}px" if width.present?) }
       })
     end
   end
 
   # Boolean field.
   class BooleanField < SimpleField
-    def view_element(model, val)
+    def view_element(val)
       el('input', attrs: { type: 'checkbox', disabled: true, checked: ('checked' if val) })
     end
 
-    def edit_element(model, val)
-      e1 = el('input', attrs: { type: 'hidden', name: field_rails_name(model), value: "0"})
-      e2 = el('input', attrs: { type: 'checkbox', name: field_rails_name(model), checked: ('checked' if val), value: "1"})
+    def edit_element(val)
+      e1 = el('input', attrs: { type: 'hidden',  name: parameter_name, value: "0"})
+      e2 = el('input', attrs: { type: 'checkbox', name: parameter_name, checked: ('checked' if val), value: "1"})
       el('span', children: [ e1, e2 ])
     end
   end
 
   # Image upload field.
   class ImageField < SimpleField
-    def view_element(model, val)
+    def view_element(val)
       el('img', attrs: { src: val.url } )
     end
 
-    def edit_element(model, val)
+    def edit_element(val)
       el('input', attrs: {
-        name: field_rails_name(model),
+        name: parameter_name,
         type: 'file',
       })
     end
@@ -322,7 +322,7 @@ module Forma
 
   # Number field.
   class NumberField < TextField
-    def view_element(model, val)
+    def view_element(val)
       el('code', text: "#{val}")
     end
   end
@@ -337,14 +337,14 @@ module Forma
       super(h)
     end
 
-    def view_element(model, val)
+    def view_element(val)
       el('span', text: val.to_s)
     end
 
-    def edit_element(model, val)
+    def edit_element(val)
       data = @empty != false ? [ nil ] + @collection : @collection
       selection = val.present? ? val : @default
-      el('select', attrs: { name: field_rails_name(model) }, children: data.map { |x|
+      el('select', attrs: { name: parameter_name }, children: data.map { |x|
         if x.nil?
           el('option', attrs: { selected: selection.blank? }, text: @empty.to_s)
         else
