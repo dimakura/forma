@@ -25,6 +25,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'therubyracer', '~> 0.11'
   spec.add_development_dependency 'less', '~> 2'
   spec.add_development_dependency 'nokogiri'
+  spec.add_development_dependency 'mongoid'
 
   # runtime dependencies
   spec.add_dependency 'railties', '>= 3.1'

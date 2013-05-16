@@ -119,14 +119,16 @@ module Forma
         el('div', attrs: { class: 'ff-field-errors' }, children: children)
       end
       has_errors = (@edit and @model.present? and fld.respond_to?(:has_errors?) and fld.has_errors?(@model))
-      label_text = fld.label_i18n(@model)
-      label_hint = fld.hint_i18n(@model)
-      label_element = el('div', attrs: { class: (fld.required ? ['ff-label', 'ff-required'] : ['ff-label'])},
-        text: label_text,
-        children: [
-          (el('i', attrs: { class: 'ff-field-hint', 'data-toggle' => 'tooltip', title: label_hint }) if label_hint.present?)
-        ]
-      )
+      if fld.label != false
+        label_text = fld.label_i18n(@model)
+        label_hint = fld.hint_i18n(@model)
+        label_element = el('div', attrs: { class: (fld.required ? ['ff-label', 'ff-required'] : ['ff-label'])},
+          text: label_text,
+          children: [
+            (el('i', attrs: { class: 'ff-field-hint', 'data-toggle' => 'tooltip', title: label_hint }) if label_hint.present?)
+          ]
+        )
+      end
       value_element = el('div', attrs: { class: (fld.required ? ['ff-value', 'ff-required'] : ['ff-value']) }, children: [
         fld.to_html(@model, @edit),
         (field_error_element(fld.errors(@model)) if has_errors),

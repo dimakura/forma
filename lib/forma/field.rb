@@ -155,10 +155,19 @@ module Forma
 
     # generate field's name by Rails convention.
     def field_rails_name(model)
+      def field_name_from_array(array)
+        if array.size == 1
+          array[0]
+        else
+          "#{array[0]}_attributes[#{field_name_from_array(array[1..-1])}]"
+        end
+      end
       model_name = singular_name(model)
-      fld_name = self.name.to_s.gsub('.', '_')
-      if model_name.present?; "#{model_name}[#{fld_name}]"
-      else; fld_name
+      fld_name = field_name_from_array(self.name.to_s.split('.'))
+      if model_name.present?
+        "#{model_name}[#{fld_name}]"
+      else
+        fld_name
       end
     end
 
