@@ -50,17 +50,10 @@ module Forma::Html
 
   # Simple attribute.
   class SimpleAttr < Attr
+    attr_reader :name, :value
     def initialize(name, value)
       @name = name
       @value = value
-    end
-
-    def name
-      @name
-    end
-
-    def value
-      @value
     end
 
     def to_s
@@ -72,12 +65,9 @@ module Forma::Html
 
   # Class attribute.
   class ClassAttr < Attr
+    attr_reader :values
     def initialize(values)
       @values = values
-    end
-
-    def values
-      @values
     end
 
     def to_s
@@ -93,12 +83,9 @@ module Forma::Html
 
   # Style attribute.
   class StyleAttr < Attr
+    attr_reader :styles
     def initialize(styles)
       @styles = styles
-    end
-
-    def styles
-      @styles
     end
 
     def to_s
@@ -132,6 +119,13 @@ module Forma::Html
 
     def to_s
       generate_html.html_safe
+    end
+
+    def attrs_by_name(name)
+      if name.to_s == 'class' then attrs.select { |x| x.is_a?(ClassAttr) }
+      elsif name.to_s == 'style' then attrs.select { |x| x.is_a?(SimpleAttr) }
+      else attrs.select { |x| (x.respond_to?(:name) and x.name == name.to_s) }
+      end
     end
 
     private
