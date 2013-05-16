@@ -71,8 +71,9 @@ module Forma
     def table_element
       def table_header_element
         children = @fields.map { |f|
-          label_text = f.label_i18n(@models.first)
-          label_hint = f.hint_i18n(@models.first)
+          f.model = @models.first
+          label_text = f.localized_label
+          label_hint = f.localized_hint
           el('th', attrs: { class: 'ff-field' }, text: label_text, children: [
             (el('i', attrs: { class: 'ff-field-hint', 'data-toggle' => 'tooltip', title: label_hint }) if label_hint.present?)
           ])
@@ -84,7 +85,8 @@ module Forma
       end
       def table_row(model)
         children = @fields.map { |fld|
-          el('td', children: [ fld.to_html(model, false) ])
+          fld.model = model
+          el('td', children: [ fld.to_html(false) ])
         }
         if @item_actions.any?
           children << el('td', children: @item_actions.map { |act| act.to_html(model) })
