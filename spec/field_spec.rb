@@ -4,5 +4,3 @@ require 'mongoid'
 
 include Forma
 
-describe '' do
-end

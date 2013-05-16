@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Forma
   class Action
     include Forma::Html

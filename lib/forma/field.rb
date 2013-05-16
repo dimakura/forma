@@ -6,14 +6,13 @@ module Forma
     include Forma::Utils
     include Forma::Html
 
-    attr_reader :id, :label, :hint, :i18n, :name
+    attr_reader :label, :hint, :i18n, :name
     attr_reader :required, :autofocus, :readonly
     attr_reader :width, :height
     attr_reader :before, :after
     attr_reader :url, :icon
-
-    attr_accessor :model, :parent_name
-    attr_writer   :model_name
+    attr_accessor :model, :value
+    attr_writer   :model_name, :parent
 
     def initialize(h = {})
       h = h.symbolize_keys
@@ -23,10 +22,16 @@ module Forma
       @before = h[:before]; @after = h[:after]
       @name = h[:name]; @value = h[:value]
       @url = h[:url]; @icon = h[:icon]
+      @model = h[:model]; @parent = h[:parent]; @model_name = h[:model_name]
     end
 
-    def value
-      @value || value_from_model
+    def id
+      # def complex_id
+      #   if parent_name; "#{parent_name}_#{@name}"
+      #   else; @name end
+      # end
+      # @id || complex_id
+      @id
     end
 
     # Convert this element into HTML.
@@ -109,8 +114,13 @@ module Forma
       @fields << f
     end
 
-    def value_from_model(model)
-      @fields.map { |f| f.value_from_model(self.model) }
+    def value
+      val = super
+      if val then val
+      else
+        @fields.each { |f| f.model = self.model }
+        @fields.map { |f| f.value }
+      end
     end
 
     def edit_element(val)
@@ -170,33 +180,15 @@ module Forma
       end
     end
 
-    def id
-      def complex_id
-        if parent_name; "#{parent_name}_#{@name}"
-        else; @name end
+    def value
+      val = super
+      if val then val
+      else extract_value(self.model, self.name)
       end
-      @id || complex_id
-    end
-
-    def value_from_model(model)
-      def simple_value(model, name)
-        if model.respond_to?(name)
-          model.send(name)
-        elsif model.respond_to?('[]')
-          model[name] || model[name.to_sym]
-        end
-      end
-      val = model
-      name.to_s.split('.').each do |n|
-        val = simple_value(val, n) if val
-      end
-      val
     end
 
     def errors(model)
-      if model.respond_to?(:errors)
-        model.errors.messages[name.to_sym]
-      end || []
+      if model.respond_to?(:errors); model.errors.messages[name.to_sym] end || []
     end
 
     def has_errors?(model)
