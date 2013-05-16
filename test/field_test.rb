@@ -37,6 +37,17 @@ class FieldTest < Test::Unit::TestCase
     assert_equal 'Dimitri', fld_first_name.value
   end
 
+  def test_generated_text_field
+    model = { first_name: 'Dimitri', last_name: 'Kurashvili' }
+    fld_first_name = TextField.new(model_name: 'user', name: 'first_name', model: model)
+    el = fld_first_name.edit_element('Dimitri')
+    assert_equal 'input', el.tag
+    assert_equal 'user_first_name', el.attrs_by_name('id').first.value
+    assert_equal 'user[first_name]', el.attrs_by_name('name').first.value
+    assert_equal 'text', el.attrs_by_name('type').first.value
+    assert_equal 'Dimitri', el.attrs_by_name('value').first.value
+  end
+
   def test_compex_field
     model = { first_name: 'Dimitri', last_name: 'Kurashvili' }
     fld = ComplexField.new(fields: [ TextField.new(name: 'first_name'), TextField.new(name: 'last_name') ])

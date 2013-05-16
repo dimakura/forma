@@ -245,20 +245,18 @@ module Forma
       super(h)
     end
 
-    def view_element(model, val)
+    def view_element(val)
       el('span', text: (password ? '******' : val.to_s))
     end
 
-    def edit_element(model, val)
+    def edit_element(val)
       el('input', attrs: {
         id: self.id,
         name: parameter_name,
         type: (password ? 'password' : 'text'),
         value: val.to_s,
         autofocus: @autofocus,
-        style: {
-          width: ("#{width}px" if width)
-        }
+        style: { width: ("#{width}px" if width.present?) }
       })
     end
   end
