@@ -11,8 +11,8 @@ module Forma
     attr_reader :width, :height
     attr_reader :before, :after
     attr_reader :url, :icon
-    attr_accessor :model, :value
-    attr_writer   :model_name, :parent
+    attr_accessor :model, :value, :parent
+    attr_writer   :model_name
 
     def initialize(h = {})
       h = h.symbolize_keys
@@ -25,13 +25,25 @@ module Forma
       @model = h[:model]; @parent = h[:parent]; @model_name = h[:model_name]
     end
 
+    def name_as_chain
+      if self.parent and self.parent.respond_to?(:name_as_chain)
+        chain = self.parent.name_as_chain
+        chain << self.name
+      else
+        chain = [ self.model_name, self.name ]
+      end
+    end
+
     def id
-      # def complex_id
-      #   if parent_name; "#{parent_name}_#{@name}"
-      #   else; @name end
-      # end
-      # @id || complex_id
-      @id
+      if @id then @id
+      else name_as_chain.flatten.join('_') end
+    end
+
+    def parameter_name
+      chain = name_as_chain
+      if chain.size == 0 then raise 'Empty chain'
+      elsif chain.size == 1 then chain[0]
+      else "#{chain[0]}[#{chain[1]}]" end
     end
 
     # Convert this element into HTML.
@@ -159,26 +171,22 @@ module Forma
       super(h)
     end
 
-    def rails_array(model)
-      [self.parent_name, self.model_name || singular_name(model), self.name].select { |x| x.present? }
-    end
-
-    # generate field's name by Rails convention.
-    def field_rails_name(model)
-      def field_name_from_array(array)
-        if array.size == 1
-          array[0]
-        else
-          "#{array[0]}_attributes[#{field_name_from_array(array[1..-1])}]"
-        end
-      end
-      names = rails_array(model).join('.').split('.')
-      if names.size == 1
-        names[0]
-      else
-        "#{names[0]}[#{field_name_from_array(names[1..-1])}]"
-      end
-    end
+    # # generate field's name by Rails convention.
+    # def field_rails_name(model)
+    #   def field_name_from_array(array)
+    #     if array.size == 1
+    #       array[0]
+    #     else
+    #       "#{array[0]}_attributes[#{field_name_from_array(array[1..-1])}]"
+    #     end
+    #   end
+    #   names = rails_array(model).join('.').split('.')
+    #   if names.size == 1
+    #     names[0]
+    #   else
+    #     "#{names[0]}[#{field_name_from_array(names[1..-1])}]"
+    #   end
+    # end
 
     def value
       val = super
@@ -196,7 +204,7 @@ module Forma
     end
   end
 
-  # Named subform.
+  # Subform!
   class SubformField < SimpleField
     include Forma::Html
     include Forma::Utils
@@ -257,7 +265,7 @@ module Forma
     def edit_element(model, val)
       el('input', attrs: {
         id: self.id,
-        name: field_rails_name(model),
+        name: parameter_name,
         type: (password ? 'password' : 'text'),
         value: val.to_s,
         autofocus: @autofocus,

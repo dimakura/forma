@@ -10,6 +10,7 @@ class FieldTest < Test::Unit::TestCase
     assert_equal 'first_name', fld.name
     assert_equal 'models.user.first_name', fld.localization_key
     assert_equal 'fake value', fld.value
+    assert_equal 'user_first_name', fld.id
   end
 
   def test_text_field
@@ -19,6 +20,10 @@ class FieldTest < Test::Unit::TestCase
     assert_equal 'first_name', fld_first_name.name
     assert_equal 'Dimitri', fld_first_name.value
     assert_equal 'last_name', fld_last_name.name
+    assert_equal 'user_first_name', fld_first_name.id
+    assert_equal 'user[first_name]', fld_first_name.parameter_name
+    assert_equal 'user_last_name', fld_last_name.id
+    assert_equal 'user[last_name]', fld_last_name.parameter_name
   end
 
   def test_text_field_value_override
