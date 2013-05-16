@@ -11,6 +11,6 @@ class FormTest < Test::Unit::TestCase
     frm = Form.new
     frm.add_field(fld_first_name)
     frm.add_field(fld_last_name)
-    puts frm.to_html
+    # puts frm.to_html
   end
 end

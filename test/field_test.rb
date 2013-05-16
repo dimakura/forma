@@ -5,19 +5,25 @@ class FieldTest < Test::Unit::TestCase
   include Forma
 
   def test_general_field
-    fld = Field.new(model_name: 'user', name: 'first_name', value: 'fake value')
+    fld = Field.new(model_name: 'user', name: 'first_name', value: 'fake value', label: 'First Name')
     assert_equal 'user', fld.model_name
     assert_equal 'first_name', fld.name
     assert_equal 'models.user.first_name', fld.localization_key
+    assert_equal 'First Name', fld.label
+    assert_equal 'First Name', fld.localized_label
+    assert_equal nil, fld.hint
+    assert_equal '', fld.localized_hint
     assert_equal 'fake value', fld.value
     assert_equal 'user_first_name', fld.id
   end
 
   def test_text_field
     model = { first_name: 'Dimitri', last_name: 'Kurashvili' }
-    fld_first_name = TextField.new(model_name: 'user', name: 'first_name', model: model)
+    fld_first_name = TextField.new(model_name: 'user', name: 'first_name', model: model, hint: "user's first name")
     fld_last_name = TextField.new(model_name: 'user', name: 'last_name', model: model)
     assert_equal 'first_name', fld_first_name.name
+    assert_equal "user's first name", fld_first_name.hint
+    assert_equal "user's first name", fld_first_name.localized_hint
     assert_equal 'Dimitri', fld_first_name.value
     assert_equal 'last_name', fld_last_name.name
     assert_equal 'user_first_name', fld_first_name.id

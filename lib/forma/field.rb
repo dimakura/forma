@@ -81,11 +81,11 @@ module Forma
     end
 
     def localized_label
-      self.label.present? ? self.label : I18n.t(localization_key, default: (self.name rescue nil))
+      self.label.present? ? self.label : I18n.t(localization_key, default: self.name)
     end
 
     def localized_hint
-      self.hint.present? ? self.hint : I18n.t("#{localization_key}_hint", default: (self.name rescue nil))
+      self.hint.present? ? self.hint : I18n.t("#{localization_key}_hint", default: '')
     end
 
     protected
@@ -153,7 +153,7 @@ module Forma
       )
     end
 
-    def view_element(model, val)
+    def view_element(val)
       el(
         'div',
         attrs: { class: 'ff-complex-field' },
@@ -161,7 +161,7 @@ module Forma
           el(
             'div',
             attrs: { class: 'ff-complex-part' },
-            children: [ fv[0].view_element(model, fv[1]) ]
+            children: [ fv[0].view_element(fv[1]) ]
           )
         }
       )
