@@ -40,10 +40,14 @@ module Forma
     end
 
     def parameter_name
-      chain = name_as_chain
-      if chain.size == 0 then raise 'Empty chain'
-      elsif chain.size == 1 then chain[0]
-      else "#{chain[0]}[#{chain[1]}]" end
+      chain = name_as_chain; length = chain.length
+      p_name = ''
+      chain.reverse.each_with_index do |n, i|
+        if i == 0 then p_name = n
+        elsif i == length - 1 then p_name = "#{n}[#{p_name}]"
+        else p_name = "#{n}_attributes[#{p_name}]" end
+      end
+      p_name
     end
 
     # Convert this element into HTML.
@@ -171,23 +175,6 @@ module Forma
       super(h)
     end
 
-    # # generate field's name by Rails convention.
-    # def field_rails_name(model)
-    #   def field_name_from_array(array)
-    #     if array.size == 1
-    #       array[0]
-    #     else
-    #       "#{array[0]}_attributes[#{field_name_from_array(array[1..-1])}]"
-    #     end
-    #   end
-    #   names = rails_array(model).join('.').split('.')
-    #   if names.size == 1
-    #     names[0]
-    #   else
-    #     "#{names[0]}[#{field_name_from_array(names[1..-1])}]"
-    #   end
-    # end
-
     def value
       val = super
       if val then val
@@ -195,12 +182,12 @@ module Forma
       end
     end
 
-    def errors(model)
-      if model.respond_to?(:errors); model.errors.messages[name.to_sym] end || []
+    def errors
+      if self.model.respond_to?(:errors); self.model.errors.messages[name.to_sym] end || []
     end
 
-    def has_errors?(model)
-      errors(model).any?
+    def has_errors?
+      errors.any?
     end
   end
 
@@ -299,7 +286,7 @@ module Forma
 
     def edit_element(model, val)
       el('input', attrs: {
-        name: field_rails_name(model),
+        name: parameter_name,
         type: 'text',
         value: val.to_s,
         autofocus: @autofocus,
