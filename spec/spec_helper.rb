@@ -1,7 +1,6 @@
 # -*- encoding : utf-8 -*-
 require 'rspec'
 require 'forma'
-require 'nokogiri'
 
 RSpec.configure do |config|
   config.include(RSpec::Matchers)
