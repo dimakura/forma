@@ -207,17 +207,23 @@ module Forma
     end
 
     def edit_element(val)
-      @form.title = 'TEST'
-      @form.model = val
-      @form.parent_field = self
-      @form.edit = true
-      @form.icon = eval_icon if @icon
-      @form.title = localized_label
+      init_forma_before_field_display(true)
       @form.to_html
     end
 
     def view_element(val)
-      el('div', text: 'This is VIEW element.')
+      init_forma_before_field_display(false)
+      @form.to_html
+    end
+
+    private
+
+    def init_forma_before_field_display(edit)
+      @form.model = val
+      @form.parent_field = self
+      @form.edit = edit
+      @form.icon = eval_icon if @icon
+      @form.title = localized_label
     end
   end
 
