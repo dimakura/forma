@@ -118,10 +118,11 @@ module Forma
         children = (many ? errors.map { |e| el('li', text: e.to_s)  } : [el('div', text: errors[0].to_s)])
         el('div', attrs: { class: 'ff-field-errors' }, children: children)
       end
-      has_errors = (@edit and @model.present? and fld.respond_to?(:has_errors?) and fld.has_errors?(@model))
+      fld.model = @model
+      has_errors = (@edit and @model.present? and fld.respond_to?(:has_errors?) and fld.has_errors?)
       if fld.label != false
-        label_text = fld.label_i18n(@model)
-        label_hint = fld.hint_i18n(@model)
+        label_text = fld.localized_label
+        label_hint = fld.localized_hint
         label_element = el('div', attrs: { class: (fld.required ? ['ff-label', 'ff-required'] : ['ff-label'])},
           text: label_text,
           children: [
@@ -130,8 +131,7 @@ module Forma
         )
       end
       value_element = el('div', attrs: { class: (fld.required ? ['ff-value', 'ff-required'] : ['ff-value']) }, children: [
-        fld.to_html(@model, @edit),
-        (field_error_element(fld.errors(@model)) if has_errors),
+        fld.to_html(@edit), (field_error_element(fld.errors) if has_errors),
       ])
       el(
         'div', attrs: {
