@@ -6,7 +6,7 @@ module Forma
     include Forma::Utils
     include Forma::Html
 
-    attr_reader :id, :label, :hint
+    attr_reader :id, :label, :hint, :i18n, :name
     attr_reader :required, :autofocus, :readonly
     attr_reader :width, :height
     attr_reader :before, :after
@@ -17,16 +17,21 @@ module Forma
 
     def initialize(h = {})
       h = h.symbolize_keys
-      @id = h[:id]; @label = h[:label]; @hint = h[:hint]
+      @id = h[:id]; @label = h[:label]; @hint = h[:hint]; @i18n = h[:i18n]
       @required = h[:required]; @autofocus = h[:autofocus]; @readonly = (not not h[:readonly])
       @width = h[:width]; @height = h[:height]
       @before = h[:before]; @after = h[:after]
+      @name = h[:name]; @value = h[:value]
       @url = h[:url]; @icon = h[:icon]
+    end
+
+    def value
+      @value || value_from_model
     end
 
     # Convert this element into HTML.
     def to_html(edit)
-      val = value_from_model(self.model)
+      val = self.value
       if edit and not readonly
         edit_element(val)
       else
@@ -47,8 +52,10 @@ module Forma
     end
 
     def localization_key
-      if self.respond_to?(:field_name)
-        ["models", self.model_name, self.field_name].join('.')
+      if @i18n.present?
+        ["models", self.model_name, @i18n].compact.join('.')
+      elsif self.respond_to?(:name)
+        ["models", self.model_name, self.name].compact.join('.')
       end
     end
 
@@ -90,7 +97,6 @@ module Forma
   # Complex field.
   class ComplexField < Field
     include Forma::FieldHelper
-
     attr_reader :fields
 
     def initialize(h = {})
@@ -104,10 +110,10 @@ module Forma
     end
 
     def value_from_model(model)
-      @fields.map { |f| f.value_from_model(model) }
+      @fields.map { |f| f.value_from_model(self.model) }
     end
 
-    def edit_element(model, val)
+    def edit_element(val)
       el(
         'div',
         attrs: { class: 'ff-complex-field' },
@@ -115,7 +121,7 @@ module Forma
           el(
             'div',
             attrs: { class: 'ff-field' },
-            children: [ fv[0].edit_element(model, fv[1]) ]
+            children: [ fv[0].edit_element(fv[1]) ]
           )
         }
       )
@@ -138,18 +144,9 @@ module Forma
 
   # SimpleField gets it's value from it's name.
   class SimpleField < Field
-    attr_reader :name
-
     def initialize(h = {})
       h = h.symbolize_keys
-      @name = h[:name]
-      @i18n_name = h[:i18n]
       super(h)
-    end
-
-    # field name for i18n
-    def field_name
-      (@i18n_name || self.name).to_s.gsub('.', '_')
     end
 
     def rails_array(model)
