@@ -5,67 +5,65 @@ module Forma
   class Field
     include Forma::Utils
     include Forma::Html
-    attr_reader :id, :label, :required, :autofocus, :readonly
+
+    attr_reader :id, :label, :hint
+    attr_reader :required, :autofocus, :readonly
     attr_reader :width, :height
-    attr_reader :hint
     attr_reader :before, :after
     attr_reader :url, :icon
-    attr_accessor :parent_name, :model_name
+
+    attr_accessor :model, :parent_name
+    attr_writer   :model_name
 
     def initialize(h = {})
       h = h.symbolize_keys
-      @id = h[:id]
-      @label = h[:label]
-      @required = h[:required]
-      @autofocus = h[:autofocus]
-      @width = h[:width]
-      @height = h[:height]
-      @readonly = (not not h[:readonly])
-      @hint = h[:hint]
-      @before = h[:before]
-      @after = h[:after]
-      @url = h[:url]
-      @icon = h[:icon]
+      @id = h[:id]; @label = h[:label]; @hint = h[:hint]
+      @required = h[:required]; @autofocus = h[:autofocus]; @readonly = (not not h[:readonly])
+      @width = h[:width]; @height = h[:height]
+      @before = h[:before]; @after = h[:after]
+      @url = h[:url]; @icon = h[:icon]
     end
 
-    def to_html(model, edit)
-      val = value_from_model(model)
+    # Convert this element into HTML.
+    def to_html(edit)
+      val = value_from_model(self.model)
       if edit and not readonly
-        edit_element(model, val)
+        edit_element(val)
       else
         if val.present? or val == false
-          view = view_element(model, val)
-          view = el('a', attrs: { href: eval_url(model) }, children: [ view ]) if @url
-          el('div', children: [ before_element, icon_element(model), view, after_element ])
+          view = view_element(val)
+          view = el('a', attrs: { href: eval_url }, children: [ view ]) if @url
+          el('div', children: [ before_element, icon_element, view, after_element ])
         else
           empty_element
         end
       end
     end
 
-    def label_i18n(model)
-      if self.label.blank? and self.respond_to?(:field_name)
-        I18n.t(["models", singular_name(model), self.field_name].join('.'), default: self.name)
-      else
-        self.label
+    # Returns model name.
+    # Model name can be defined by user or determined automatically, based on model class.
+    def model_name
+      @model_name || singular_name(self.model)
+    end
+
+    def localization_key
+      if self.respond_to?(:field_name)
+        ["models", self.model_name, self.field_name].join('.')
       end
     end
 
-    def hint_i18n(model)
-      if self.hint.blank? and self.respond_to?(:field_name)
-        I18n.t(["models", singular_name(model), "#{self.field_name}_hint"].join('.'), default: '')
-      else
-        self.hint
-      end
+    def localized_label
+      self.label.present? ? self.label : I18n.t(localization_key, default: (self.name rescue nil))
+    end
+
+    def localized_hint
+      self.hint.present? ? self.hint : I18n.t("#{localization_key}_hint", default: (self.name rescue nil))
     end
 
     protected
 
-    def icon_element(model)
-      if @icon
-        iconpath = @icon.is_a?(Proc) ? @icon.call(model) : @icon.to_s
-        el('img', attrs: { src: iconpath, style: { 'margin-right' => '4px' } })
-      end
+    def icon_element
+      el('img', attrs: { src: eval_icon, style: { 'margin-right' => '4px' } }) if @icon.present?
     end
 
     def before_element
@@ -80,8 +78,12 @@ module Forma
       el('span', attrs: { class: 'ff-empty' }, text: Forma.config.texts.empty)
     end
 
-    def eval_url(model)
-      @url.is_a?(Proc) ? @url.call(model) : @url.to_s
+    def eval_url
+      @url.is_a?(Proc) ? @url.call(self.model) : @url.to_s
+    end
+
+    def eval_icon
+      @icon.is_a?(Proc) ? @icon.call(self.model) : @icon.to_s
     end
   end
 
