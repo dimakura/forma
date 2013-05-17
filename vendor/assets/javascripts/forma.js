@@ -29,6 +29,7 @@
         oldBody.hide();
         newTab.addClass("ff-selected");
         newBody.show();
+        if (ff_redraw_map) { ff_redraw_map(); }
       }
     });
   };

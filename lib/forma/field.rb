@@ -204,19 +204,21 @@ module Forma
 
     def view_js_script(id)
       text = %Q{
-        var map , marker;
-        function initialize_map(id) {
+        var map_id = '#{id}';
+        var map, marker;
+        function ff_initialize_map() {
           var latLng = new google.maps.LatLng(41.747136083153336, 44.79393392801285);
           var options = { center: latLng, zoom: 18, mapTypeId: google.maps.MapTypeId.HYBRID };
-          map = new google.maps.Map(document.getElementById(id), options);
+          map = new google.maps.Map(document.getElementById(map_id), options);
           marker = new google.maps.Marker({ position: latLng, map: map, title:"test", draggable: true, animation: google.maps.Animation.DROP });
+          //google.maps.event.trigger(map, 'resize');
+          ff_initialize_map();
+        }
+        function ff_redraw_map() {
           google.maps.event.trigger(map, 'resize');
         }
-        //$(function() {
-        //  initialize_map("#{id}");
-        //});
-        $(document).ready(function() {
-          initialize_map("#{id}");
+        $(function() {
+          ff_initialize_map();
         });
       }
       el('script', attrs: { type: 'text/javascript' }, html: text )
