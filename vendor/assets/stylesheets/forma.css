@@ -282,6 +282,9 @@
   border: 1px solid #a0a0a0;
   border-top: none;
 }
+.ff-map img {
+  max-width: none;
+}
 .ff-form .ff-title,
 .ff-table .ff-title {
   background-color: #cfc8ff;

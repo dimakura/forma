@@ -172,6 +172,57 @@ module Forma
     end
   end
 
+  # Map field.
+  class MapField < Field
+    def value
+      val = super
+      if val then val
+      else
+        long = extract_value(self.model, "#{self.name}_longitude")
+        lat  = extract_value(self.model, "#{self.name}_latitude")
+        [ long, lat ]
+      end
+    end
+
+    def width; @width || 500 end
+    def height; @height || 500 end
+
+    def view_element(val)
+      id = "map_#{self.id}"
+      el('div', attrs: { style: { width: "#{self.width}px", height: "#{self.height}px", position: 'relative' } }, children: [
+        el('div', attrs: { id: id, class: 'ff-map', style: { width: '100%', height: '100%', overflow: 'hidden', position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 } },
+          children: [ googlemap_script ]),
+        view_js_script(id)
+      ])
+    end
+
+    private
+
+    def googlemap_script
+      el('script', attrs: { type: 'text/javascript', src: 'http://maps.googleapis.com/maps/api/js?key=AIzaSyD_wcFfq6rCVz4A4HCMypFizALZ1IK3jZg&sensor=true'})
+    end
+
+    def view_js_script(id)
+      text = %Q{
+        var map , marker;
+        function initialize_map(id) {
+          var latLng = new google.maps.LatLng(41.747136083153336, 44.79393392801285);
+          var options = { center: latLng, zoom: 18, mapTypeId: google.maps.MapTypeId.HYBRID };
+          map = new google.maps.Map(document.getElementById(id), options);
+          marker = new google.maps.Marker({ position: latLng, map: map, title:"test", draggable: true, animation: google.maps.Animation.DROP });
+          google.maps.event.trigger(map, 'resize');
+        }
+        //$(function() {
+        //  initialize_map("#{id}");
+        //});
+        $(document).ready(function() {
+          initialize_map("#{id}");
+        });
+      }
+      el('script', attrs: { type: 'text/javascript' }, html: text )
+    end
+  end
+
   # SimpleField gets it's value from it's name.
   class SimpleField < Field
     def initialize(h = {})

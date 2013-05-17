@@ -38,6 +38,13 @@ module Forma
       add_field(field)
     end
 
+    def map_field(name, opts = {})
+      opts[:name] = name
+      field = Forma::MapField.new(opts)
+      yield field if block_given?
+      add_field(field)
+    end
+
     def subform(name, opts = {})
       opts[:name] = name
       field = Forma::SubformField.new(opts)
