@@ -188,35 +188,45 @@ module Forma
 
     def view_element(val)
       el('div', attrs: { style: { width: "#{self.width}px", height: "#{self.height}px", position: 'relative' } }, children: [
-        el('div', attrs: { id: map_id, class: 'ff-map' }),
-        googlemap_script,
-        view_js_script(val)
+        el('div', attrs: { id: self.id, class: 'ff-map' }),
+        google_import,
+        map_display(val, false)
       ])
     end
 
     def edit_element(val)
       el('div', attrs: { style: { width: "#{self.width}px", height: "#{self.height}px", position: 'relative' } }, children: [
-        el('div', attrs: { id: map_id, class: 'ff-map' }),
-        googlemap_script,
-        view_js_script(val)
+        el('div', attrs: { id: self.id, class: 'ff-map' }),
+        google_import,
+        map_display(val, true),
+        el('input', attrs: { name: latitude_name, id: "#{self.id}_latitude", value: val[0], type: 'hidden' }),
+        el('input', attrs: { name: longitude_name, id: "#{self.id}_longitude", value: val[1], type: 'hidden' }),
       ])
     end
 
     private
 
-    def map_id
-      "map_#{self.id}"
-    end
-
-    def googlemap_script
+    def google_import
       key = Forma.config.map.google_key
       el('script', attrs: { type: 'text/javascript', src: "https://maps.googleapis.com/maps/api/js?key=#{key}&sensor=true"})
     end
 
-    def view_js_script(val)
+    def map_display(val, edit)
       longLat = "{ latitude: #{val[0]}, longitude: #{val[1]} }"
       zoom_level = Forma.config.map.zoom_level
-      el('script', attrs: { type: 'text/javascript' }, html: %Q{ forma.registerGoogleMap('#{map_id}', #{zoom_level}, #{longLat}, [ #{longLat} ]); } )
+      el(
+        'script',
+        attrs: { type: 'text/javascript' },
+        html: %Q{ forma.registerGoogleMap('#{self.id}', #{zoom_level}, #{longLat}, [ #{longLat} ], #{edit}); }
+      )
+    end
+
+    def latitude_name
+      "#{name_as_chain[0]}[#{name_as_chain[1]}_latitude]"
+    end
+
+    def longitude_name
+      "#{name_as_chain[0]}[#{name_as_chain[1]}_longitude]"
     end
   end
 

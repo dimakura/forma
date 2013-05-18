@@ -56,8 +56,8 @@
 
   var mapsData = {};
 
-  var registerGoogleMap = function(id, zoom, center, markers) {
-    mapsData[id] = { id: id, initialized: false, zoom: zoom, center: center, markers: markers }
+  var registerGoogleMap = function(id, zoom, center, markers, draggable) {
+    mapsData[id] = { id: id, initialized: false, zoom: zoom, center: center, markers: markers, draggable: draggable }
   };
 
   var googleMapInitialization = function(data) {
@@ -75,7 +75,13 @@
         var marker = new google.maps.Marker({
           position: markerPosition,
           animation: google.maps.Animation.DROP,
-          map: map
+          map: map,
+          draggable: data.draggable,
+        });
+        google.maps.event.addListener(marker, 'dragend', function() {
+          var pos = marker.getPosition();
+          $('#' + id + '_latitude').val(pos.lat() + '');
+          $('#' + id + '_longitude').val(pos.lng());
         });
       }
       data.initialized = true;
