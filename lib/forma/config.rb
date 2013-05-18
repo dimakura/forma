@@ -25,6 +25,10 @@ module Forma
     def texts
       @texts ||= TextsConfig.new
     end
+
+    def map
+      @map ||= MapConfig.new
+    end
   end
 
   class NumberConfig
@@ -51,4 +55,7 @@ module Forma
     end
   end  
 
+  class MapConfig
+    attr_accessor :google_key
+  end
 end

@@ -13,3 +13,7 @@ end
 describe 'Texts configuration' do
   specify { Forma.config.texts.empty.should == '(empty)' }
 end
+
+describe 'Map configuration' do
+  specify { Forma.config.map.google_key.should be_nil }
+end
