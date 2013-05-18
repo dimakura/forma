@@ -7,6 +7,7 @@ module Forma
 
     def initialize(h={})
       h = h.symbolize_keys
+      @id = h[:id]
       @label = h[:label]
       @icon = h[:icon]
       @url = h[:url]
@@ -22,6 +23,7 @@ module Forma
       el(
         'a',
         attrs: {
+          id: @id,
           class: ['ff-action', ('btn' if button)],
           href: eval_url(model), 'data-method' => @method, 'data-confirm' => @confirm,
           'data-original-title' => @tooltip
