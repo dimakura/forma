@@ -54,7 +54,9 @@ module Forma
 
     def text_field(name, opts={})
       opts[:name] = name
-      add_field(Forma::TextField.new(opts))
+      field = Forma::TextField.new(opts)
+      yield field if block_given?
+      add_field(field)
     end
 
     def password_field(name, opts={})
@@ -64,32 +66,44 @@ module Forma
 
     def email_field(name, opts={})
       opts[:name] = name
-      add_field(Forma::EmailField.new(opts))
+      field = Forma::EmailField.new(opts)
+      yield field if block_given?
+      add_field(field)
     end
 
     def date_field(name, opts={})
       opts[:name] = name
-      add_field(Forma::DateField.new(opts))
+      field = Forma::DateField.new(opts)
+      yield field if block_given?
+      add_field(field)
     end
 
     def boolean_field(name, opts={})
       opts[:name] = name
-      add_field(Forma::BooleanField.new(opts))
+      field = Forma::BooleanField.new(opts)
+      yield field if block_given?
+      add_field(field)
     end
 
     def image_field(name, opts={})
       opts[:name] = name
-      add_field(Forma::ImageField.new(opts))
+      field = Forma::ImageField.new(opts)
+      yield field if block_given?
+      add_field(field)
     end
 
     def number_field(name, opts = {})
       opts[:name] = name
-      add_field(Forma::NumberField.new(opts))
+      field = Forma::NumberField.new(opts)
+      yield field if block_given?
+      add_field(field)
     end
 
     def combo_field(name, opts = {})
       opts[:name] = name
-      add_field(Forma::ComboField.new(opts))
+      field = Forma::ComboField.new(opts)
+      yield field if block_given?
+      add_field(field)
     end
   end
 

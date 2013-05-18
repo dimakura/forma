@@ -12,6 +12,7 @@ module Forma
     attr_reader :url, :icon
     attr_accessor :model, :value, :parent, :child_model_name
     attr_writer :model_name
+    attr_reader :actions
 
     def initialize(h = {})
       h = h.symbolize_keys
@@ -23,6 +24,12 @@ module Forma
       @url = h[:url]; @icon = h[:icon]
       @model = h[:model]; @parent = h[:parent]
       @model_name = h[:model_name]; @child_model_name = h[:child_model_name]
+      @actions = h[:actions] || []
+    end
+
+    def action(url, h={})
+      h[:url] = url
+      @actions << Action.new(h)
     end
 
     def name_as_chain
