@@ -29,7 +29,10 @@
         oldBody.hide();
         newTab.addClass("ff-selected");
         newBody.show();
-        if (ff_redraw_map) { ff_redraw_map(); }
+        // we need to initialize a map
+        // if it was not visible and became
+        // visible when the tab was open
+        initGoogleMaps();
       }
     });
   };
@@ -49,16 +52,64 @@
     // TODO: any other tooltips?
   };
 
+  // google map initialization
+
+  var mapsData = {};
+
+  var registerGoogleMap = function(id, zoom, center, markers) {
+    mapsData[id] = { id: id, initialized: false, zoom: zoom, center: center, markers: markers }
+  };
+
+  var googleMapInitialization = function(data) {
+    var id = data['id'];
+    if ($('#' + id).is(':visible')) {
+      var mapOptions = {
+        center: new google.maps.LatLng(data.center.latitude, data.center.longitude),
+        zoom: data.zoom,
+        mapTypeId: google.maps.MapTypeId.HYBRID //ROADMAP
+      };
+      var map = new google.maps.Map(document.getElementById(id), mapOptions);
+      for (var i = 0, l = data.markers.length; i < l; i++) {
+        var markerData = data.markers[i];
+        var markerPosition = new google.maps.LatLng(markerData.latitude, markerData.longitude);
+        var marker = new google.maps.Marker({
+          position: markerPosition,
+          animation: google.maps.Animation.DROP,
+          map: map
+        });
+      }
+      data.initialized = true;
+    }
+  };
+
+  var initGoogleMaps = function() {
+    for (var id in mapsData) {
+      var data = mapsData[id];
+      if (data && !data.initialized) {
+        googleMapInitialization(data);
+      }
+    }
+  };
+
+  // prepare function
+
   var ready = function() {
     initilizeCollapsibleElement();
     initializeTabs();
     initializeFormSubmit();
     initializeTooltips();
+    initGoogleMaps();
   };
 
   // turbolink initilization!
   // http://railscasts.com/episodes/390-turbolinks?view=asciicast
   $(document).ready(ready);
   $(document).on('page:load', ready);
+
+  // external API
+
+  window.forma = {
+    registerGoogleMap: registerGoogleMap,
+  };
 
 })();

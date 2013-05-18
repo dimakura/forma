@@ -16,4 +16,6 @@ end
 
 describe 'Map configuration' do
   specify { Forma.config.map.google_key.should be_nil }
+  specify { Forma.config.map.default_latitude == 41.711447 }
+  specify { Forma.config.map.default_longitude == 44.754514 }
 end

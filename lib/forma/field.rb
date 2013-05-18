@@ -1,6 +1,5 @@
 # -*- encoding : utf-8 -*-
 module Forma
-
   # General field interface.
   class Field
     include Forma::Utils
@@ -178,9 +177,9 @@ module Forma
       val = super
       if val then val
       else
-        long = extract_value(self.model, "#{self.name}_longitude")
-        lat  = extract_value(self.model, "#{self.name}_latitude")
-        [ long, lat ]
+        lat  = extract_value(self.model, "#{self.name}_latitude")  || Forma.config.map.default_latitude
+        long = extract_value(self.model, "#{self.name}_longitude") || Forma.config.map.default_longitude
+        [ lat, long ]
       end
     end
 
@@ -190,38 +189,23 @@ module Forma
     def view_element(val)
       id = "map_#{self.id}"
       el('div', attrs: { style: { width: "#{self.width}px", height: "#{self.height}px", position: 'relative' } }, children: [
-        el('div', attrs: { id: id, class: 'ff-map', style: { width: '100%', height: '100%', overflow: 'hidden', position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 } },
-          children: [ googlemap_script ]),
-        view_js_script(id)
+        el('div', attrs: { id: id, class: 'ff-map', style: { width: '100%', height: '100%', overflow: 'hidden', position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 } }),
+        googlemap_script,
+        view_js_script(id, val)
       ])
     end
 
     private
 
     def googlemap_script
-      el('script', attrs: { type: 'text/javascript', src: 'http://maps.googleapis.com/maps/api/js?key=AIzaSyD_wcFfq6rCVz4A4HCMypFizALZ1IK3jZg&sensor=true'})
+      key = Forma.config.map.google_key
+      el('script', attrs: { type: 'text/javascript', src: "https://maps.googleapis.com/maps/api/js?key=#{key}&sensor=true"})
     end
 
-    def view_js_script(id)
-      text = %Q{
-        var map_id = '#{id}';
-        var map, marker;
-        function ff_initialize_map() {
-          var latLng = new google.maps.LatLng(41.747136083153336, 44.79393392801285);
-          var options = { center: latLng, zoom: 18, mapTypeId: google.maps.MapTypeId.HYBRID };
-          map = new google.maps.Map(document.getElementById(map_id), options);
-          marker = new google.maps.Marker({ position: latLng, map: map, title:"test", draggable: true, animation: google.maps.Animation.DROP });
-          //google.maps.event.trigger(map, 'resize');
-          ff_initialize_map();
-        }
-        function ff_redraw_map() {
-          google.maps.event.trigger(map, 'resize');
-        }
-        $(function() {
-          ff_initialize_map();
-        });
-      }
-      el('script', attrs: { type: 'text/javascript' }, html: text )
+    def view_js_script(id, val)
+      longLat = "{ latitude: #{val[0]}, longitude: #{val[1]} }"
+      zoom_level = Forma.config.map.zoom_level
+      el('script', attrs: { type: 'text/javascript' }, html: %Q{ forma.registerGoogleMap('#{id}', #{zoom_level}, #{longLat}, [ #{longLat} ]); } )
     end
   end
 

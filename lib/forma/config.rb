@@ -57,5 +57,13 @@ module Forma
 
   class MapConfig
     attr_accessor :google_key
+    attr_accessor :default_latitude
+    attr_accessor :default_longitude
+    attr_accessor :zoom_level
+    def initialize
+      self.default_latitude = 41.711447
+      self.default_longitude = 44.754514
+      self.zoom_level = 17
+    end
   end
 end
