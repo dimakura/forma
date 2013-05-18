@@ -311,7 +311,7 @@ module Forma
     end
 
     def view_element(val)
-      el('span', text: (password ? '******' : val.to_s))
+      el('span', text: (password ? '******' : val.to_s), attrs: { id: self.id })
     end
 
     def edit_element(val)
