@@ -204,7 +204,7 @@ module Forma
     def view_element(val)
       el('div', attrs: { style: { width: "#{self.width}px", height: "#{self.height}px", position: 'relative' } }, children: [
         el('div', attrs: { id: self.id, class: 'ff-map' }),
-        google_import,
+        # google_import,
         map_display(val, false)
       ])
     end
@@ -212,7 +212,7 @@ module Forma
     def edit_element(val)
       el('div', attrs: { style: { width: "#{self.width}px", height: "#{self.height}px", position: 'relative' } }, children: [
         el('div', attrs: { id: self.id, class: 'ff-map' }),
-        google_import,
+        # google_import,
         map_display(val, true),
         el('input', attrs: { name: latitude_name, id: "#{self.id}_latitude", value: val[0], type: 'hidden' }),
         el('input', attrs: { name: longitude_name, id: "#{self.id}_longitude", value: val[1], type: 'hidden' }),
@@ -220,11 +220,6 @@ module Forma
     end
 
     private
-
-    def google_import
-      key = Forma.config.map.google_key
-      el('script', attrs: { type: 'text/javascript', src: "https://maps.googleapis.com/maps/api/js?key=#{key}&sensor=true"})
-    end
 
     def map_display(val, edit)
       longLat = "{ latitude: #{val[0]}, longitude: #{val[1]} }"

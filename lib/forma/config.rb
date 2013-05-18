@@ -56,7 +56,6 @@ module Forma
   end  
 
   class MapConfig
-    attr_accessor :google_key
     attr_accessor :default_latitude
     attr_accessor :default_longitude
     attr_accessor :zoom_level
