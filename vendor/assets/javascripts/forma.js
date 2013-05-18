@@ -56,8 +56,12 @@
 
   var mapsData = {};
 
-  var registerGoogleMap = function(id, zoom, center, markers, draggable) {
-    mapsData[id] = { id: id, initialized: false, zoom: zoom, center: center, markers: markers, draggable: draggable }
+  var registerGoogleMap = function(id, zoom, center, coordinates, draggable) {
+    mapsData[id] = { id: id, zoom: zoom, center: center, coordinates: coordinates, draggable: draggable }
+  };
+
+  var getGoogleMap = function(id) {
+    return mapsData[id];
   };
 
   var googleMapInitialization = function(data) {
@@ -69,8 +73,9 @@
         mapTypeId: google.maps.MapTypeId.HYBRID //ROADMAP
       };
       var map = new google.maps.Map(document.getElementById(id), mapOptions);
-      for (var i = 0, l = data.markers.length; i < l; i++) {
-        var markerData = data.markers[i];
+      var markers = [ ];
+      for (var i = 0, l = data.coordinates.length; i < l; i++) {
+        var markerData = data.coordinates[i];
         var markerPosition = new google.maps.LatLng(markerData.latitude, markerData.longitude);
         var marker = new google.maps.Marker({
           position: markerPosition,
@@ -78,20 +83,22 @@
           map: map,
           draggable: data.draggable,
         });
+        markers.push(marker);
         google.maps.event.addListener(marker, 'dragend', function() {
           var pos = marker.getPosition();
           $('#' + id + '_latitude').val(pos.lat() + '');
           $('#' + id + '_longitude').val(pos.lng());
         });
       }
-      data.initialized = true;
+      data.map = map;
+      data.markers = markers;
     }
   };
 
   var initGoogleMaps = function() {
     for (var id in mapsData) {
       var data = mapsData[id];
-      if (data && !data.initialized) {
+      if (data && !data.map) {
         googleMapInitialization(data);
       }
     }
@@ -116,6 +123,7 @@
 
   window.forma = {
     registerGoogleMap: registerGoogleMap,
+    getGoogleMap: getGoogleMap,
   };
 
 })();
