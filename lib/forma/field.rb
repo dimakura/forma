@@ -62,14 +62,15 @@ module Forma
       val = self.value
       if edit and not readonly
         edit = edit_element(val)
-        el('div', children: [ before_element, icon_element, edit, after_element ])
+        el('div', children: [ before_element, icon_element, edit, after_element, actions_element ])
       else
         if val.present? or val == false
           view = view_element(val)
           view = el('a', attrs: { href: eval_url }, children: [ view ]) if @url
-          el('div', children: [ before_element, icon_element, view, after_element ])
+          el('div', children: [ before_element, icon_element, view, after_element, actions_element ])
         else
-          empty_element
+          empty = empty_element
+          el('div', children: [ empty, actions_element ])
         end
       end
     end
@@ -115,6 +116,12 @@ module Forma
 
     def empty_element
       el('span', attrs: { class: 'ff-empty' }, text: Forma.config.texts.empty)
+    end
+
+    def actions_element
+      if @actions.any?
+        el('div', attrs: { class: 'ff-field-actions' }, children: @actions.map { |action| action.to_html(@model) })
+      end
     end
 
     def eval_url
