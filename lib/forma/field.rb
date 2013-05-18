@@ -61,7 +61,8 @@ module Forma
     def to_html(edit)
       val = self.value
       if edit and not readonly
-        edit_element(val)
+        edit = edit_element(val)
+        el('div', children: [ before_element, icon_element, edit, after_element ])
       else
         if val.present? or val == false
           view = view_element(val)
