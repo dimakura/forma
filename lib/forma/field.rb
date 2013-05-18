@@ -187,25 +187,36 @@ module Forma
     def height; @height || 500 end
 
     def view_element(val)
-      id = "map_#{self.id}"
       el('div', attrs: { style: { width: "#{self.width}px", height: "#{self.height}px", position: 'relative' } }, children: [
-        el('div', attrs: { id: id, class: 'ff-map', style: { width: '100%', height: '100%', overflow: 'hidden', position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 } }),
+        el('div', attrs: { id: map_id, class: 'ff-map' }),
         googlemap_script,
-        view_js_script(id, val)
+        view_js_script(val)
+      ])
+    end
+
+    def edit_element(val)
+      el('div', attrs: { style: { width: "#{self.width}px", height: "#{self.height}px", position: 'relative' } }, children: [
+        el('div', attrs: { id: map_id, class: 'ff-map' }),
+        googlemap_script,
+        view_js_script(val)
       ])
     end
 
     private
+
+    def map_id
+      "map_#{self.id}"
+    end
 
     def googlemap_script
       key = Forma.config.map.google_key
       el('script', attrs: { type: 'text/javascript', src: "https://maps.googleapis.com/maps/api/js?key=#{key}&sensor=true"})
     end
 
-    def view_js_script(id, val)
+    def view_js_script(val)
       longLat = "{ latitude: #{val[0]}, longitude: #{val[1]} }"
       zoom_level = Forma.config.map.zoom_level
-      el('script', attrs: { type: 'text/javascript' }, html: %Q{ forma.registerGoogleMap('#{id}', #{zoom_level}, #{longLat}, [ #{longLat} ]); } )
+      el('script', attrs: { type: 'text/javascript' }, html: %Q{ forma.registerGoogleMap('#{map_id}', #{zoom_level}, #{longLat}, [ #{longLat} ]); } )
     end
   end
 
