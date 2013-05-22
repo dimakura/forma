@@ -198,6 +198,12 @@
   display: inline-block;
   padding-right: 8px;
 }
+.ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-complex-field .ff-field,
+.ff-table .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-complex-field .ff-field {
+  display: inline-block;
+  border: none;
+  padding-right: 8px;
+}
 .ff-form .ff-tabs .ff-cols:after,
 .ff-table .ff-tabs .ff-cols:after {
   content: ".";
