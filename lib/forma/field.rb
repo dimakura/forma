@@ -5,7 +5,7 @@ module Forma
     include Forma::Utils
     include Forma::Html
 
-    attr_reader :label, :hint, :i18n, :name
+    attr_reader :label, :hint, :i18n, :name, :tag
     attr_reader :required, :autofocus, :readonly
     attr_reader :width, :height
     attr_reader :before, :after
@@ -25,6 +25,7 @@ module Forma
       @model = h[:model]; @parent = h[:parent]
       @model_name = h[:model_name]; @child_model_name = h[:child_model_name]
       @actions = h[:actions] || []
+      @tag = h[:tag]
     end
 
     def action(url, h={})
@@ -306,7 +307,7 @@ module Forma
     end
 
     def view_element(val)
-      el('span', text: (password ? '******' : val.to_s), attrs: { id: self.id })
+      el((@tag || 'span'), text: (password ? '******' : val.to_s), attrs: { id: self.id })
     end
 
     def edit_element(val)
