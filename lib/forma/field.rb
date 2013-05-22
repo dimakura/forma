@@ -402,13 +402,17 @@ module Forma
     end
 
     def edit_element(val)
-      data = @empty != false ? [ nil ] + @collection : @collection
+      def normalize_data(collection, empty)
+        if collection.is_a?(Hash) then data = collection.to_a
+        else data = collection.map { |x| [x.to_s, x.id] } end
+        if empty != false then data.insert[empty.to_s, nil] end
+        Hash[data]
+      end
+      data = normalize_data(@collection, @empty)
       selection = val.present? ? val : @default
-      el('select', attrs: { name: parameter_name }, children: data.map { |x|
-        if x.nil?
-          el('option', attrs: { selected: selection.blank? }, text: @empty.to_s)
-        else
-          el('option', attrs: { value: x.id, selected: (true if selection == x.id) }, text: x.to_s)
+      el('select', attrs: { name: parameter_name }, children: data.map { |text, value|
+        if value.nil? then el('option', attrs: { selected: selection.blank? }, text: text)
+        else el('option', attrs: { selected: (true if selection == value) }, text: text)
         end
       })
     end
