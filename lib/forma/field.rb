@@ -399,16 +399,12 @@ module Forma
     end
 
     def view_element(val)
-      el('span', text: val.to_s)
+      data = normalize_data(@collection, false)
+      text = data.find{|text, value| val == value }[0].to_s rescue nil
+      el('span', text: text)
     end
 
     def edit_element(val)
-      def normalize_data(collection, empty)
-        if collection.is_a?(Hash) then data = collection.to_a
-        else data = collection.map { |x| [x.to_s, x.id] } end
-        if empty != false then data.insert[empty.to_s, nil] end
-        Hash[data]
-      end
       data = normalize_data(@collection, @empty)
       selection = val.present? ? val : @default
       el('select', attrs: { name: parameter_name }, children: data.map { |text, value|
@@ -416,6 +412,15 @@ module Forma
         else el('option', attrs: { selected: (true if selection == value), value: value }, text: text)
         end
       })
+    end
+
+    private
+
+    def normalize_data(collection, empty)
+      if collection.is_a?(Hash) then data = collection.to_a
+      else data = collection.map { |x| [x.to_s, x.id] } end
+      if empty != false then data.insert[empty.to_s, nil] end
+      Hash[data]
     end
   end
 end
