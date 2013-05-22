@@ -429,7 +429,8 @@ module Forma
     def initialize(h={})
       h = h.symbolize_keys
       @search_url = h[:search_url]
-      # @value_visible = h[:value_visible] text/hidden
+      @search_width = h[:search_width] || 500
+      @search_height = h[:search_height] || 600
       super(h)
     end
 
@@ -441,7 +442,7 @@ module Forma
       el('div', attrs: { id: self.id, class: 'ff-select-field' }, children: [
         el('input', attrs: { id: "#{self.id}_value", type: 'text', value: "#{val and val.id}" }),
         el('span', attrs: { id: "#{self.id}_text" }, text: val.to_s),
-        el('a', attrs: { class: 'ff-select-link', 'data-id' => self.id, 'data-url' => @search_url }, text: 'select')
+        el('a', attrs: { class: 'ff-select-link', 'data-id' => self.id, 'data-url' => @search_url, 'data-width' => @search_width, 'data-height' => @search_height }, text: 'select')
       ])
     end
   end

@@ -56,9 +56,16 @@
     $('.ff-select-link').click(function() {
       var link = $(this);
       var url = link.attr('data-url');
-      // TODO: calculate center of the screen:
-      // http://stackoverflow.com/questions/504052/determining-position-of-the-browser-window-in-javascript
-      window.open(url, link.attr('data-id'), 'height=300,width=300,location=no');
+      var height = link.attr('data-height');
+      var width = link.attr('data-width');
+      var screenLeft = window.screenLeft;
+      var screenTop = window.screenTop;
+      var browserHeight = window.outerHeight;
+      var browserWidth = window.outerWidth;
+      var left = parseInt((screenLeft + browserWidth - width) / 2);
+      var top = parseInt((screenTop + browserHeight - height) / 2);
+      var properties = ['height=', height, ',width=', width, ',left=', left, ',top=', top];
+      window.open(url, link.attr('data-id'), properties.join(''));
     });
   };
 
