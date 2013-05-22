@@ -52,6 +52,16 @@
     // TODO: any other tooltips?
   };
 
+  var initializeSelectFields = function() {
+    $('.ff-select-link').click(function() {
+      var link = $(this);
+      var url = link.attr('data-url');
+      // TODO: calculate center of the screen:
+      // http://stackoverflow.com/questions/504052/determining-position-of-the-browser-window-in-javascript
+      window.open(url, link.attr('data-id'), 'height=300,width=300,location=no');
+    });
+  };
+
   // google map initialization
 
   var mapsData = {};
@@ -112,6 +122,7 @@
     initializeFormSubmit();
     initializeTooltips();
     initGoogleMaps();
+    initializeSelectFields();
   };
 
   // turbolink initilization!
