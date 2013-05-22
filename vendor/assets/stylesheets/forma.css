@@ -4,6 +4,10 @@
   -moz-user-select: none;
   -ms-user-select: none;
 }
+.ff-form,
+.ff-table {
+  margin-bottom: 16px;
+}
 .ff-form .ff-action,
 .ff-table .ff-action {
   margin-left: 4px;
