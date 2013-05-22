@@ -433,6 +433,10 @@ module Forma
       super(h)
     end
 
+    def view_element(val)
+      el(@tag || 'span', text: val.to_s)
+    end
+
     def edit_element(val)
       el('div', attrs: { id: self.id, class: 'ff-select-field' }, children: [
         el('input', attrs: { id: "#{self.id}_value", type: 'text', value: "#{val and val.id}" }),
