@@ -22,6 +22,7 @@
 .ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-field-after,.ff-table .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-field-after{padding-left:8px;}
 .ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-complex-field .ff-complex-part,.ff-table .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-complex-field .ff-complex-part{display:inline-block;padding-right:8px;}
 .ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-complex-field .ff-field,.ff-table .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-complex-field .ff-field{display:inline-block;border:none;padding-right:8px;}
+.ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-select-field .ff-select-link,.ff-table .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-select-field .ff-select-link{margin-left:8px;}
 .ff-form .ff-tabs .ff-cols:after,.ff-table .ff-tabs .ff-cols:after{content:".";display:block;clear:both;width:0;height:0;overflow:hidden;}
 .ff-form .ff-tabs input,.ff-table .ff-tabs input{padding:4px;margin:0;font-size:13px;}
 .ff-form .ff-tabs select,.ff-table .ff-tabs select{padding:4px;margin:0;font-size:13px;width:auto;}

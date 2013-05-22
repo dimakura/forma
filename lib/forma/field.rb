@@ -442,7 +442,9 @@ module Forma
       el('div', attrs: { id: self.id, class: 'ff-select-field' }, children: [
         el('input', attrs: { id: "#{self.id}_value", type: 'text', value: "#{val and val.id}" }),
         el('span', attrs: { id: "#{self.id}_text" }, text: val.to_s),
-        el('a', attrs: { class: 'ff-select-link', 'data-id' => self.id, 'data-url' => @search_url, 'data-width' => @search_width, 'data-height' => @search_height }, text: 'select')
+        el('a', attrs: { class: 'ff-select-link btn btn-mini', 'data-id' => self.id, 'data-url' => @search_url, 'data-width' => @search_width, 'data-height' => @search_height }, children: [
+          el('i', attrs: { class: 'icon icon-search' })
+        ])
       ])
     end
   end

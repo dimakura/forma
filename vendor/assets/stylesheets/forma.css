@@ -208,6 +208,10 @@
   border: none;
   padding-right: 8px;
 }
+.ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-select-field .ff-select-link,
+.ff-table .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-select-field .ff-select-link {
+  margin-left: 8px;
+}
 .ff-form .ff-tabs .ff-cols:after,
 .ff-table .ff-tabs .ff-cols:after {
   content: ".";
