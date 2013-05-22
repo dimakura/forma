@@ -423,4 +423,22 @@ module Forma
       Hash[data]
     end
   end
+
+  # Selection field.
+  class SelectField < SimpleField
+    def initialize(h={})
+      h = h.symbolize_keys
+      @search_url = h[:search_url]
+      # @value_visible = h[:value_visible] text/hidden
+      super(h)
+    end
+
+    def edit_element(val)
+      el('div', attrs: { id: self.id, class: 'ff-select-field' }, children: [
+        el('input', attrs: { id: "#{self.id}_value", type: 'text', value: "#{val and val.id}" }),
+        el('span', attrs: { id: "#{self.id}_text" }, text: val.to_s),
+        el('a', attrs: { class: 'ff-select-link', 'data-id' => self.id, 'data-url' => @search_url }, text: 'select')
+      ])
+    end
+  end
 end

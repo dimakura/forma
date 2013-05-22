@@ -105,6 +105,14 @@ module Forma
       yield field if block_given?
       add_field(field)
     end
+
+    def select_field(name, search_url, opts = {})
+      opts[:name] = name
+      opts[:search_url] = search_url
+      field = Forma::SelectField.new(opts)
+      yield field if block_given?
+      add_field(field)
+    end
   end
 
   module WithTitleElement
