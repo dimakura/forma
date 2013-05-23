@@ -7,9 +7,9 @@ Gem::Specification.new do |spec|
   spec.name          = 'forma'
   spec.version       = Forma::VERSION
   spec.authors       = ['Dimitri Kurashvili']
-  spec.email         = ['dimitri@c12.ge']
-  spec.description   = %q{killer forms for ruby}
-  spec.summary       = %q{highly informative and flexible forms with ruby}
+  spec.email         = ['dimakura@gmail.com']
+  spec.description   = %q{rich forms for ruby}
+  spec.summary       = %q{rich forms for ruby}
   spec.homepage      = 'http://github.com/dimakura/forma'
   spec.license       = 'MIT'
 
