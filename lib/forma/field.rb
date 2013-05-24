@@ -419,7 +419,7 @@ module Forma
     def normalize_data(collection, empty)
       if collection.is_a?(Hash) then data = collection.to_a
       else data = collection.map { |x| [x.to_s, x.id] } end
-      if empty != false then data.insert[empty.to_s, nil] end
+      if empty != false then data = ([[empty.to_s, nil]] + data) end
       Hash[data]
     end
   end
