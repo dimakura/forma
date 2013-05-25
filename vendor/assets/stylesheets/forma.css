@@ -298,6 +298,21 @@
   border: none;
   padding-right: 8px;
 }
+.ff-form .ff-select-field,
+.ff-table .ff-select-field {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  padding: 3px 3px 2px 3px;
+  background: #ffffcc;
+}
+.ff-form .ff-select-field .ff-select-label,
+.ff-table .ff-select-field .ff-select-label {
+  min-width: 100px;
+}
 .ff-empty {
   color: #a0a0a0;
 }
