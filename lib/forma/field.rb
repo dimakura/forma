@@ -449,11 +449,21 @@ module Forma
     end
 
     def edit_element(val)
+      text_element = el(
+        'span',
+        attrs: { id: "#{self.id}_text", class: ['ff-select-label', ('ff-empty' if val.blank?)] },
+        text: (val.present? ? val.to_s : Forma.config.texts.empty)
+      )
       el('div', attrs: { id: self.id, class: 'ff-select-field' }, children: [
         el('input', attrs: { id: "#{self.id}_value", type: 'hidden', value: "#{val and val.id}", name: parameter_name }),
-        el('span', attrs: { id: "#{self.id}_text", class: 'ff-select-label' }, text: val.to_s),
-        el('a', attrs: { class: 'ff-select-link btn btn-mini', 'data-id' => self.id, 'data-url' => @search_url, 'data-width' => @search_width, 'data-height' => @search_height }, children: [
-          el('i', attrs: { class: 'icon icon-search' })
+        text_element,
+        el('div', attrs: { class: 'btn-group' }, children: [
+          el('a', attrs: { class: 'ff-select-link btn btn-mini', 'data-id' => self.id, 'data-url' => @search_url, 'data-width' => @search_width, 'data-height' => @search_height }, children: [
+            el('i', attrs: { class: 'icon icon-search' })
+          ]),
+          el('a', attrs: { class: 'ff-clear-selection-action btn btn-mini', 'data-id' => self.id }, children: [
+            el('i', attrs: { class: 'icon icon-trash' })
+          ])
         ])
       ])
     end

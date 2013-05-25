@@ -73,10 +73,22 @@
     $('.ff-select-action').click(function() {
       var valueId = window.name + '_value';
       var labelId = window.name + '_text';
-      window.opener.$('#' + valueId).val($(this).attr('data-value-id'));
-      window.opener.$('#' + labelId).text($(this).attr('data-value-text'));
+      var valueElement = window.opener.$('#' + valueId);
+      var labelElement = window.opener.$('#' + labelId);
+      valueElement.val($(this).attr('data-value-id'));
+      labelElement.text($(this).attr('data-value-text'));
+      labelElement.removeClass('ff-empty');
       window.close();
       return false;
+    });
+    $('.ff-clear-selection-action').click(function() {
+      var valueId = $(this).attr('data-id') + '_value';
+      var labelId = $(this).attr('data-id') + '_text';
+      var valueElement = $('#' + valueId);
+      var labelElement = $('#' + labelId);
+      valueElement.val(null);
+      labelElement.text('(empty)');
+      labelElement.addClass('ff-empty');
     });
   };
 

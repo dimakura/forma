@@ -202,13 +202,12 @@
 }
 .ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-select-field .ff-select-link,
 .ff-table .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-select-field .ff-select-link {
-  margin-left: 8px;
+  margin-left: 4px;
 }
 .ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-select-field .ff-select-label,
 .ff-table .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-select-field .ff-select-label {
   display: inline-block;
   padding: 0 4px;
-  min-width: 200px;
 }
 .ff-form .ff-tabs .ff-cols:after,
 .ff-table .ff-tabs .ff-cols:after {
