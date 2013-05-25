@@ -154,26 +154,22 @@ module Forma
     end
 
     def value
-      val = super
-      if val then val
-      else
-        @fields.each { |f| f.model = self.model }
-        @fields.map { |f| f.value }
-      end
+      # val = super
+      # if val then val
+      # else
+      #   @fields.each { |f| f.model = self.model }
+      #   @fields.map { |f| f.value }
+      # end
+      @model
     end
 
     def edit_element(val)
       el(
         'div',
         attrs: { class: 'ff-complex-field' },
-        children: @fields.zip(val).map { |fv|
-          field = fv[0]
-          value = fv[1]
-          el(
-            'div',
-            attrs: { class: 'ff-complex-part' },
-            children: [ field.readonly ? field.view_element(value) : field.edit_element(value) ]
-          )
+         children: @fields.map { |f|
+          f.model = self.model
+          el('div', attrs: { class: 'ff-complex-part' }, children: [ f.to_html(true) ])
         }
       )
     end
@@ -182,12 +178,9 @@ module Forma
       el(
         'div',
         attrs: { class: 'ff-complex-field' },
-        children: @fields.zip(val).map { |fv|
-          el(
-            'div',
-            attrs: { class: 'ff-complex-part' },
-            children: [ fv[0].view_element(fv[1]) ]
-          )
+         children: @fields.map { |f|
+          f.model = self.model
+          el('div', attrs: { class: 'ff-complex-part' }, children: [ f.to_html(false) ])
         }
       )
     end
