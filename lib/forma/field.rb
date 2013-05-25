@@ -154,12 +154,6 @@ module Forma
     end
 
     def value
-      # val = super
-      # if val then val
-      # else
-      #   @fields.each { |f| f.model = self.model }
-      #   @fields.map { |f| f.value }
-      # end
       @model
     end
 
@@ -183,6 +177,14 @@ module Forma
           el('div', attrs: { class: 'ff-complex-part' }, children: [ f.to_html(false) ])
         }
       )
+    end
+
+    def errors
+      @fields.map { |f| f.model = @model; f.errors }.flatten
+    end
+
+    def has_errors?
+      errors.any?
     end
   end
 
