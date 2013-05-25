@@ -69,6 +69,17 @@
     });
   };
 
+  var initializeSelectActions = function() {
+    $('.ff-select-action').click(function() {
+      var valueId = window.name + '_value';
+      var labelId = window.name + '_text';
+      window.opener.$('#' + valueId).val($(this).attr('data-value-id'));
+      window.opener.$('#' + labelId).text($(this).attr('data-value-text'));
+      window.close();
+      return false;
+    });
+  };
+
   // google map initialization
 
   var mapsData = {};
@@ -129,7 +140,9 @@
     initializeFormSubmit();
     initializeTooltips();
     initGoogleMaps();
+    // selectors
     initializeSelectFields();
+    initializeSelectActions();
   };
 
   // turbolink initilization!

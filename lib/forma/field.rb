@@ -48,14 +48,7 @@ module Forma
     end
 
     def parameter_name
-      chain = name_as_chain; length = chain.length
-      p_name = ''
-      chain.reverse.each_with_index do |n, i|
-        if i == 0 then p_name = n
-        elsif i == length - 1 then p_name = "#{n}[#{p_name}]"
-        else p_name = "#{n}_attributes[#{p_name}]" end
-      end
-      p_name
+      parameter_name_from_chain(name_as_chain)
     end
 
     # Convert this element into HTML.
@@ -102,6 +95,17 @@ module Forma
     end
 
     protected
+
+    def parameter_name_from_chain(chain)
+      length = chain.length
+      p_name = ''
+      chain.reverse.each_with_index do |n, i|
+        if i == 0 then p_name = n
+        elsif i == length - 1 then p_name = "#{n}[#{p_name}]"
+        else p_name = "#{n}_attributes[#{p_name}]" end
+      end
+      p_name
+    end
 
     def icon_element
       el('img', attrs: { src: eval_icon, style: { 'margin-right' => '4px' } }) if @icon.present?
@@ -434,14 +438,20 @@ module Forma
       super(h)
     end
 
+    def parameter_name
+      chain = name_as_chain
+      chain[chain.length - 1] = "#{chain.last}_id"
+      parameter_name_from_chain(chain)
+    end
+
     def view_element(val)
       el(@tag || 'span', text: val.to_s)
     end
 
     def edit_element(val)
       el('div', attrs: { id: self.id, class: 'ff-select-field' }, children: [
-        el('input', attrs: { id: "#{self.id}_value", type: 'text', value: "#{val and val.id}" }),
-        el('span', attrs: { id: "#{self.id}_text" }, text: val.to_s),
+        el('input', attrs: { id: "#{self.id}_value", type: 'hidden', value: "#{val and val.id}", name: parameter_name }),
+        el('span', attrs: { id: "#{self.id}_text", class: 'ff-select-label' }, text: val.to_s),
         el('a', attrs: { class: 'ff-select-link btn btn-mini', 'data-id' => self.id, 'data-url' => @search_url, 'data-width' => @search_width, 'data-height' => @search_height }, children: [
           el('i', attrs: { class: 'icon icon-search' })
         ])

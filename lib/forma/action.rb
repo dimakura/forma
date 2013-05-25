@@ -15,21 +15,34 @@ module Forma
       @confirm = h[:confirm]
       @as = h[:as]
       @tooltip = h[:tooltip]
+      @select = h[:select]
     end
 
     def to_html(model)
-      children = [ (el('img', attrs: { src: @icon }) if @icon.present?), el('span', text: eval_label(model)) ]
-      button = (@as.to_s == 'button')
-      el(
-        'a',
-        attrs: {
-          id: @id,
-          class: ['ff-action', ('btn' if button)],
-          href: eval_url(model), 'data-method' => @method, 'data-confirm' => @confirm,
-          'data-original-title' => @tooltip
-        },
-        children: children
-      )
+      if @select
+        el(
+          'a',
+          attrs: {
+            id: @id, class: ['ff-action', 'btn', 'btn-mini', 'ff-select-action'],
+            href: '#', 'data-original-title' => @tooltip,
+            'data-value-id' => model.id, 'data-value-text' => model.to_s
+          },
+          children: [ el('i', attrs: { class: 'icon icon-download' }) ]
+        )
+      else
+        children = [ (el('img', attrs: { src: @icon }) if @icon.present?), el('span', text: eval_label(model)) ]
+        button = (@as.to_s == 'button')
+        el(
+          'a',
+          attrs: {
+            id: @id,
+            class: ['ff-action', ('btn btn' if button)],
+            href: eval_url(model), 'data-method' => @method, 'data-confirm' => @confirm,
+            'data-original-title' => @tooltip
+          },
+          children: children
+        )
+      end
     end
 
     private
