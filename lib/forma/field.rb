@@ -171,7 +171,7 @@ module Forma
           value = fv[1]
           el(
             'div',
-            attrs: { class: 'ff-field' },
+            attrs: { class: 'ff-complex-part' },
             children: [ field.readonly ? field.view_element(value) : field.edit_element(value) ]
           )
         }

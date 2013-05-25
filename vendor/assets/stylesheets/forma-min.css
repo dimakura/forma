@@ -18,8 +18,6 @@
 .ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-label,.ff-table .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-label{display:table-cell;vertical-align:top;position:relative;width:150px;padding:4px 4px 4px 8px;background-color:#c8ffb0;border-right:3px solid transparent;}.ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-label.ff-required,.ff-table .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-label.ff-required{border-right:3px solid #cf0000;}
 .ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-label .ff-field-hint,.ff-table .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-label .ff-field-hint{display:block;height:16px;width:16px;position:absolute;right:0;top:8px;background-position:-96px -96px;}
 .ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-value,.ff-table .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-value{display:table-cell;padding:4px;vertical-align:top;}.ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-value .ff-field-actions,.ff-table .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-value .ff-field-actions{display:inline-block;border-left:1px solid #b1b1b1;padding-left:8px;margin-left:8px;}
-.ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-complex-field .ff-complex-part,.ff-table .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-complex-field .ff-complex-part{display:inline-block;padding-right:8px;}
-.ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-complex-field .ff-field,.ff-table .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-complex-field .ff-field{display:inline-block;border:none;padding-right:8px;}
 .ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-select-field .ff-select-link,.ff-table .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-select-field .ff-select-link{margin-left:4px;}
 .ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-select-field .ff-select-label,.ff-table .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-select-field .ff-select-label{display:inline-block;padding:0 4px;}
 .ff-form .ff-tabs .ff-cols:after,.ff-table .ff-tabs .ff-cols:after{content:".";display:block;clear:both;width:0;height:0;overflow:hidden;}
@@ -35,6 +33,8 @@
 .ff-form table.ff-common-table tbody td,.ff-table table.ff-common-table tbody td{padding:4px 8px;border-bottom:1px solid #3316ff;}
 .ff-form .ff-field-before,.ff-table .ff-field-before{padding-right:8px;}
 .ff-form .ff-field-after,.ff-table .ff-field-after{padding-left:8px;}
+.ff-form .ff-complex-field .ff-complex-part,.ff-table .ff-complex-field .ff-complex-part{display:inline-block;padding-right:8px;}
+.ff-form .ff-complex-field .ff-field,.ff-table .ff-complex-field .ff-field{display:inline-block;border:none;padding-right:8px;}
 .ff-empty{color:#a0a0a0;}
 .ff-table-empty{padding:32px;text-align:center;background-color:#f6f6f6;border:1px solid #a0a0a0;border-top:none;}
 .ff-map{width:100%;height:100%;overflow:hidden;position:absolute;top:0;left:0;right:0;bottom:0;}.ff-map img{max-width:none;}

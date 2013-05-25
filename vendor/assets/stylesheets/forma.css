@@ -189,17 +189,6 @@
   padding-left: 8px;
   margin-left: 8px;
 }
-.ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-complex-field .ff-complex-part,
-.ff-table .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-complex-field .ff-complex-part {
-  display: inline-block;
-  padding-right: 8px;
-}
-.ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-complex-field .ff-field,
-.ff-table .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-complex-field .ff-field {
-  display: inline-block;
-  border: none;
-  padding-right: 8px;
-}
 .ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-select-field .ff-select-link,
 .ff-table .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-select-field .ff-select-link {
   margin-left: 4px;
@@ -297,6 +286,17 @@
 .ff-form .ff-field-after,
 .ff-table .ff-field-after {
   padding-left: 8px;
+}
+.ff-form .ff-complex-field .ff-complex-part,
+.ff-table .ff-complex-field .ff-complex-part {
+  display: inline-block;
+  padding-right: 8px;
+}
+.ff-form .ff-complex-field .ff-field,
+.ff-table .ff-complex-field .ff-field {
+  display: inline-block;
+  border: none;
+  padding-right: 8px;
 }
 .ff-empty {
   color: #a0a0a0;
