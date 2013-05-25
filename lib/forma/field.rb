@@ -167,10 +167,12 @@ module Forma
         'div',
         attrs: { class: 'ff-complex-field' },
         children: @fields.zip(val).map { |fv|
+          field = fv[0]
+          value = fv[1]
           el(
             'div',
             attrs: { class: 'ff-field' },
-            children: [ fv[0].edit_element(fv[1]) ]
+            children: [ field.readonly ? field.view_element(value) : field.edit_element(value) ]
           )
         }
       )
