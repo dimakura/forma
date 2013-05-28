@@ -112,11 +112,11 @@ module Forma
     end
 
     def before_element
-      el('span', text: before, attrs: { class: 'ff-field-before' }) if before.present?
+      el('span', text: eval_with_model(before), attrs: { class: 'ff-field-before' }) if before.present?
     end
 
     def after_element
-      el('span', text: after, attrs: { class: 'ff-field-after' }) if after.present?
+      el('span', text: eval_with_model(after), attrs: { class: 'ff-field-after' }) if after.present?
     end
 
     def empty_element
@@ -130,11 +130,17 @@ module Forma
     end
 
     def eval_url
-      @url.is_a?(Proc) ? @url.call(self.model) : @url.to_s
+      eval_with_model(@url)
     end
 
     def eval_icon
-      @icon.is_a?(Proc) ? @icon.call(self.model) : @icon.to_s
+      eval_with_model(@icon)
+    end
+
+    private
+
+    def eval_with_model(val)
+      val.is_a?(Proc) ? val.call(self.model) : val.to_s
     end
   end
 
