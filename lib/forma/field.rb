@@ -435,19 +435,26 @@ module Forma
   class ArrayField < SimpleField
     def initialize(h={})
       h = h.symbolize_keys
+      @item_actions = h[:item_actions] || []
       super(h)
     end
 
     def view_element(val)
       el('div', attrs: { class: ['ff-array-field'] }, children: val.map { |x| 
         el('div', attrs: { class: 'ff-array-part' }, children: [
-          el('span', text: x.to_s)
+          el('span', text: x.to_s),
+          (el('span', attrs: { class: 'ff-actions' }, children: @item_actions.map { |a| a.to_html(x) } ) if @item_actions.any?)
         ])
       })
     end
 
     def edit_element(val)
       el('div', text: '< NO IMPLEMENTATION >')
+    end
+
+    def item_action(url, h={})
+      h[:url] = url
+      @item_actions << Action.new(h)
     end
   end
 

@@ -215,6 +215,10 @@
   border: 1px solid #ddd;
   background: #fafafa;
 }
+.ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-array-field .ff-array-part .ff-action,
+.ff-table .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-array-field .ff-array-part .ff-action {
+  margin-left: 4px;
+}
 .ff-form .ff-tabs .ff-cols:after,
 .ff-table .ff-tabs .ff-cols:after {
   content: ".";
