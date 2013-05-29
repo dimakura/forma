@@ -58,7 +58,7 @@ module Forma::Html
 
     def to_s
       if @name.present? and @value.present?
-        %Q{#{@name}="#{@value}"}
+        %Q{#{@name}="#{ERB::Util.html_escape(@value)}"}
       end
     end
   end
