@@ -113,6 +113,13 @@ module Forma
       yield field if block_given?
       add_field(field)
     end
+
+    def array_field(name, opts = {})
+      opts[:name] = name
+      field = Forma::ArrayField.new(opts)
+      yield field if block_given?
+      add_field(field)
+    end
   end
 
   module WithTitleElement

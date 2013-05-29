@@ -431,6 +431,26 @@ module Forma
     end
   end
 
+  # Array field.
+  class ArrayField < SimpleField
+    def initialize(h={})
+      h = h.symbolize_keys
+      super(h)
+    end
+
+    def view_element(val)
+      el('div', attrs: { class: ['ff-array-field'] }, children: val.map { |x| 
+        el('div', attrs: { class: 'ff-array-part' }, children: [
+          el('span', text: x.to_s)
+        ])
+      })
+    end
+
+    def edit_element(val)
+      el('div', text: '< NO IMPLEMENTATION >')
+    end
+  end
+
   # Selection field.
   class SelectField < SimpleField
     def initialize(h={})
