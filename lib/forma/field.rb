@@ -139,8 +139,8 @@ module Forma
 
     private
 
-    def eval_with_model(val)
-      val.is_a?(Proc) ? val.call(self.model) : val.to_s
+    def eval_with_model(val, h={})
+      val.is_a?(Proc) ? val.call(h[:model] || self.model) : val.to_s
     end
   end
 
@@ -436,13 +436,14 @@ module Forma
     def initialize(h={})
       h = h.symbolize_keys
       @item_actions = h[:item_actions] || []
+      @item_url = h[:item_url]
       super(h)
     end
 
     def view_element(val)
       el('div', attrs: { class: ['ff-array-field'] }, children: val.map { |x| 
         el('div', attrs: { class: 'ff-array-part' }, children: [
-          el('span', text: x.to_s),
+          if @item_url then el('a', attrs: { href: eval_with_model(@item_url, model: x) }, text: x.to_s) else el('span', text: x.to_s) end,
           (el('span', attrs: { class: 'ff-actions' }, children: @item_actions.map { |a| a.to_html(x) } ) if @item_actions.any?)
         ])
       })
