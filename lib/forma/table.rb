@@ -108,7 +108,14 @@ module Forma
       if @paginate and @context
         self_from_block = eval("self", @context.binding)
         s = self_from_block.send(:will_paginate, @models, @paginate_options)
-        el('div', html: s.to_s)
+        paginate = el('div', html: s.to_s)
+        el('div', attrs: { class: 'ff-paginate' }, children: [
+          paginate,
+          el('div', attrs: { class: 'ff-totals' }, children: [
+            el('code', text: "#{@models.total_entries}"),
+            el('span', text: @paginate_options[:records] || 'records')
+          ] )
+        ])
       end
     end
   end

@@ -304,6 +304,14 @@
   padding: 4px 8px;
   border-bottom: 1px solid #3316ff;
 }
+.ff-form .ff-paginate .ff-totals,
+.ff-table .ff-paginate .ff-totals {
+  padding: 4px;
+}
+.ff-form .ff-paginate .ff-totals span,
+.ff-table .ff-paginate .ff-totals span {
+  padding-left: 4px;
+}
 .ff-form .ff-field-before,
 .ff-table .ff-field-before {
   padding-right: 8px;
