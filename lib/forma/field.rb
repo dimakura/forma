@@ -26,6 +26,7 @@ module Forma
       @model_name = h[:model_name]; @child_model_name = h[:child_model_name]
       @actions = h[:actions] || []
       @tag = h[:tag]
+      @empty = h[:empty]
     end
 
     def action(url, h={})
@@ -122,7 +123,7 @@ module Forma
     end
 
     def empty_element
-      el('span', attrs: { class: 'ff-empty' }, text: Forma.config.texts.empty)
+      el('span', attrs: { class: 'ff-empty' }, text: Forma.config.texts.empty) unless @empty == false
     end
 
     def actions_element
@@ -378,15 +379,30 @@ module Forma
 
   # Image upload field.
   class ImageField < SimpleField
+    def initialize(h = {})
+      h = h.symbolize_keys
+      @popover = h[:popover]
+      @height = h[:height] || 200
+      @width = h[:width] || 200
+      super(h)
+    end
+
     def view_element(val)
-      el('img', attrs: { src: val.url } )
+      popover_data = {}
+      if @popover
+        popover_data['data-original-title'] = eval_with_model(@popover[:title])
+        url = eval_with_model(@popover[:url])
+        popover_data['data-content'] = %Q{<div style="height: #{@height}px; width: #{@width}px;"><img src="#{url}"></img></div>}
+        popover_data['data-html'] = 'true'
+        popover_data['data-placement'] = @popover[:placement]
+        el('img', attrs: { src: val.url, class: 'ff-popover' }.merge(popover_data))
+      else
+        el('img', attrs: { src: val.url })
+      end
     end
 
     def edit_element(val)
-      el('input', attrs: {
-        name: parameter_name,
-        type: 'file',
-      })
+      el('input', attrs: { name: parameter_name, type: 'file', })
     end
   end
 

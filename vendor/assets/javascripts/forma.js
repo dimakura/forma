@@ -144,6 +144,10 @@
     }
   };
 
+  var initPopovers = function() {
+    $('.ff-popover').popover({ trigger: 'click' });
+  };
+
   // prepare function
 
   var ready = function() {
@@ -152,6 +156,7 @@
     initializeFormSubmit();
     initializeTooltips();
     initGoogleMaps();
+    initPopovers();
     // selectors
     initializeSelectFields();
     initializeSelectActions();
