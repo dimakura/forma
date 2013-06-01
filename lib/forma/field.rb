@@ -87,7 +87,9 @@ module Forma
     end
 
     def localized_label
-      self.label.present? ? self.label : I18n.t(localization_key, default: self.name)
+      unless self.label == false
+        self.label.present? ? self.label : I18n.t(localization_key, default: self.name)
+      end
     end
 
     def localized_hint
