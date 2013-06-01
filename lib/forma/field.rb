@@ -390,8 +390,18 @@ module Forma
 
   # Number field.
   class NumberField < TextField
+    include Forma::Utils
+    def initialize(h = {})
+      h = h.symbolize_keys
+      @min_digits = h[:min_digits] || Forma.config.num.min_digits
+      @max_digits = h[:max_digits] || Forma.config.num.max_digits
+      @separator = h[:separator] || Forma.config.num.separator
+      @delimiter = h[:delimiter] || Forma.config.num.delimiter
+      super(h)
+    end
+
     def view_element(val)
-      el('code', text: "#{val}")
+      el('code', text: "#{number_format(val.to_f, max_digits: @max_digits, min_digits: @min_digits)}")
     end
   end
 

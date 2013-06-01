@@ -34,9 +34,13 @@ module Forma
   class NumberConfig
     attr_accessor :delimiter
     attr_accessor :separator
+    attr_accessor :max_digits
+    attr_accessor :min_digits
     def initialize
       self.delimiter = ','
       self.separator = '.'
+      self.max_digits = 3
+      self.min_digits = 2
     end
   end
 
