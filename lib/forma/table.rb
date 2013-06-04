@@ -111,10 +111,10 @@ module Forma
         paginate = el('div', html: s.to_s)
         el('div', attrs: { class: 'ff-paginate' }, children: [
           paginate,
-          el('div', attrs: { class: 'ff-totals' }, children: [
+          (el('div', attrs: { class: 'ff-totals' }, children: [
             el('code', text: "#{@models.total_entries}"),
             el('span', text: @paginate_options[:records] || 'records')
-          ] )
+          ]) if @models.total_entries > 0)
         ])
       end
     end
