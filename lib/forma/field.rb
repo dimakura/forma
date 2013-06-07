@@ -27,6 +27,7 @@ module Forma
       @actions = h[:actions] || []
       @tag = h[:tag]
       @empty = h[:empty]
+      @force_nonempty = h[:force_nonempty]
     end
 
     def action(url, h={})
@@ -59,7 +60,7 @@ module Forma
         edit = edit_element(val)
         el('div', children: [ before_element, icon_element, edit, after_element, actions_element ])
       else
-        if val.present? or val == false or val.respond_to?(:count)
+        if val.present? or val == false or @force_nonempty
           view = view_element(val)
           view = el('a', attrs: { href: eval_url }, children: [ view ]) if @url
           el('div', children: [ before_element, icon_element, view, after_element, actions_element ])
@@ -492,6 +493,7 @@ module Forma
     def initialize(h={})
       h = h.symbolize_keys
       h[:label] = false
+      h[:force_nonempty] = true
       @table = Forma::Table.new(h[:table] || {})
       super(h)
     end
