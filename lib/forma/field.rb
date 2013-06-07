@@ -59,7 +59,7 @@ module Forma
         edit = edit_element(val)
         el('div', children: [ before_element, icon_element, edit, after_element, actions_element ])
       else
-        if val.present? or val == false
+        if val.present? or val == false or val.respond_to?(:count)
           view = view_element(val)
           view = el('a', attrs: { href: eval_url }, children: [ view ]) if @url
           el('div', children: [ before_element, icon_element, view, after_element, actions_element ])
