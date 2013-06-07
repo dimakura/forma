@@ -478,12 +478,36 @@ module Forma
     end
 
     def edit_element(val)
-      el('div', text: '< NO IMPLEMENTATION >')
+      el('div', text: 'NO IMPLEMENTATION')
     end
 
     def item_action(url, h={})
       h[:url] = url
       @item_actions << Action.new(h)
+    end
+  end
+
+  # Table field.
+  class TableField < SimpleField
+    def initialize(h={})
+      h = h.symbolize_keys
+      h[:label] = false
+      @table = Forma::Table.new(h[:table] || {})
+      super(h)
+    end
+
+    def view_element(val)
+      @table.models = val
+      @table.to_html
+    end
+
+    def edit_element(val)
+      el('div', text: 'NO IMPLEMENTATION')
+    end
+
+    def table
+      yield @table if block_given?
+      @table
     end
   end
 

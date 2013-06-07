@@ -138,7 +138,10 @@ module Forma
           ]
         )
       end
-      value_element = el('div', attrs: { class: (fld.required ? ['ff-value', 'ff-required'] : ['ff-value']) }, children: [
+      value_class = ['ff-value']
+      value_class << 'ff-required' if fld.required
+      value_class << 'ff-value-no-label' if fld.label == false
+      value_element = el('div', attrs: { class: value_class }, children: [
         fld.to_html(@edit), (field_error_element(fld.errors) if has_errors),
       ])
       el(

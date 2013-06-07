@@ -120,6 +120,13 @@ module Forma
       yield field if block_given?
       add_field(field)
     end
+
+    def table_field(name, opts = {})
+      opts[:name] = name
+      field = Forma::TableField.new(opts)
+      yield field if block_given?
+      add_field(field)
+    end
   end
 
   module WithTitleElement

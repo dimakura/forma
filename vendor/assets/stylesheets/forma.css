@@ -189,6 +189,10 @@
   padding-left: 8px;
   margin-left: 8px;
 }
+.ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-value.ff-value-no-label,
+.ff-table .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-value.ff-value-no-label {
+  display: block;
+}
 .ff-form .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-select-field,
 .ff-table .ff-tabs .ff-cols .ff-col-inner .ff-field .ff-select-field {
   display: inline-block;

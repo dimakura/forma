@@ -6,6 +6,7 @@ module Forma
     include Forma::WithTitleElement
     attr_reader :collapsible, :collapsed, :icon, :title
     attr_reader :title_actions
+    attr_accessor :models
 
     def initialize(h = {})
       h = h.symbolize_keys
