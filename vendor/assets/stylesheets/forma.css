@@ -62,15 +62,15 @@
 }
 .ff-form .ff-collapse,
 .ff-table .ff-collapse {
-  background: url(/assets/glyphicons-halflings.png) -313px -119px;
+  background: url(/glyphicons-halflings.png) -313px -119px;
 }
 .ff-form .ff-collapsed.ff-collapse,
 .ff-table .ff-collapsed.ff-collapse {
-  background: url(/assets/glyphicons-halflings.png) -456px -72px;
+  background: url(/glyphicons-halflings.png) -456px -72px;
 }
 .ff-form .ff-field-hint,
 .ff-table .ff-field-hint {
-  background: url(/assets/glyphicons-halflings.png) -456px -72px;
+  background: url(/glyphicons-halflings.png) -456px -72px;
 }
 .ff-form .ff-tabs,
 .ff-table .ff-tabs {
