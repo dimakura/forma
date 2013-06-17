@@ -109,7 +109,7 @@ module Forma
     end
 
     def auth_token_element
-      if @auth_token.present?
+      if @auth_token.present? and @method != 'get'
         el('div', attrs: { style: {padding: 0, margin: 0, height: 0, width: 0, display: 'inline'} }, children: [
           el('input', attrs: { type: 'hidden', name: 'authenticity_token', value: @auth_token })
         ])
