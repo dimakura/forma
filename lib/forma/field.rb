@@ -46,7 +46,7 @@ module Forma
 
     def id
       if @id then @id
-      else name_as_chain.flatten.join('_') end
+      else name_as_chain.select{ |x| x.present? }.join('_') end
     end
 
     def parameter_name
@@ -103,7 +103,7 @@ module Forma
     def parameter_name_from_chain(chain)
       length = chain.length
       p_name = ''
-      chain.reverse.each_with_index do |n, i|
+      chain.select{ |x| x.present? }.reverse.each_with_index do |n, i|
         if i == 0 then p_name = n
         elsif i == length - 1 then p_name = "#{n}[#{p_name}]"
         else p_name = "#{n}_attributes[#{p_name}]" end
