@@ -444,7 +444,7 @@ module Forma
       data = normalize_data(@collection, @empty)
       selection = val.present? ? val : @default
       el('select', attrs: { name: parameter_name }, children: data.map { |text, value|
-        if value.nil? then el('option', attrs: { selected: selection.blank? , value: "nil"}, text: text)
+        if value.nil? then el('option', attrs: { selected: selection.blank? , value: ""}, text: text)
         else el('option', attrs: { selected: (true if selection.to_s == value.to_s), value: value }, text: text)
         end
       })
