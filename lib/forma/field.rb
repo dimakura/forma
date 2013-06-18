@@ -390,15 +390,16 @@ module Forma
 
     def view_element(val)
       popover_data = {}
+      image_url = val.respond_to?(:url) ? val.url : val.to_s
       if @popover
         popover_data['data-original-title'] = eval_with_model(@popover[:title])
         url = eval_with_model(@popover[:url])
         popover_data['data-content'] = %Q{<div style="height: #{@height}px; width: #{@width}px;"><img src="#{url}"></img></div>}
         popover_data['data-html'] = 'true'
         popover_data['data-placement'] = @popover[:placement]
-        el('img', attrs: { src: val.url, class: 'ff-popover' }.merge(popover_data))
+        el('img', attrs: { src: image_url, class: 'ff-popover' }.merge(popover_data))
       else
-        el('img', attrs: { src: val.url })
+        el('img', attrs: { src: image_url })
       end
     end
 
