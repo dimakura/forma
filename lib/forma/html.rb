@@ -44,7 +44,7 @@ module Forma::Html
   module_function :attr
   module_function :el
 
-  private
+#  private
 
   class Attr; end
 
