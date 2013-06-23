@@ -42,7 +42,7 @@ module Forma
       else
         chain = [ self.model_name, self.name ]
       end
-      chain.map { |x| x.gsub '.', '_' }
+      chain.map { |x| x.to_s.gsub '.', '_' }
     end
 
     def id
