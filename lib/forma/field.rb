@@ -28,6 +28,7 @@ module Forma
       @tag = h[:tag]
       @empty = h[:empty]
       @force_nonempty = h[:force_nonempty]
+      @class = h[:class]
     end
 
     def action(url, h={})
@@ -64,10 +65,9 @@ module Forma
         if val.present? or val == false or @force_nonempty
           view = view_element(val)
           view = el('a', attrs: { href: eval_url }, children: [ view ]) if @url
-          el('div', children: [ before_element, icon_element, view, after_element, actions_element ])
+          el('div', attrs: { class: (@class ? eval_with_model(@class) : nil) }, children: [ before_element, icon_element, view, after_element, actions_element ])
         else
-          empty = empty_element
-          el('div', children: [ empty, actions_element ])
+          el('div', children: [ empty_element, actions_element ])
         end
       end
     end
