@@ -27,7 +27,7 @@ module Forma
             attrs: {
               id: @id, class: ['ff-action', 'btn', 'btn-mini', 'ff-select-action'],
               href: '#', 'data-original-title' => @tooltip,
-              'data-value-id' => model.id, 'data-value-text' => model.to_s
+              'data-value-id' => model.id, 'data-value-type' => model.class.name, 'data-value-text' => model.to_s
             },
             children: [ el('i', attrs: { class: 'icon icon-download' }) ]
           )
