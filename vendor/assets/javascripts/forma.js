@@ -85,11 +85,14 @@
       return false;
     });
     $('.ff-clear-selection-action').click(function() {
-      var valueId = $(this).attr('data-id') + '_value';
+      var valueId = $(this).attr('data-id') + '_id_value';
       var labelId = $(this).attr('data-id') + '_text';
+      var typeId  = $(this).attr('data-id') + '_type_value';
       var valueElement = $('#' + valueId);
       var labelElement = $('#' + labelId);
+      var typeElement  = $('#' + typeId);
       valueElement.val(null);
+      if (typeElement) { typeElement.val(null); }
       labelElement.text('(empty)');
       labelElement.addClass('ff-empty');
     });
