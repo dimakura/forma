@@ -522,37 +522,46 @@ module Forma
       @search_url = h[:search_url]
       @search_width = h[:search_width] || 500
       @search_height = h[:search_height] || 600
+      @polymorphic = h[:polymorphic]
       super(h)
     end
 
-    def parameter_name
+    def id_field_name
       chain = name_as_chain
       chain[chain.length - 1] = "#{chain.last}_id"
       parameter_name_from_chain(chain)
     end
 
-    def view_element(val)
-      el(@tag || 'span', text: val.to_s)
+    def type_field_name
+      chain = name_as_chain
+      chain[chain.length - 1] = "#{chain.last}_type"
+      parameter_name_from_chain(chain)
     end
 
+    def view_element(val); el(@tag || 'span', text: val.to_s) end
+
     def edit_element(val)
+      inputs = [ el('input', attrs: { id: "#{self.id}_id_value", type: 'hidden', value: "#{val and val.id}", name: id_field_name }) ]
+      if @polymorphic
+        inputs <<  el('input',
+          attrs: { id: "#{self.id}_type_value", type: 'hidden', value: "#{val and val.class.to_s}", name: type_field_name }
+        )
+      end
       text_element = el(
         'span',
         attrs: { id: "#{self.id}_text", class: ['ff-select-label', ('ff-empty' if val.blank?)] },
         text: (val.present? ? val.to_s : Forma.config.texts.empty)
       )
-      el('div', attrs: { id: self.id, class: 'ff-select-field' }, children: [
-        el('input', attrs: { id: "#{self.id}_value", type: 'hidden', value: "#{val and val.id}", name: parameter_name }),
-        text_element,
-        el('div', attrs: { class: 'btn-group' }, children: [
-          el('a', attrs: { class: 'ff-select-link btn btn-mini', 'data-id' => self.id, 'data-url' => @search_url, 'data-width' => @search_width, 'data-height' => @search_height }, children: [
-            el('i', attrs: { class: 'icon icon-search' })
-          ]),
-          el('a', attrs: { class: 'ff-clear-selection-action btn btn-mini', 'data-id' => self.id }, children: [
-            el('i', attrs: { class: 'icon icon-trash' })
-          ])
+      buttons = el('div', attrs: { class: 'btn-group' }, children: [
+        el('a', attrs: { class: 'ff-select-link btn btn-mini', 'data-id' => self.id, 'data-url' => @search_url, 'data-width' => @search_width, 'data-height' => @search_height }, children: [
+          el('i', attrs: { class: 'icon icon-search' })
+        ]),
+        el('a', attrs: { class: 'ff-clear-selection-action btn btn-mini', 'data-id' => self.id }, children: [
+          el('i', attrs: { class: 'icon icon-trash' })
         ])
       ])
+      children = inputs + [ text_element, buttons ]
+      el('div', attrs: { id: self.id, class: 'ff-select-field' }, children: children)
     end
   end
 end

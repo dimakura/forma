@@ -71,11 +71,14 @@
 
   var initializeSelectActions = function() {
     $('.ff-select-action').click(function() {
-      var valueId = window.name + '_value';
+      var valueId = window.name + '_id_value';
+      var typeId = window.name + '_type_value';
       var labelId = window.name + '_text';
       var valueElement = window.opener.$('#' + valueId);
       var labelElement = window.opener.$('#' + labelId);
+      var typeElement = window.opener.$('#' + typeId);
       valueElement.val($(this).attr('data-value-id'));
+      if (typeElement) { typeElement.val($(this).attr('data-value-type')); }
       labelElement.text($(this).attr('data-value-text'));
       labelElement.removeClass('ff-empty');
       window.close();
