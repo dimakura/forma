@@ -7,7 +7,7 @@
 .ff-form .ff-collapse,.ff-table .ff-collapse{background:url(/glyphicons-halflings.png) -313px -119px;}
 .ff-form .ff-collapsed.ff-collapse,.ff-table .ff-collapsed.ff-collapse{background:url(/glyphicons-halflings.png) -456px -72px;}
 .ff-form .ff-field-hint,.ff-table .ff-field-hint{background:url(/glyphicons-halflings.png) -456px -72px;}
-.ff-form .ff-tabs,.ff-table .ff-tabs{padding:4px 0;}.ff-form .ff-tabs ul.ff-tabs-header,.ff-table .ff-tabs ul.ff-tabs-header{font-size:14px;list-style-type:none;margin:0;position:relative;border-bottom:1px solid #b1b1b1;}.ff-form .ff-tabs ul.ff-tabs-header li,.ff-table .ff-tabs ul.ff-tabs-header li{user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;cursor:pointer;display:inline-block;padding:4px 8px;margin-left:8px;margin-bottom:-1px;border:1px solid transparent;}.ff-form .ff-tabs ul.ff-tabs-header li img,.ff-table .ff-tabs ul.ff-tabs-header li img{margin:0 4px;height:16px;width:16px;}
+.ff-form .ff-tabs,.ff-table .ff-tabs{padding:4px 0;}.ff-form .ff-tabs ul.ff-tabs-header,.ff-table .ff-tabs ul.ff-tabs-header{font-size:13px;list-style-type:none;margin:0;position:relative;border-bottom:1px solid #b1b1b1;}.ff-form .ff-tabs ul.ff-tabs-header li,.ff-table .ff-tabs ul.ff-tabs-header li{user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;cursor:pointer;display:inline-block;padding:4px 8px;margin-left:8px;margin-bottom:-1px;border:1px solid transparent;}.ff-form .ff-tabs ul.ff-tabs-header li img,.ff-table .ff-tabs ul.ff-tabs-header li img{margin:0 4px;height:16px;width:16px;}
 .ff-form .ff-tabs ul.ff-tabs-header li.ff-selected,.ff-table .ff-tabs ul.ff-tabs-header li.ff-selected{background:#ffffcc;border:1px solid #b1b1b1;border-bottom:1px solid #ffffcc;}
 .ff-form .ff-tabs .ff-tab-actions,.ff-table .ff-tabs .ff-tab-actions{padding:4px 8px;background:#ffffcc;border:1px solid #b1b1b1;margin-top:-1px;}
 .ff-form .ff-tabs .ff-cols,.ff-table .ff-tabs .ff-cols{margin:4px 0 0 0;position:relative;font-size:13px;}.ff-form .ff-tabs .ff-cols .ff-col-100,.ff-table .ff-tabs .ff-cols .ff-col-100{width:100%;}
@@ -30,9 +30,9 @@
 .ff-form ul.ff-form-errors li,.ff-table ul.ff-form-errors li{margin-left:16px;}
 .ff-form .ff-field-errors,.ff-table .ff-field-errors{color:red;padding:4px 0;}
 .ff-form .ff-bottom-actions,.ff-table .ff-bottom-actions{padding:8px;border-top:1px solid #b1b1b1;background:#e0e0e0;}
-.ff-form table.ff-common-table,.ff-table table.ff-common-table{margin-top:8px;width:100%;border-collapse:collapse;}.ff-form table.ff-common-table thead,.ff-table table.ff-common-table thead{text-align:left;border-top:1px solid #3316ff;border-bottom:1px solid #3316ff;background:#c8ffb0;}.ff-form table.ff-common-table thead th,.ff-table table.ff-common-table thead th{font-size:14px;font-weight:normal;padding:4px 8px;}
+.ff-form table.ff-common-table,.ff-table table.ff-common-table{margin-top:8px;width:100%;border-collapse:collapse;}.ff-form table.ff-common-table thead,.ff-table table.ff-common-table thead{text-align:left;border-top:1px solid #3316ff;border-bottom:1px solid #3316ff;background:#c8ffb0;}.ff-form table.ff-common-table thead th,.ff-table table.ff-common-table thead th{font-size:13px;font-weight:normal;padding:4px 8px;}
 .ff-form table.ff-common-table thead .ff-field-hint,.ff-table table.ff-common-table thead .ff-field-hint{display:inline-block;height:16px;width:16px;background-position:-96px -96px;}
-.ff-form table.ff-common-table tbody td,.ff-table table.ff-common-table tbody td{font-size:14px;padding:4px 8px;border-bottom:1px solid #3316ff;background:white;}
+.ff-form table.ff-common-table tbody td,.ff-table table.ff-common-table tbody td{font-size:13px;padding:4px 8px;border-bottom:1px solid #3316ff;background:white;}
 .ff-form .ff-paginate .ff-totals,.ff-table .ff-paginate .ff-totals{padding:4px;}.ff-form .ff-paginate .ff-totals span,.ff-table .ff-paginate .ff-totals span{padding-left:4px;}
 .ff-form .ff-field-before,.ff-table .ff-field-before{padding-right:8px;}
 .ff-form .ff-field-after,.ff-table .ff-field-after{padding-left:8px;}

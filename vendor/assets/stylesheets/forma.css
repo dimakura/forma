@@ -78,7 +78,7 @@
 }
 .ff-form .ff-tabs ul.ff-tabs-header,
 .ff-table .ff-tabs ul.ff-tabs-header {
-  font-size: 14px;
+  font-size: 13px;
   list-style-type: none;
   margin: 0;
   position: relative;
@@ -294,7 +294,7 @@
 }
 .ff-form table.ff-common-table thead th,
 .ff-table table.ff-common-table thead th {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: normal;
   padding: 4px 8px;
 }
@@ -307,7 +307,7 @@
 }
 .ff-form table.ff-common-table tbody td,
 .ff-table table.ff-common-table tbody td {
-  font-size: 14px;
+  font-size: 13px;
   padding: 4px 8px;
   border-bottom: 1px solid #3316ff;
   background: white;
