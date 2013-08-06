@@ -11,6 +11,7 @@
 .ff-form .ff-action,
 .ff-table .ff-action {
   margin-left: 4px;
+  font-size: 13px;
 }
 .ff-form .ff-action:first-child,
 .ff-table .ff-action:first-child {
