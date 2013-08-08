@@ -32,7 +32,7 @@ module Forma
             children: [ el('i', attrs: { class: 'icon icon-download' }) ]
           )
         else
-          children = [ (el('img', attrs: { src: @icon }) if @icon.present?), el('span', text: eval_label(model)) ]
+          children = [ (el('img', attrs: { src: eval_icon(model) }) if @icon.present?), el('span', text: eval_label(model)) ]
           button = (@as.to_s == 'button')
           el(
             'a',
@@ -51,11 +51,15 @@ module Forma
     private
 
     def eval_url(model)
-      @url.is_a?(Proc) ? @url.call(model) : @url.to_s
+      @url.is_a?(Proc) ? @url.call(model).to_s : @url.to_s
     end
 
     def eval_label(model)
-      @label.is_a?(Proc) ? @label.call(model) : @label.to_s
+      @label.is_a?(Proc) ? @label.call(model).to_s : @label.to_s
+    end
+
+    def eval_icon(model)
+      @icon.is_a?(Proc) ? @icon.call(model).to_s : @icon.to_s
     end
 
     def eval_condition(model)
