@@ -92,6 +92,13 @@ module Forma
       add_field(field)
     end
 
+    def file_field(name, opts={})
+      opts[:name] = name
+      field = Forma::FileField.new(opts)
+      yield field if block_given?
+      add_field(field)
+    end
+
     def number_field(name, opts = {})
       opts[:name] = name
       field = Forma::NumberField.new(opts)

@@ -352,7 +352,8 @@ module Forma
     end
 
     def view_element(val)
-      el('span', text: val.localtime.strftime(formatter || Forma.config.date.formatter))
+			val = val.respond_to?(:localtime) ? val.localtime : val
+      el('span', text: val.strftime(formatter || Forma.config.date.formatter))
     end
 
     def edit_element(val)
@@ -405,7 +406,18 @@ module Forma
     end
 
     def edit_element(val)
-      el('input', attrs: { name: parameter_name, type: 'file', })
+      el('input', attrs: { name: parameter_name, type: 'file' })
+    end
+  end
+
+  # Image upload field.
+  class FileField < SimpleField
+    def view_element(val)
+      el('div', text: 'NO IMPLEMENTATION')
+    end
+
+    def edit_element(val)
+      el('input', attrs: { name: parameter_name, type: 'file' })
     end
   end
 
