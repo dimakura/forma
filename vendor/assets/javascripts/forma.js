@@ -154,6 +154,15 @@
     $('.ff-popover').popover({ trigger: 'click' });
   };
 
+  var initDatePicker = function() {
+    var pickers = $('.ff-date');
+    for (var i = 0, l = pickers.length; i < l; i++) {
+      var picker = $(pickers[i]);
+      console.log(picker.attr('data-altfield'));
+      picker.datepicker({ dateFormat: 'dd-M-yy', altField: '#' + picker.attr('data-altfield'), altFormat: 'yy-mm-dd' });
+    }
+  };
+
   // prepare function
 
   var ready = function() {
@@ -163,6 +172,7 @@
     initializeTooltips();
     initGoogleMaps();
     initPopovers();
+    initDatePicker();
     // selectors
     initializeSelectFields();
     initializeSelectActions();

@@ -348,6 +348,8 @@ module Forma
     def initialize(h = {})
       h = h.symbolize_keys
       @formatter = h[:formatter]
+      @@date_counter ||= 0
+      @@date_counter += 1
       super(h)
     end
 
@@ -357,13 +359,23 @@ module Forma
     end
 
     def edit_element(val)
-      el('input', attrs: {
-        name: parameter_name,
-        type: 'text',
-        value: val.to_s,
-        autofocus: @autofocus,
-        style: { width: ("#{width}px" if width.present?) }
-      })
+      input_id = "ff-date-#{@@date_counter}"
+      el('div', children: [
+        el('input', attrs: {
+          id: input_id,
+          value: val.to_s,
+          type: 'hidden'
+        }),
+        el('input', attrs: {
+          class: 'ff-date',
+          name: parameter_name,
+          type: 'text',
+          value: (val.strftime('%d-%b-%Y') if val),
+          autofocus: @autofocus,
+          style: { width: ("#{width}px" if width.present?) },
+          'data-altfield' => input_id,
+        })
+      ])
     end
   end
 
