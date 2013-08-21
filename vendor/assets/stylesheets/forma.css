@@ -257,6 +257,12 @@
   color: red;
   background: #fff8f8;
 }
+.ff-form .ff-tabs .ff-inline-hint,
+.ff-table .ff-tabs .ff-inline-hint {
+  padding: 4px 2px;
+  color: #88f;
+  font-size: 12px;
+}
 .ff-form .ff-form-errors,
 .ff-table .ff-form-errors {
   margin: 8px;

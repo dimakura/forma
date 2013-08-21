@@ -5,7 +5,7 @@ module Forma
     include Forma::Utils
     include Forma::Html
 
-    attr_reader :label, :hint, :i18n, :name, :tag
+    attr_reader :label, :hint, :i18n, :name, :tag, :inline_hint
     attr_reader :required, :autofocus, :readonly
     attr_reader :width, :height
     attr_reader :before, :after
@@ -17,6 +17,7 @@ module Forma
     def initialize(h = {})
       h = h.symbolize_keys
       @id = h[:id]; @label = h[:label]; @hint = h[:hint]; @i18n = h[:i18n]
+      @inline_hint = h[:inline_hint]
       @required = h[:required]; @autofocus = h[:autofocus]; @readonly = (not not h[:readonly])
       @width = h[:width]; @height = h[:height]
       @before = h[:before]; @after = h[:after]
@@ -60,12 +61,13 @@ module Forma
       val = self.value
       if edit and not readonly
         edit = edit_element(val)
-        el('div', children: [ before_element, icon_element, edit, after_element, actions_element ])
+        el('div', children: [ before_element, icon_element, edit, after_element, actions_element, inline_hint_element ])
       else
         if val.present? or val == false or @force_nonempty
           view = view_element(val)
           view = el('a', attrs: { href: eval_url }, children: [ view ]) if @url
-          el('div', attrs: { class: (@class ? eval_with_model(@class) : nil) }, children: [ before_element, icon_element, view, after_element, actions_element ])
+          el('div', attrs: { class: (@class ? eval_with_model(@class) : nil) },
+            children: [ before_element, icon_element, view, after_element, actions_element, inline_hint_element ])
         else
           el('div', children: [ empty_element, actions_element ])
         end
@@ -112,41 +114,17 @@ module Forma
       p_name
     end
 
-    def icon_element
-      el('img', attrs: { src: eval_icon, style: { 'margin-right' => '4px' } }) if @icon.present?
-    end
-
-    def before_element
-      el('span', text: eval_with_model(before), attrs: { class: 'ff-field-before' }) if before.present?
-    end
-
-    def after_element
-      el('span', text: eval_with_model(after), attrs: { class: 'ff-field-after' }) if after.present?
-    end
-
-    def empty_element
-      el('span', attrs: { class: 'ff-empty' }, text: Forma.config.texts.empty) unless @empty == false
-    end
-
-    def actions_element
-      if @actions.any?
-        el('div', attrs: { class: 'ff-field-actions' }, children: @actions.map { |action| action.to_html(@model) })
-      end
-    end
-
-    def eval_url
-      eval_with_model(@url)
-    end
-
-    def eval_icon
-      eval_with_model(@icon)
-    end
+    def icon_element; el('img', attrs: { src: eval_icon, style: { 'margin-right' => '4px' } }) if @icon.present? end
+    def before_element; el('span', text: eval_with_model(before), attrs: { class: 'ff-field-before' }) if before.present? end
+    def after_element; el('span', text: eval_with_model(after), attrs: { class: 'ff-field-after' }) if after.present? end
+    def empty_element; el('span', attrs: { class: 'ff-empty' }, text: Forma.config.texts.empty) unless @empty == false end
+    def actions_element; el('div', attrs: { class: 'ff-field-actions' }, children: @actions.map { |action| action.to_html(@model) }) if @actions.any? end
+    def inline_hint_element; el('div', attrs: { class: 'ff-inline-hint' }, text: @inline_hint) if @inline_hint.present? end
+    def eval_url; eval_with_model(@url) end
+    def eval_icon; eval_with_model(@icon) end
 
     private
-
-    def eval_with_model(val, h={})
-      val.is_a?(Proc) ? val.call(h[:model] || self.model) : val.to_s
-    end
+    def eval_with_model(val, h={}); val.is_a?(Proc) ? val.call(h[:model] || self.model) : val.to_s end
   end
 
   # Complex field.
