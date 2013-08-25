@@ -338,17 +338,18 @@ module Forma
 
     def edit_element(val)
       input_id = "ff-date-#{@@date_counter}"
+      val = Date.strptime(val) if val.is_a?(String)
       el('div', children: [
         el('input', attrs: {
           id: input_id,
+          name: parameter_name,
           value: val.to_s,
           type: 'hidden'
         }),
         el('input', attrs: {
           class: 'ff-date',
-          name: parameter_name,
           type: 'text',
-          value: (val.strftime('%d-%b-%Y') if val),
+          value: (val.strftime('%d-%b-%Y') if val.present?),
           autofocus: @autofocus,
           style: { width: ("#{width}px" if width.present?) },
           'data-altfield' => input_id,
