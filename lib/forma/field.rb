@@ -338,7 +338,7 @@ module Forma
 
     def edit_element(val)
       input_id = "ff-date-#{@@date_counter}"
-      val = (Date.strptime(val) if val.present? and val.is_a?(String)) rescue nil
+      val = Date.strptime(val) if (val.present? and val.is_a?(String)) rescue nil
       el('div', children: [
         el('input', attrs: {
           id: input_id,
@@ -351,7 +351,7 @@ module Forma
           type: 'text',
           value: (val.strftime('%d-%b-%Y') if val.present?),
           autofocus: @autofocus,
-          style: { width: ("#{width}px" if width.present?) },
+          style: { width: "#{width || 100}px" },
           'data-altfield' => input_id,
         })
       ])
