@@ -79,7 +79,7 @@
       var typeElement = window.opener.$('#' + typeId);
       valueElement.val($(this).attr('data-value-id'));
       if (typeElement) { typeElement.val($(this).attr('data-value-type')); }
-      labelElement.text($(this).attr('data-value-text'));
+      labelElement.html($(this).attr('data-value-text'));
       labelElement.removeClass('ff-empty');
       window.close();
       return false;
