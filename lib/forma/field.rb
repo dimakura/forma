@@ -328,6 +328,7 @@ module Forma
       @formatter = h[:formatter]
       @@date_counter ||= 0
       @@date_counter += 1
+      @date_counter = @@date_counter
       super(h)
     end
 
@@ -337,7 +338,7 @@ module Forma
     end
 
     def edit_element(val)
-      input_id = "ff-date-#{@@date_counter}"
+      input_id = "ff-date-#{@date_counter}"
       val = Date.strptime(val) if (val.present? and val.is_a?(String)) rescue nil
       el('div', children: [
         el('input', attrs: {
