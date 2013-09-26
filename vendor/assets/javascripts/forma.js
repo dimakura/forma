@@ -158,7 +158,13 @@
     var pickers = $('.ff-date');
     for (var i = 0, l = pickers.length; i < l; i++) {
       var picker = $(pickers[i]);
-      picker.datepicker({ dateFormat: 'dd-M-yy', altField: '#' + picker.attr('data-altfield'), altFormat: 'yy-mm-dd' });
+      picker.datepicker({
+        dateFormat: 'dd-M-yy',
+        altField: '#' + picker.attr('data-altfield'), altFormat: 'yy-mm-dd',
+        onClose: function(dateText, inst) {
+          if(dateText == '') { $(inst.settings["altField"]).val(dateText); }
+        },
+      });
     }
   };
 
