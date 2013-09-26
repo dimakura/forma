@@ -152,6 +152,7 @@ module Forma
         attrs: { class: 'ff-complex-field' },
          children: @fields.map { |f|
           f.model = self.model
+          f.model_name = self.model_name
           el('div', attrs: { class: 'ff-complex-part' }, children: [ f.to_html(true) ])
         }
       )
