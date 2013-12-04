@@ -25,11 +25,11 @@ module Forma
           el(
             'a',
             attrs: {
-              id: @id, class: ['ff-action', 'btn', 'btn-mini', 'ff-select-action'],
+              id: @id, class: ['ff-action', 'btn', 'btn-mini', 'ff-select-action', 'btn-xs', 'btn-default'],
               href: '#', 'data-original-title' => @tooltip,
               'data-value-id' => model.id, 'data-value-type' => model.class.name, 'data-value-text' => model.to_s
             },
-            children: [ el('i', attrs: { class: 'icon icon-download' }) ]
+            children: [ el('i', attrs: { class: 'icon icon-download fa fa-hand-o-left' }) ]
           )
         else
           children = [ (el('img', attrs: { src: eval_icon(model) }) if @icon.present?), el('span', text: eval_label(model)) ]
@@ -38,7 +38,7 @@ module Forma
             'a',
             attrs: {
               id: @id,
-              class: ['ff-action', ('btn btn' if button)],
+              class: ['ff-action', ('btn btn-default' if button)],
               href: eval_url(model), 'data-method' => @method, 'data-confirm' => @confirm,
               'data-original-title' => @tooltip
             },

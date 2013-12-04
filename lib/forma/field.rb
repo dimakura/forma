@@ -558,11 +558,11 @@ module Forma
         text: (val.present? ? val.to_s : Forma.config.texts.empty)
       )
       buttons = el('div', attrs: { class: 'btn-group' }, children: [
-        el('a', attrs: { class: 'ff-select-link btn btn-mini', 'data-id' => self.id, 'data-url' => @search_url, 'data-width' => @search_width, 'data-height' => @search_height }, children: [
-          el('i', attrs: { class: 'icon icon-search' })
+        el('a', attrs: { class: 'ff-select-link btn btn-mini btn-default btn-xs', 'data-id' => self.id, 'data-url' => @search_url, 'data-width' => @search_width, 'data-height' => @search_height }, children: [
+          el('i', attrs: { class: 'icon icon-search fa fa-search' })
         ]),
-        el('a', attrs: { class: 'ff-clear-selection-action btn btn-mini', 'data-id' => self.id }, children: [
-          el('i', attrs: { class: 'icon icon-trash' })
+        el('a', attrs: { class: 'ff-clear-selection-action btn btn-mini btn-default btn-xs', 'data-id' => self.id }, children: [
+          el('i', attrs: { class: 'icon icon-trash fa fa-trash-o' })
         ])
       ])
       children = inputs + [ text_element, buttons ]
