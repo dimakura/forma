@@ -368,7 +368,7 @@ module Forma
 
     def edit_element(val)
       e1 = el('input', attrs: { type: 'hidden',  name: parameter_name, value: "0"})
-      e2 = el('input', attrs: { type: 'checkbox', name: parameter_name, checked: ('checked' if val), value: "1"})
+      e2 = el('input', attrs: { id: self.id, type: 'checkbox', name: parameter_name, checked: ('checked' if val), value: "1"})
       el('span', children: [ e1, e2 ])
     end
   end
