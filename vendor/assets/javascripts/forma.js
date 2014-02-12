@@ -183,10 +183,8 @@
     initializeSelectActions();
   };
 
-  // turbolink initilization!
-  // http://railscasts.com/episodes/390-turbolinks?view=asciicast
-  $(document).ready(ready);
-  $(document).on('page:load', ready);
+  // initialization
+  $(ready);
 
   // external API
 
