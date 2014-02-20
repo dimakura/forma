@@ -59,6 +59,7 @@ module Forma
     # Convert this element into HTML.
     def to_html(edit)
       val = self.value
+      val = val.call(self.model) if val.is_a?(Proc)
       if edit and not readonly
         edit = edit_element(val)
         el('div', children: [ before_element, icon_element, edit, after_element, actions_element, inline_hint_element ])
