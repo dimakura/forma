@@ -9,7 +9,7 @@ module Forma
     attr_reader :required, :autofocus, :readonly
     attr_reader :width, :height
     attr_reader :before, :after
-    attr_reader :url, :icon
+    attr_reader :url, :icon, :turbolink
     attr_accessor :model, :value, :parent, :child_model_name
     attr_writer :model_name
     attr_reader :actions
@@ -30,6 +30,7 @@ module Forma
       @empty = h[:empty]
       @force_nonempty = h[:force_nonempty]
       @class = h[:class]
+      @turbolink = h[:turbolink]
     end
 
     def action(url, h={})
@@ -66,7 +67,11 @@ module Forma
       else
         if val.present? or val == false or @force_nonempty
           view = view_element(val)
-          view = el('a', attrs: { href: eval_url }, children: [ view ]) if @url
+          if @url
+            attrs = { href: eval_url }
+            attrs['data-no-turbolink']=true if @turbolink==false
+            view = el('a', attrs: attrs, children: [ view ])
+          end
           el('div', attrs: { class: (@class ? eval_with_model(@class) : nil) },
             children: [ before_element, icon_element, view, after_element, actions_element, inline_hint_element ])
         else
