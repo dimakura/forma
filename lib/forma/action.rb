@@ -11,6 +11,7 @@ module Forma
       @label = h[:label]
       @icon = h[:icon]
       @url = h[:url]
+      @turbolink=h[:turbolink]
       @method = h[:method]
       @confirm = h[:confirm]
       @as = h[:as]
@@ -22,28 +23,31 @@ module Forma
     def to_html(model)
       if eval_condition(model)
         if @select
-          el(
-            'a',
-            attrs: {
-              id: @id, class: ['ff-action', 'btn', 'btn-mini', 'ff-select-action', 'btn-xs', 'btn-default'],
-              href: '#', 'data-original-title' => @tooltip,
-              'data-value-id' => model.id, 'data-value-type' => model.class.name, 'data-value-text' => model.to_s
-            },
-            children: [ el('i', attrs: { class: 'icon icon-download fa fa-hand-o-left' }) ]
-          )
+          attrs = {
+            id: @id,
+            class: ['ff-action', 'btn', 'btn-mini', 'ff-select-action', 'btn-xs', 'btn-default'],
+            href: '#',
+            'data-original-title' => @tooltip,
+            'data-value-id' => model.id,
+            'data-value-type' => model.class.name,
+            'data-value-text' => model.to_s
+          }
+          attrs['data-no-turbolink'] = 'true' if @turbolink == false
+          children = [ el('i', attrs: { class: 'icon icon-download fa fa-hand-o-left' }) ]
+          el('a', attrs: attrs, children: children)
         else
           children = [ (el('img', attrs: { src: eval_icon(model) }) if @icon.present?), el('span', text: eval_label(model)) ]
           button = (@as.to_s == 'button')
-          el(
-            'a',
-            attrs: {
-              id: @id,
-              class: ['ff-action', ('btn btn-default' if button)],
-              href: eval_url(model), 'data-method' => @method, 'data-confirm' => @confirm,
-              'data-original-title' => @tooltip
-            },
-            children: children
-          )
+          attrs = {
+            id: @id,
+            class: ['ff-action', ('btn btn-default' if button)],
+            href: eval_url(model),
+            'data-method' => @method,
+            'data-confirm' => @confirm,
+            'data-original-title' => @tooltip
+          }
+          attrs['data-no-turbolink'] = 'true' if @turbolink == false
+          el('a', attrs: attrs, children: children)
         end
       end
     end
