@@ -77,7 +77,13 @@ module Forma
 
     def table_element
       def table_header_element
-        children = @fields.map { |f|
+        children = []
+        if @checkboxes
+          children << el('th', attrs: { style: {width: '10px'} }, children: [
+            el('input', attrs: { id: "all-models", type: 'checkbox' })
+          ])
+        end
+        children += @fields.map { |f|
           f.model = @models.first
           label_text = f.localized_label
           label_hint = f.localized_hint
@@ -92,7 +98,13 @@ module Forma
       end
 
       def table_row(model)
-        children = @fields.map { |fld|
+        children = []
+        if @checkboxes
+          children << el('td', children: [
+            el('input', attrs: { id: "model-#{model.id}", type: 'checkbox' })
+          ])
+        end
+        children += @fields.map { |fld|
           fld.model = model
           el('td', children: [ fld.to_html(false) ])
         }
@@ -102,7 +114,6 @@ module Forma
         ############################################################################################
         options = { children: children }
         options[:attrs] = { class: eval_with_model(@row_class, model: model) } if @row_class
-        # debugger
         ############################################################################################
         html = el('tr', options)
       end
