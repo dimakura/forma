@@ -23,7 +23,7 @@ module Forma
       opts[:models] = models
       opts[:context] = block
       t = Forma::Table.new(opts)
-      yield t if block_given?
+      (yield t) if block_given?
       t.to_html.to_s
     end
 

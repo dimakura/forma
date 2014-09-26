@@ -5,7 +5,7 @@ module Forma
     include Forma::FieldHelper
     include Forma::WithTitleElement
     attr_reader :collapsible, :collapsed, :icon, :title
-    attr_reader :title_actions
+    attr_reader :title_actions, :row_class, :checkboxes
     attr_accessor :models
 
     def initialize(h = {})
@@ -23,6 +23,9 @@ module Forma
       # actions
       @title_actions = h[:title_actions] || []
       @item_actions = h[:item_actions] || []
+      # row class
+      @row_class = h[:row_class]
+      @checkboxes = h[:checkboxes]
       # context
       @context = h[:context]
     end
@@ -57,6 +60,9 @@ module Forma
       @paginate_options = h
     end
 
+    def row_class(clazz); @row_class = clazz end
+    def checkboxes(val=true); @checkboxes = val end
+
     private
 
     def body_element
@@ -84,6 +90,7 @@ module Forma
           el('tr', children: children)
         ])
       end
+
       def table_row(model)
         children = @fields.map { |fld|
           fld.model = model
@@ -92,12 +99,18 @@ module Forma
         if @item_actions.any?
           children << el('td', children: @item_actions.map { |act| act.to_html(model) })
         end
-        el('tr', children: children)
+        ############################################################################################
+        options = { children: children }
+        options[:attrs] = { class: eval_with_model(@row_class, model: model) } if @row_class
+        # debugger
+        ############################################################################################
+        html = el('tr', options)
       end
+
       def table_body_element
-        children = 
-        el('tbody', children: @models.map { |model| table_row(model) })
+        children = el('tbody', children: @models.map { |model| table_row(model) })
       end
+
       if @models and @models.any?
         el('table', attrs: { class: 'ff-common-table' }, children: [ table_header_element, table_body_element ])
       else
@@ -119,5 +132,8 @@ module Forma
         ])
       end
     end
+
+    private
+    def eval_with_model(val, h={}); val.is_a?(Proc) ? val.call(h[:model] || self.model) : val.to_s end
   end
 end
