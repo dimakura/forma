@@ -22,9 +22,10 @@ module Forma
     def class_name_eval(table, opts); 'table' end
 
     def table_header_eval(table, opts)
+      firstModel = table.models ? table.models.first : nil
       el('thead', [
         el('tr', table.fields.map do |field|
-          el('th', [ Forma::FieldGenerator.label_eval(field, {}) ])
+          el('th', [ Forma::FieldGenerator.label_eval(field, { model: firstModel }) ])
         end)
       ])
     end

@@ -1,16 +1,14 @@
 # -*- encoding : utf-8 -*-
 require 'spec_helper'
 
-class User
-  attr_accessor :age
-end
+
 
 RSpec.describe Forma::Field do
 
   before(:all) do
     @field1 = Forma::Field.new(value: 'Dimitri')
     @field2 = Forma::Field.new(name: 'last_name', model: { first_name: 'Dimitri', last_name: 'Kurashvili' }, url: 'http://mecniereba.org')
-    user = User.new ; user.age = 33
+    user = User.new(age: 33)
     @field3 = Forma::Field.new(name: 'age', model: user, tag: 'code')
   end
 

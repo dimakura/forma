@@ -33,8 +33,8 @@ module Forma
     def value_eval(field, opts)
       if field.value
         field.value
-      elsif (opts[:model] || field.model) and field.name
-        evalModel = opts[:model] || field.model
+      elsif field.name
+        evalModel = model_eval(field, opts)
         if evalModel.instance_of?(Hash)
           evalModel[ field.name.to_sym ]
         else
@@ -46,14 +46,26 @@ module Forma
     def url_eval(field, opts)
       url = field.url
       if url.instance_of?(Proc)
-        url.call(field.model || opts[:model])
+        url.call(opts[:model] || field.model)
       else
         url
       end
     end
 
+    def model_eval(field, opts)
+      opts[:model] || field.model
+    end
+
+    def model_name_eval(field, opts)
+      model = model_eval(field, opts)
+      model.class.name.split('::').join('_').downcase unless model.blank?
+    end
+
     def label_eval(field, opts)
-      field.label || field.name.split('_').map{|x| x.capitalize}.join(' ')
+      label = nil
+      model_name = model_name_eval(field, opts)
+      label = I18n.t("models.#{model_name}.#{ field.i18n || field.name }") if model_name
+      label || (field.label || field.name.split('_').map{|x| x.capitalize}.join(' '))
     end
 
     module_function :viewer
@@ -63,5 +75,7 @@ module Forma
     module_function :class_name_eval
     module_function :url_eval
     module_function :label_eval
+    module_function :model_eval
+    module_function :model_name_eval
   end
 end

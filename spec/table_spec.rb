@@ -8,8 +8,8 @@ RSpec.describe Forma::Field do
                Forma::Field.new(name: 'last_name'),
                Forma::Field.new(name: 'age') ]
     @table = Forma::Table.new(fields: fields, models: [
-      { first_name: 'Dimitri', last_name: 'Kurashvili', age: 35 },
-      { first_name: 'Misho', last_name: 'Kurashvili', age: 8 },
+      User.new({ first_name: 'Dimitri', last_name: 'Kurashvili', age: 35 }),
+      User.new({ first_name: 'Misho', last_name: 'Kurashvili', age: 8 }),
     ])
     @html = @table.viewer_html
     @table2 = Forma::Table.new(fields: fields)
