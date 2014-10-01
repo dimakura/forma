@@ -1,17 +1,20 @@
 # -*- encoding : utf-8 -*-
 require 'spec_helper'
 
+class User
+  attr_accessor :first_name, :last_name, :age
+end
+
 RSpec.describe Forma::Field do
 
   before(:all) do
-    @field = Forma::Field.new(name: 'first_name', type: 'text')
+    @field1 = Forma::Field.new(value: 'Dimitri')
+    @field2 = Forma::Field.new(name: 'last_name', model: { first_name: 'Dimitri', last_name: 'Kurashvili' })
+    user = User.new ; user.age = 33
+    @field3 = Forma::Field.new(name: 'age', model: user)
   end
 
-  it 'field options' do
-    expect(@field.name).to eq('first_name')
-    expect(@field.type).to eq('text')
-    expect(@field.id).to be_nil
-    expect(@field.class).to eq(Forma::Field)
-  end
-
+  specify{ expect(@field1.viewer_html).to eq('<span class="forma-text-field">Dimitri</span>') }
+  specify{ expect(@field2.viewer_html).to eq('<span class="forma-text-field">Kurashvili</span>') }
+  specify{ expect(@field3.viewer_html).to eq('<span class="forma-text-field">33</span>') }
 end
