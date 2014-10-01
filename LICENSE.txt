@@ -1,4 +1,4 @@
-Copyright (c) 2013 Dimitri Kurashvili
+Copyright (c) 2013-2015 Dimitri Kurashvili
 
 MIT License
 
