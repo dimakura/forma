@@ -4,10 +4,12 @@ require 'forma/model'
 module Forma
   module Helpers
 
-    # def forma_text_field(name, opts = {})
-    #   opts[:name] = name ; opts[:type] = 'text'
-    #   Forma::Field.new(opts).to_html
-    # end
+    def table_for(models, opts = {})
+      table = Forma::Table.new(opts.merge(models: models))
+      yield table if block_given?
+      table.viewer_html.html_safe
+    end
 
+    module_function :table_for
   end
 end
