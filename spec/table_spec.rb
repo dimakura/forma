@@ -16,7 +16,7 @@ RSpec.describe Forma::Field do
     @html2 = @table2.viewer_html
   end
 
-  specify{ expect(@html).to include('<table class="table">') }
+  specify{ expect(@html).to include('<table class="table table-bordered table-striped">') }
   specify{ expect(@html).to include('<th>First Name</th>') }
   specify{ expect(@html).to include('<th>Last Name</th>') }
   specify{ expect(@html).to include('<th>Age</th>') }

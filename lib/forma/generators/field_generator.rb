@@ -15,7 +15,12 @@ module Forma
 
     def viewer(field, opts)
       tag = field.tag || 'span'
-      el(tag, [ body_eval(field, opts) ], { class: class_name_eval(field, opts) })
+      value = value_eval(field, opts)
+      if value.present?
+        el(tag, [ body_eval(field, opts) ], { class: class_name_eval(field, opts) })
+      else
+        el('span', [ '(empty)' ], { class: 'text-muted forma-empty-field' })
+      end
     end
 
     def type_eval(field, opts); field.type || 'text' end
