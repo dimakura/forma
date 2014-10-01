@@ -9,9 +9,4 @@ module Forma
       @opts[ method_name.to_sym ]
     end
   end
-
-  class Field
-    include AutoInitialize
-  end
-
 end
