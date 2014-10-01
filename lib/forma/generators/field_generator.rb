@@ -14,18 +14,17 @@ module Forma
 ## Viewer creation functions
 
     def viewer(field, opts)
-      model = opts[:model]
-      el('span', [ value_eval(field, model) ], { class: class_name_eval(field, model) })
+      el('span', [ value_eval(field, opts) ], { class: class_name_eval(field, opts) })
     end
 
-    def type_eval(field, model); field.type || 'text' end
-    def class_name_eval(field, model); "forma-#{type_eval(field, model)}-field" end
+    def type_eval(field, opts); field.type || 'text' end
+    def class_name_eval(field, opts); "forma-#{type_eval(field, opts)}-field" end
 
-    def value_eval(field, model)
+    def value_eval(field, opts)
       if field.value
         field.value
-      elsif (model || field.model) and field.name
-        evalModel = model || field.model
+      elsif (opts[:model] || field.model) and field.name
+        evalModel = opts[:model] || field.model
         if evalModel.instance_of?(Hash)
           evalModel[ field.name.to_sym ]
         else
