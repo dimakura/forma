@@ -15,11 +15,20 @@ module Forma
 
     def viewer(field, opts)
       tag = field.tag || 'span'
-      el(tag, [ value_eval(field, opts) ], { class: class_name_eval(field, opts) })
+      el(tag, [ body_eval(field, opts) ], { class: class_name_eval(field, opts) })
     end
 
     def type_eval(field, opts); field.type || 'text' end
     def class_name_eval(field, opts); "forma-#{type_eval(field, opts)}-field" end
+
+    def body_eval(field, opts)
+      value = value_eval(field, opts)
+      if field.url
+        el('a', [ value ], { href: url_eval(field, opts) })
+      else
+        value
+      end
+    end
 
     def value_eval(field, opts)
       if field.value
@@ -34,14 +43,20 @@ module Forma
       end
     end
 
+    def url_eval(field, opts)
+      field.url
+    end
+
     def label_eval(field, opts)
       field.label || field.name.split('_').map{|x| x.capitalize}.join(' ')
     end
 
     module_function :viewer
+    module_function :body_eval
     module_function :value_eval
     module_function :type_eval
     module_function :class_name_eval
+    module_function :url_eval
     module_function :label_eval
   end
 end
