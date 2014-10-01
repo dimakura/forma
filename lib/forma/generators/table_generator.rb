@@ -8,12 +8,7 @@ module Forma
 
     def viewer_html(table, opts={}); viewer(table, opts) end
 
-    # def editor_html(field)
-    #   '<p>editor</p>'
-    # end
-
     module_function :viewer_html
-    # module_function :editor_html
 
 ## Viewer generator functions
 
@@ -36,11 +31,21 @@ module Forma
 
     def table_body_eval(table, opts)
       models = opts[:models] || table.models
-      el('tbody', models.map do |model|
-        el('tr',  table.fields.map do |field|
-          el('td', [ Forma::FieldGenerator.viewer(field, { model: model }) ])
+      if models
+        el('tbody', models.map do |model|
+          el('tr',  table.fields.map do |field|
+            el('td', [ Forma::FieldGenerator.viewer(field, { model: model }) ])
+          end)
         end)
-      end)
+      else
+        el('tbody', [
+          el('tr', [
+            el('td', { class: 'forma-no-data' }, [
+              'no-data'
+            ])
+          ])
+        ])
+      end
     end
 
     module_function :viewer

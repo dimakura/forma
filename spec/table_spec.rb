@@ -12,6 +12,8 @@ RSpec.describe Forma::Field do
       { first_name: 'Misho', last_name: 'Kurashvili', age: 8 },
     ])
     @html = @table.viewer_html
+    @table2 = Forma::Table.new(fields: fields)
+    @html2 = @table2.viewer_html
   end
 
   specify{ expect(@html).to include('<table class="table">') }
@@ -22,4 +24,6 @@ RSpec.describe Forma::Field do
   specify{ expect(@html).to include('Dimitri') }
   specify{ expect(@html).to include('Kurashvili') }
   specify{ expect(@html).to include('Misho') }
+
+  specify{ expect(@html2).to include('<td class="forma-no-data">no-data</td>') }
 end
