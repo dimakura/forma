@@ -14,7 +14,8 @@ module Forma
 ## Viewer creation functions
 
     def viewer(field, opts)
-      el('span', [ value_eval(field, opts) ], { class: class_name_eval(field, opts) })
+      tag = field.tag || 'span'
+      el(tag, [ value_eval(field, opts) ], { class: class_name_eval(field, opts) })
     end
 
     def type_eval(field, opts); field.type || 'text' end
