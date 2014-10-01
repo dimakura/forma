@@ -64,8 +64,12 @@ module Forma
     def label_eval(field, opts)
       label = nil
       model_name = model_name_eval(field, opts)
-      label = I18n.t("models.#{model_name}.#{ field.i18n || field.name }") if model_name
-      label || (field.label || field.name.split('_').map{|x| x.capitalize}.join(' '))
+      label = I18n.t("models.#{model_name}.#{ field.i18n || field.name }", default: '') if model_name
+      if label.nil? or label == ''
+        field.label || field.name.split('_').map{|x| x.capitalize}.join(' ')
+      else
+        label
+      end
     end
 
     module_function :viewer

@@ -25,5 +25,5 @@ RSpec.describe Forma::Field do
   specify{ expect(@html).to include('Kurashvili') }
   specify{ expect(@html).to include('Misho') }
 
-  specify{ expect(@html2).to include('<td class="forma-no-data">no-data</td>') }
+  specify{ expect(@html2).to include('<div class="forma-no-data">no-data</div>') }
 end
