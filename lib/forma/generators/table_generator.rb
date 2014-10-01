@@ -20,6 +20,7 @@ module Forma
     def viewer(table, opts)
       el('table', { class: class_name_eval(table, opts) }, [
         table_header_eval(table, opts),
+        table_body_eval(table, opts)
       ])
     end
 
@@ -33,8 +34,18 @@ module Forma
       ])
     end
 
+    def table_body_eval(table, opts)
+      models = opts[:models] || table.models
+      el('tbody', models.map do |model|
+        el('tr',  table.fields.map do |field|
+          el('td', [ Forma::FieldGenerator.viewer(field, { model: model }) ])
+        end)
+      end)
+    end
+
     module_function :viewer
     module_function :class_name_eval
-    module_function :table_header_eval    
+    module_function :table_header_eval
+    module_function :table_body_eval
   end
 end
