@@ -11,7 +11,7 @@ module Forma
         @type = @field.type || 'text'
       end
 
-      def to_html
+      def to_html(opts)
         el('span', [ value_eval ], { class: class_name_eval })
       end
 
@@ -34,11 +34,11 @@ module Forma
       end
     end
 
-    def viewer_html(field)
-      ViewerGenerator.new(field).to_html
+    def viewer_html(field, opts={})
+      ViewerGenerator.new(field).to_html(opts)
     end
 
-    def editor_html(field)
+    def editor_html(field, opts={})
       '<p>editor</p>'
     end
 
