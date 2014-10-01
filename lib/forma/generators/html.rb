@@ -18,7 +18,13 @@ module Forma
 
       def params
         if @params.any?
-          ' ' + @params.map{|k,v| "#{k}=\"#{v}\""}.join(' ')
+          allparams = @params.map {|k,v|
+            if v == true then k
+            elsif v == false then nil
+            else "#{k}=\"#{v}\""
+            end
+          }.select{|x| not x.nil? }.join(' ')
+          ' ' + allparams unless allparams.empty?
         end
       end
 
