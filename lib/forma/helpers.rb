@@ -7,7 +7,7 @@ module Forma
     def table_for(models, opts = {})
       table = Forma::Table.new(opts.merge(models: models))
       yield table if block_given?
-      table.viewer_html.html_safe
+      table.viewer_html
     end
 
     module_function :table_for

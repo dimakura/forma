@@ -63,7 +63,7 @@ module Forma
 
       tag ||= 'div' ; children ||= [] ; params ||= {}
 
-      Element.new(tag, params, children).to_s
+      Element.new(tag, params, children).to_s.html_safe
     end
 
     module_function :el
