@@ -44,7 +44,12 @@ module Forma
     end
 
     def url_eval(field, opts)
-      field.url
+      url = field.url
+      if url.instance_of?(Proc)
+        url.call(field.model || opts[:model])
+      else
+        url
+      end
     end
 
     def label_eval(field, opts)
