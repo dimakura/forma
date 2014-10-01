@@ -8,7 +8,9 @@ RSpec.describe Forma::Field do
                Forma::Field.new(name: 'last_name'),
                Forma::Field.new(name: 'age') ]
     @table = Forma::Table.new(fields: fields)
+    @html = @table.viewer_html
   end
 
-  specify{ expect(@table.viewer_html).to eq('<table/>') }
+  specify{ expect(@html).to include('<table class="table">') }
+  specify{ expect(@html).to include('<th>First Name</th>') }
 end

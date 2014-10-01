@@ -33,9 +33,14 @@ module Forma
       end
     end
 
+    def label_eval(field, opts)
+      field.label || field.name.split('_').map{|x| x.capitalize}.join(' ')
+    end
+
     module_function :viewer
     module_function :value_eval
     module_function :type_eval
     module_function :class_name_eval
+    module_function :label_eval
   end
 end

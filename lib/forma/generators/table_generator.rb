@@ -1,27 +1,12 @@
 # -*- encoding : utf-8 -*-
 require 'forma/generators/html'
+require 'forma/generators/field_generator'
 
 module Forma
   module TableGenerator
-    class ViewerGenerator
-      include Forma::Html
+    extend Forma::Html
 
-      def initialize(table)
-        @table = table
-      end
-
-      def to_html(opts)
-        el('table')
-      end
-
-      private
-
-      
-    end
-
-    def viewer_html(field, opts={})
-      ViewerGenerator.new(field).to_html(opts)
-    end
+    def viewer_html(table, opts={}); viewer(table, opts) end
 
     # def editor_html(field)
     #   '<p>editor</p>'
@@ -29,5 +14,27 @@ module Forma
 
     module_function :viewer_html
     # module_function :editor_html
+
+## Viewer generator functions
+
+    def viewer(table, opts)
+      el('table', { class: class_name_eval(table, opts) }, [
+        table_header_eval(table, opts),
+      ])
+    end
+
+    def class_name_eval(table, opts); 'table' end
+
+    def table_header_eval(table, opts)
+      el('thead', [
+        el('tr', table.fields.map do |field|
+          el('th', [ Forma::FieldGenerator.label_eval(field, {}) ])
+        end)
+      ])
+    end
+
+    module_function :viewer
+    module_function :class_name_eval
+    module_function :table_header_eval    
   end
 end
