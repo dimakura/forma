@@ -19,8 +19,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_development_dependency 'rspec'
-
-  # runtime dependencies
-  # spec.add_dependency 'railties', '>= 3.1'
-  # spec.add_dependency 'activesupport', '>= 3.1'
+  spec.add_dependency 'railties'
+  spec.add_dependency 'activesupport'
 end
