@@ -7,3 +7,12 @@
 .forma-viewer .forma-required th {
   border-left: #cf0000 2px solid;
 }
+table.forma-table tbody td.forma-no-data {
+  padding: 32px 0;
+  text-align: center;
+  color: #999;
+  background-color: #fefefe !important;
+}
+table.forma-table tbody td.forma-no-data:hover {
+  background-color: #fefefe !important;
+}
