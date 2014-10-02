@@ -26,7 +26,7 @@ RSpec.describe Forma::Table do
   specify{ expect(@html).to include('Kurashvili') }
   specify{ expect(@html).to include('Misho') }
 
-  specify{ expect(@html2).to include('<td class="forma-no-data">no-data</td>') }
+  specify{ expect(@html2).to include('<td colspan="3" class="forma-no-data">no-data</td>') }
 
   specify{ expect(@html3).not_to include('<th>First Name</th>') }
 end
