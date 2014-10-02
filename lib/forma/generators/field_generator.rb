@@ -35,15 +35,8 @@ module Forma
     end
 
     def value_eval(field, opts)
-      if field.value
-        field.value
-      elsif field.name
-        model_value( model_eval(field, opts), field.name )
-        # if evalModel.instance_of?(Hash)
-        #   evalModel[ field.name.to_sym ]
-        # else
-        #   evalModel.send( field.name.to_sym )
-        # end
+      if field.value then field.value
+      elsif field.name then model_value( model_eval(field, opts), field.name )
       end
     end
 
