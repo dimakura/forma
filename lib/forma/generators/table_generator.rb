@@ -45,7 +45,7 @@ module Forma
       ]
     end
 
-    def class_name_eval(table, opts); 'table table-bordered table-striped' end
+    def class_name_eval(table, opts); 'table table-bordered table-striped table-hover' end
     def models_eval(table, opts); opts[:models] || table.models end
 
     def table_header_eval(table, opts)
