@@ -29,13 +29,23 @@ RSpec.describe Forma::Helpers do
         first_name: 'Dimitri',
         last_name: 'Kurashvili',
         is_admin: true,
-        birthdate: Time.new(1979, 4, 4, 6, 15)
+        birthdate: Time.new(1979, 4, 4, 6, 15),
+        profile: Profile.new(
+          total_friends: 100,
+          total_followers: 200,
+          email: 'dimakura@gmail.com',
+          mobile: '555666777'
+        )
       )
       @viewer_html = Forma::Helpers.viewer_for(model) do |v|
         v.text_field 'first_name'
         v.text_field 'last_name'
         v.boolean_field 'is_admin', true_text: 'user is admin', false_text: 'use is not admin'
         v.date_field 'birthdate', class_name: 'text-muted'
+        v.complex_field 'profile' do |p|
+          p.text_field 'email'
+          p.text_field 'mobile'
+        end
       end
     end
 

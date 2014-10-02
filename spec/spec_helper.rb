@@ -9,3 +9,4 @@ require 'forma/helpers'
 I18n.enforce_available_locales = false
 
 class User < Forma::AutoInitialize; end
+class Profile < Forma::AutoInitialize; end
