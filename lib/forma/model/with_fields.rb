@@ -9,14 +9,16 @@ module Forma
     def add_field(fld)
       self.options[:fields] = [] if self.options[:fields].blank?
       self.options[:fields] << fld
+      fld
     end
 
     def method_missing(method_name, *args, &block)
       method_str = method_name.to_s
       if method_str =~ /^(.)+_field$/
         type = method_str[0..-7] ; name = args[0] ; opts = args[1] || {}
-        add_field Forma::Field.new(opts.merge(name: name, type: type))
-        return
+        fld = add_field Forma::Field.new(opts.merge(name: name, type: type))
+        yield fld if block_given?
+        return fld
       end
 
       super
