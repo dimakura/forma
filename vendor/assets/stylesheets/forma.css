@@ -1,3 +1,9 @@
 .forma-viewer td .well {
   margin: 0;
 }
+.forma-viewer th {
+  vertical-align: middle;
+}
+.forma-viewer .forma-required th {
+  border-left: #cf0000 2px solid;
+}

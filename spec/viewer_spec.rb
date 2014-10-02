@@ -6,7 +6,7 @@ RSpec.describe Forma::Viewer do
     @user = User.new({ first_name: 'Dimitri', last_name: 'Kurashvili', age: 35 })
     @viewer = Forma::Viewer.new model: @user, label_width: 250
     @viewer.col1 do |c|
-      c.text_field :first_name, after: '&mdash;'
+      c.text_field :first_name, after: '&mdash;', required: true
       c.text_field :last_name
       c.text_field :age
     end
@@ -25,4 +25,5 @@ RSpec.describe Forma::Viewer do
   specify { expect(@html).to include('35') }
   specify { expect(@html).to include('width="250"') }
   specify { expect(@html).to include('&mdash;') }
+  specify { expect(@html).to include('<tr class="forma-required">') }
 end

@@ -26,7 +26,9 @@ module Forma
       el('table', { class: 'table table-bordered table-striped forma-viewer-column' }, [
         el('tbody', col.fields.map do |fld|
           newopts = opts.merge(model: v.model)
-          el('tr', [
+          rowparams = {}
+          rowparams[:class] = 'forma-required' if ( opts[:required] || fld.required )
+          el('tr', rowparams, [
             el('th', [ Forma::FieldGenerator.label_eval(fld, newopts) ], { width: label_width }),
             el('td', [ Forma::FieldGenerator.viewer(fld, newopts) ])
           ])
