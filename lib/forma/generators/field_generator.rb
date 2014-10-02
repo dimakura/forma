@@ -26,7 +26,11 @@ module Forma
     def type_eval(field, opts); field.type || 'text' end
     def model_eval(field, opts); opts[:model] || field.model end
 
-    def viewer_class_name_eval(field, opts); "forma-#{type_eval(field, opts)}-field" end
+    def viewer_class_name_eval(field, opts)
+      clazz = opts[:class_name] || field.class_name
+      clazz = clazz.join(' ') if clazz.instance_of?(Array)
+      "forma-#{type_eval(field, opts)}-field #{clazz}".strip
+    end
 
     def value_eval(field, opts)
       if field.value

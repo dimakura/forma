@@ -35,7 +35,7 @@ RSpec.describe Forma::Helpers do
         v.text_field 'first_name'
         v.text_field 'last_name'
         v.boolean_field 'is_admin', true_text: 'user is admin', false_text: 'use is not admin'
-        v.date_field 'birthdate'
+        v.date_field 'birthdate', class_name: 'text-muted'
       end
     end
 
@@ -46,6 +46,7 @@ RSpec.describe Forma::Helpers do
     specify { expect(@viewer_html).to include('user is admin') }
     specify { expect(@viewer_html).not_to include('user is not admin') }
     specify { expect(@viewer_html).to include('4-Apr-1979 06:15') }
+    specify { expect(@viewer_html).to include('class="forma-date-field text-muted"') }
   end
 
 end
