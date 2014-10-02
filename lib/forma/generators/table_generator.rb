@@ -13,16 +13,24 @@ module Forma
 ## Viewer generator functions
 
     def viewer(table, opts)
+      children = nil
       models = models_eval(table, opts)
       if models and models.any?
-        table_eval(table, opts)
+        children = table_eval(table, opts)
       else
-        empty_table_eval(table, opts)
+        children = empty_table_eval(table, opts)
       end
+      el('table', { class: class_name_eval(table, opts) }, children)
     end
 
     def empty_table_eval(table, opts)
-      el({ class: 'forma-no-data' }, [ 'no-data' ])
+      [
+        el('tbody', [
+          el('tr',  { colspan: table.fields.size }, table.fields.map do |field|
+            el('td', [ 'no-data' ], { class: 'forma-no-data' })
+          end)
+        ])
+      ]
     end
 
     def table_eval(table, opts)
@@ -38,7 +46,6 @@ module Forma
           table_body_eval(table, opts)
         ]
       end
-      el('table', { class: class_name_eval(table, opts) }, children)
     end
 
     def class_name_eval(table, opts); 'table table-bordered table-striped' end
