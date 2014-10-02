@@ -35,30 +35,26 @@ module Forma
 
     def table_eval(table, opts)
       children = nil
-      hide_header = opts[:hide_header] or table.hide_header
-      unless hide_header
-        children = [
-          table_header_eval(table, opts),
-          table_body_eval(table, opts)
-        ]
-      else
-        children = [
-          table_body_eval(table, opts)
-        ]
-      end
+      [
+        table_header_eval(table, opts),
+        table_body_eval(table, opts)
+      ]
     end
 
     def class_name_eval(table, opts); 'table table-bordered table-striped' end
     def models_eval(table, opts); opts[:models] || table.models end
 
     def table_header_eval(table, opts)
-      models = models_eval(table, opts)
-      firstModel = models ? models.first : nil
-      el('thead', [
-        el('tr', table.fields.map do |field|
-          el('th', [ Forma::FieldGenerator.label_eval(field, { model: firstModel }) ])
-        end)
-      ])
+      hide_header = opts[:hide_header] or table.hide_header
+      unless hide_header
+        models = models_eval(table, opts)
+        firstModel = models ? models.first : nil
+        el('thead', [
+          el('tr', table.fields.map do |field|
+            el('th', [ Forma::FieldGenerator.label_eval(field, { model: firstModel }) ])
+          end)
+        ])
+      end
     end
 
     def table_body_eval(table, opts)
