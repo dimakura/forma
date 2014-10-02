@@ -46,7 +46,9 @@ module Forma
     def models_eval(table, opts); opts[:models] || table.models end
 
     def table_header_eval(table, opts)
-      hide_header = opts[:hide_header] or table.hide_header
+      hide_header = false
+      hide_header = true if (not opts[:hide_header].nil? and opts[:hide_header])
+      hide_header = true if (not table.hide_header.nil? and table.hide_header)
       unless hide_header
         models = models_eval(table, opts)
         first_model = (models and models.any?) ? models.first : nil
