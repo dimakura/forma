@@ -16,24 +16,17 @@ module Forma
     def viewer(field, opts)
       tag = field.tag || 'span'
       value = value_eval(field, opts)
-      if value.present?
-        el(tag, [ body_eval(field, opts) ], { class: class_name_eval(field, opts) })
+      unless value.nil? or value == ''
+        el(tag, [ viewer_body_eval(field, opts) ], { class: viewer_class_name_eval(field, opts) })
       else
         el('span', [ '(empty)' ], { class: 'text-muted forma-empty-field' })
       end
     end
 
     def type_eval(field, opts); field.type || 'text' end
-    def class_name_eval(field, opts); "forma-#{type_eval(field, opts)}-field" end
+    def model_eval(field, opts); opts[:model] || field.model end
 
-    def body_eval(field, opts)
-      value = value_eval(field, opts)
-      if field.url
-        el('a', [ value ], { href: url_eval(field, opts) })
-      else
-        value
-      end
-    end
+    def viewer_class_name_eval(field, opts); "forma-#{type_eval(field, opts)}-field" end
 
     def value_eval(field, opts)
       if field.value
@@ -57,10 +50,6 @@ module Forma
       end
     end
 
-    def model_eval(field, opts)
-      opts[:model] || field.model
-    end
-
     def model_name_eval(field, opts)
       model_name = opts[:model_name] || field.model_name
       unless model_name
@@ -81,14 +70,72 @@ module Forma
       end
     end
 
+    def viewer_body_eval(field, opts)
+      type = type_eval(field, opts)
+      url = url_eval(field, opts)
+      value = value_eval(field, opts)
+      
+      inner_html = case type
+        when 'boolean' then viewer_for_boolean_eval(field, value, opts)
+        else value
+      end
+
+      if url then el('a', [ inner_html ], { href: url })
+      else inner_html
+      end
+    end
+
+    def viewer_for_boolean_eval(field, value, opts)
+      model_name = model_name_eval(field, opts)
+
+      false_text = true_text = nil
+
+      if opts[:false_text] == false
+        false_text = nil
+      elsif opts[:false_text].present?
+        false_text = opts[:false_text]
+      elsif field.false_text == false
+        false_text = nil
+      elsif field.false_text.present?
+        false_text = field.false_text
+      elsif model_name.present?
+        false_text = I18n.t("models.#{model_name}.#{ field.i18n || field.name }_false", default: '')
+      end
+
+      if opts[:true_text] == false
+        true_text = nil
+      elsif opts[:true_text].present?
+        true_text = opts[:true_text]
+      elsif field.true_text == false
+        true_text = nil
+      elsif field.true_text.present?
+        true_text = field.true_text
+      elsif model_name.present?
+        true_text = I18n.t("models.#{model_name}.#{ field.i18n || field.name }_true", default: '')
+      end      
+
+      if value
+        el('span', { class: 'text-success' }, [
+          el('i', { class: 'fa fa-check' }),
+          ' ' + true_text
+        ])
+      else
+        el('span', { class: 'text-danger' }, [
+          el('i', { class: 'fa fa-remove' }),
+          ' ' + false_text
+        ])
+      end
+    end
+
     module_function :viewer
-    module_function :body_eval
+    module_function :viewer_body_eval
     module_function :value_eval
     module_function :type_eval
-    module_function :class_name_eval
+    module_function :viewer_class_name_eval
     module_function :url_eval
     module_function :label_eval
     module_function :model_eval
     module_function :model_name_eval
+    module_function :viewer_for_boolean_eval
   end
 end
