@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 require 'spec_helper'
 
-RSpec.describe Forma::Field do
+RSpec.describe Forma::Table do
 
   before(:all) do
     fields = [ Forma::Field.new(name: 'first_name'),
@@ -14,6 +14,7 @@ RSpec.describe Forma::Field do
     @html = @table.viewer_html
     @table2 = Forma::Table.new(fields: fields)
     @html2 = @table2.viewer_html
+    @html3 = @table.viewer_html(hide_header: true)
   end
 
   specify{ expect(@html).to include('<table class="table table-bordered table-striped">') }
@@ -26,4 +27,6 @@ RSpec.describe Forma::Field do
   specify{ expect(@html).to include('Misho') }
 
   specify{ expect(@html2).to include('<div class="forma-no-data">no-data</div>') }
+
+  specify{ expect(@html3).not_to include('<th>First Name</th>') }
 end

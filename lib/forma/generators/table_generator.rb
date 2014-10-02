@@ -26,10 +26,19 @@ module Forma
     end
 
     def table_eval(table, opts)
-      el('table', { class: class_name_eval(table, opts) }, [
-        table_header_eval(table, opts),
-        table_body_eval(table, opts)
-      ])
+      children = nil
+      hide_header = opts[:hide_header] or table.hide_header
+      unless hide_header
+        children = [
+          table_header_eval(table, opts),
+          table_body_eval(table, opts)
+        ]
+      else
+        children = [
+          table_body_eval(table, opts)
+        ]
+      end
+      el('table', { class: class_name_eval(table, opts) }, children)
     end
 
     def class_name_eval(table, opts); 'table table-bordered table-striped' end
