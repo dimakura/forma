@@ -7,7 +7,7 @@ module Forma
     def fields; self.options[:fields] end
 
     def add_field(fld)
-      self.options[:fields] = [] if self.options[:fields].nil?
+      self.options[:fields] = [] if self.options[:fields].blank?
       self.options[:fields] << fld
     end
 

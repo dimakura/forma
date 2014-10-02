@@ -75,7 +75,7 @@ module Forma
       model_name = model_name_eval(field, opts)
       label = I18n.t("models.#{model_name}.#{ field.i18n || field.name }", default: '') if model_name
       if label.nil? or label == ''
-        field.label || field.name.split('_').map{|x| x.capitalize}.join(' ')
+        field.label || field.name.to_s.split('_').map{|x| x.capitalize}.join(' ')
       else
         label
       end
