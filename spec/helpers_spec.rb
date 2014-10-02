@@ -57,6 +57,8 @@ RSpec.describe Forma::Helpers do
     specify { expect(@viewer_html).not_to include('user is not admin') }
     specify { expect(@viewer_html).to include('4-Apr-1979 06:15') }
     specify { expect(@viewer_html).to include('class="forma-date-field text-muted"') }
+    specify { expect(@viewer_html).to include('dimakura@gmail.com') }
+    specify { expect(@viewer_html).to include('555666777') }
   end
 
 end

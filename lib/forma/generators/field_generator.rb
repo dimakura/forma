@@ -82,6 +82,7 @@ module Forma
       inner_html = case type
         when 'boolean' then viewer_for_boolean_eval(field, value, opts)
         when 'date' then viewer_for_date_eval(field, value, opts)
+        when 'complex' then viewer_for_complex_eval(field, value, opts)
         else value
       end
 
@@ -150,6 +151,12 @@ module Forma
       value.localtime.strftime(formatter)
     end
 
+    def viewer_for_complex_eval(field, value, opts)
+      field.fields.map do |fld|
+        viewer(fld, { model: value })
+      end.join(' ')
+    end
+
     module_function :viewer
     module_function :viewer_body_eval
     module_function :value_eval
@@ -161,5 +168,6 @@ module Forma
     module_function :model_name_eval
     module_function :viewer_for_boolean_eval
     module_function :viewer_for_date_eval
+    module_function :viewer_for_complex_eval
   end
 end
