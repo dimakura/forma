@@ -17,5 +17,6 @@ module Forma
     end
 
     module_function :table_for
+    module_function :viewer_for
   end
 end
