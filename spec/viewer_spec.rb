@@ -4,7 +4,7 @@ require 'spec_helper'
 RSpec.describe Forma::Viewer do
   before(:all) do
     @user = User.new({ first_name: 'Dimitri', last_name: 'Kurashvili', age: 35 })
-    @viewer = Forma::Viewer.new model: @user
+    @viewer = Forma::Viewer.new model: @user, label_width: 250
     @viewer.col1 do |c|
       c.text_field :first_name
       c.text_field :last_name
@@ -23,4 +23,5 @@ RSpec.describe Forma::Viewer do
   specify{ expect(@html).to include('Dimitri') }
   specify{ expect(@html).to include('Kurashvili') }
   specify{ expect(@html).to include('35') }
+  specify{ expect(@html).to include('width="250"') }
 end
