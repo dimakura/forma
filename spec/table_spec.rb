@@ -17,7 +17,7 @@ RSpec.describe Forma::Table do
     @html3 = @table.viewer_html(hide_header: true)
   end
 
-  specify{ expect(@html).to include('<table class="table table-bordered table-striped">') }
+  specify{ expect(@html).to include('<table class="table table-bordered table-striped table-hover">') }
   specify{ expect(@html).to include('<th>First Name</th>') }
   specify{ expect(@html).to include('<th>Last Name</th>') }
   specify{ expect(@html).to include('<th>Age</th>') }
