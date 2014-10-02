@@ -19,9 +19,24 @@ module Forma
       tag = field.tag || 'span'
       value = value_eval(field, opts)
       unless value.nil? or value == ''
-        el(tag, [ viewer_body_eval(field, opts) ], { class: viewer_class_name_eval(field, opts) })
+        [ before_eval(field, opts),
+          el(tag, [ viewer_body_eval(field, opts) ], { class: viewer_class_name_eval(field, opts) }),
+          after_eval(field, opts)
+        ].select{|x| x.present? }.join(' ')
       else
         el('span', [ '(empty)' ], { class: 'text-muted forma-empty-field' })
+      end
+    end
+
+    def before_eval(field, opts)
+      if opts[:before] or field.before
+        el('span', { class: 'forma-field-before' }, [ " #{opts[:before] || field.before}" ])
+      end
+    end
+
+    def after_eval(field, opts)
+      if opts[:after] or field.after
+        el('span', { class: 'forma-field-after' }, [ " #{opts[:after] || field.after}" ])
       end
     end
 
@@ -154,6 +169,8 @@ module Forma
 
     module_function :viewer
     module_function :viewer_body_eval
+    module_function :after_eval
+    module_function :before_eval
     module_function :value_eval
     module_function :type_eval
     module_function :viewer_class_name_eval

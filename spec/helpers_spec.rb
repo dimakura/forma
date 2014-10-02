@@ -44,7 +44,7 @@ RSpec.describe Forma::Helpers do
         v.date_field 'birthdate', class_name: 'text-muted'
         v.text_field 'profile.total_followers'
         v.complex_field 'profile' do |p|
-          p.text_field 'email'
+          p.text_field 'email', after: '&mdash;'.html_safe
           p.text_field 'mobile'
         end
       end
