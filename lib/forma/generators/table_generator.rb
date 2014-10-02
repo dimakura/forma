@@ -31,7 +31,7 @@ module Forma
             el('td', {
               colspan: table.fields.size,
               class: 'forma-no-data'
-            }, [ 'no-data' ])
+            }, [ (opts[:empty_text] || table.empty_text || 'no-data') ])
           ])
         ])
       ]
