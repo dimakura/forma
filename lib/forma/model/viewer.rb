@@ -18,5 +18,15 @@ module Forma
 
     def two_columns?; not not @col2 end
     def to_html(opts={}); Forma::ViewerGenerator.to_html(self, opts) end
+
+    def method_missing(method_name, *args, &block)
+      method_str = method_name.to_s
+      if method_str =~ /^(.)+_field$/
+        col1.send method_name, *args, &block
+        return
+      end
+
+      super
+    end
   end
 end

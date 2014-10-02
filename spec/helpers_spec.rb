@@ -24,10 +24,8 @@ RSpec.describe Forma::Helpers do
     before(:all) do
       model = User.new(first_name: 'Dimitri', last_name: 'Kurashvili')
       @viewer_html = Forma::Helpers.viewer_for(model) do |v|
-        v.col1 do |c|
-          c.text_field 'first_name'
-          c.text_field 'last_name'
-        end
+        v.text_field 'first_name'
+        v.text_field 'last_name'
       end
     end
 
