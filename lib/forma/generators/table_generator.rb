@@ -25,6 +25,7 @@ module Forma
 
     def empty_table_eval(table, opts)
       [
+        table_header_eval(table, opts),
         el('tbody', [
           el('tr',  { colspan: table.fields.size }, table.fields.map do |field|
             el('td', [ 'no-data' ], { class: 'forma-no-data' })
