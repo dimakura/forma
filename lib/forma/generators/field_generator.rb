@@ -132,7 +132,7 @@ module Forma
       short:  '%d-%b-%Y',
       medium: '%d-%b-%Y %H:%M',
       long:   '%d-%b-%Y %H:%M:%S',
-      extra:  '%d-%b-%Y %H:%M:%S Z'
+      extra:  '%d-%b-%Y %H:%M:%S %z'
     }
 
     def viewer_for_date_eval(field, value, opts)
@@ -143,7 +143,7 @@ module Forma
         elsif field.formatter then field.formatter.to_s
         else DATE_FORMATS[:medium]
         end).to_s
-      value.strftime(formatter)
+      value.localtime.strftime(formatter)
     end
 
     module_function :viewer
