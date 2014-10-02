@@ -8,7 +8,11 @@ module Forma
     def options; @opts end
 
     def method_missing(method_name, *args, &block)
-      @opts[ method_name.to_sym ]
+      if method_name.to_s[-1] == '='
+        @opts[ method_name.to_s.chop.to_sym ] = args[0]
+      else
+        @opts[ method_name ]
+      end
     end
   end
 end
