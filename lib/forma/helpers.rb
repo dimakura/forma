@@ -10,6 +10,12 @@ module Forma
       table.viewer_html
     end
 
+    def viewer_for(model, opts = {})
+      viewer = Forma::Viewer.new(opts.merge(model: model))
+      yield viewer if block_given?
+      viewer.to_html
+    end
+
     module_function :table_for
   end
 end

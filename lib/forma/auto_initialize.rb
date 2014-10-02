@@ -1,6 +1,7 @@
 # -*- encoding : utf-8 -*-
 module Forma
   class AutoInitialize
+
     def initialize(opts = {})
       @opts = opts
     end
@@ -14,5 +15,6 @@ module Forma
         @opts[ method_name ]
       end
     end
+
   end
 end
