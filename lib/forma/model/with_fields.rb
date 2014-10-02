@@ -15,7 +15,13 @@ module Forma
     def method_missing(method_name, *args, &block)
       method_str = method_name.to_s
       if method_str =~ /^(.)+_field$/
-        type = method_str[0..-7] ; name = args[0] ; opts = args[1] || {}
+        type = method_str[0..-7]
+        name = args[0]
+        opts = args[1] || {}
+        if type.index('required_')
+          type = type[8..-1]
+          opts[:required] = true
+        end
         fld = add_field Forma::Field.new(opts.merge(name: name, type: type))
         yield fld if block_given?
         return fld
