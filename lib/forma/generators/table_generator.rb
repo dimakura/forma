@@ -48,10 +48,11 @@ module Forma
       hide_header = opts[:hide_header] or table.hide_header
       unless hide_header
         models = models_eval(table, opts)
-        firstModel = models ? models.first : nil
+        first_model = (models and models.any?) ? models.first : nil
+        model_name = opts[:model_name] || table.model_name
         el('thead', [
           el('tr', table.fields.map do |field|
-            el('th', [ Forma::FieldGenerator.label_eval(field, { model: firstModel }) ])
+            el('th', [ Forma::FieldGenerator.label_eval(field, { model: first_model, model_name: model_name }) ])
           end)
         ])
       end

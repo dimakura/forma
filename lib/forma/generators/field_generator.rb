@@ -62,8 +62,12 @@ module Forma
     end
 
     def model_name_eval(field, opts)
-      model = model_eval(field, opts)
-      model.class.name.split('::').join('_').downcase unless model.blank?
+      model_name = opts[:model_name] || field.model_name
+      unless model_name
+        model = model_eval(field, opts)
+        model_name = model.class.name unless model.blank?
+      end
+      model_name.split('::').join('_').downcase unless model_name.blank?
     end
 
     def label_eval(field, opts)
