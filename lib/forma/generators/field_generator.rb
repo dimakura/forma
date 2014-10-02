@@ -1,9 +1,11 @@
 # -*- encoding : utf-8 -*-
 require 'forma/generators/html'
+require 'forma/generators/utils'
 
 module Forma
   module FieldGenerator
     extend Forma::Html
+    extend Forma::Utils
 
     def viewer_html(field, opts); viewer(field, opts) end
     def editor_html(field, opts); '<p>editor</p>' end
@@ -36,12 +38,12 @@ module Forma
       if field.value
         field.value
       elsif field.name
-        evalModel = model_eval(field, opts)
-        if evalModel.instance_of?(Hash)
-          evalModel[ field.name.to_sym ]
-        else
-          evalModel.send( field.name.to_sym )
-        end
+        model_value( model_eval(field, opts), field.name )
+        # if evalModel.instance_of?(Hash)
+        #   evalModel[ field.name.to_sym ]
+        # else
+        #   evalModel.send( field.name.to_sym )
+        # end
       end
     end
 

@@ -42,6 +42,7 @@ RSpec.describe Forma::Helpers do
         v.text_field 'last_name'
         v.boolean_field 'is_admin', true_text: 'user is admin', false_text: 'use is not admin'
         v.date_field 'birthdate', class_name: 'text-muted'
+        v.text_field 'profile.total_followers'
         v.complex_field 'profile' do |p|
           p.text_field 'email'
           p.text_field 'mobile'
