@@ -25,11 +25,17 @@ RSpec.describe Forma::Helpers do
 
   context 'viewer helper' do
     before(:all) do
-      model = User.new(first_name: 'Dimitri', last_name: 'Kurashvili', is_admin: true)
+      model = User.new(
+        first_name: 'Dimitri',
+        last_name: 'Kurashvili',
+        is_admin: true,
+        birthdate: Time.new(1979, 4, 4, 6, 15)
+      )
       @viewer_html = Forma::Helpers.viewer_for(model) do |v|
         v.text_field 'first_name'
         v.text_field 'last_name'
         v.boolean_field 'is_admin', true_text: 'user is admin', false_text: 'use is not admin'
+        v.date_field 'birthdate'
       end
     end
 
@@ -39,6 +45,7 @@ RSpec.describe Forma::Helpers do
     specify { expect(@viewer_html).to include('Kurashvili') }
     specify { expect(@viewer_html).to include('user is admin') }
     specify { expect(@viewer_html).not_to include('user is not admin') }
+    specify { expect(@viewer_html).to include('4-Apr-1979 06:15') }
   end
 
 end

@@ -77,6 +77,7 @@ module Forma
       
       inner_html = case type
         when 'boolean' then viewer_for_boolean_eval(field, value, opts)
+        when 'date' then viewer_for_date_eval(field, value, opts)
         else value
       end
 
@@ -127,6 +128,24 @@ module Forma
       end
     end
 
+    DATE_FORMATS = {
+      short:  '%d-%b-%Y',
+      medium: '%d-%b-%Y %H:%M',
+      long:   '%d-%b-%Y %H:%M:%S',
+      extra:  '%d-%b-%Y %H:%M:%S Z'
+    }
+
+    def viewer_for_date_eval(field, value, opts)
+      formatter = (
+        if opts[:format] then DATE_FORMATS[opts[:format].to_sym]
+        elsif opts[:formatter] then opts[:formatter].to_s
+        elsif field.format then DATE_FORMATS[field.format.to_sym]
+        elsif field.formatter then field.formatter.to_s
+        else DATE_FORMATS[:medium]
+        end).to_s
+      value.strftime(formatter)
+    end
+
     module_function :viewer
     module_function :viewer_body_eval
     module_function :value_eval
@@ -137,5 +156,6 @@ module Forma
     module_function :model_eval
     module_function :model_name_eval
     module_function :viewer_for_boolean_eval
+    module_function :viewer_for_date_eval
   end
 end
