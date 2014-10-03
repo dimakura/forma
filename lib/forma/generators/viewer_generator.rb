@@ -13,18 +13,9 @@ module Forma
 ## Viewer generator functions
 
     def viewer(v, opts)
-      el('div', { class: 'forma-viewer' }, [ columns_eval(v, opts) ])
-    end
-
-    def columns_eval(v, opts)
-      column_eval(v, v.col1, opts)
-      # TODO: second column
-    end
-
-    def column_eval(v, col, opts)
       label_width = opts[:label_width] || v.label_width || 200
-      el('table', { class: 'table table-bordered table-striped forma-viewer-column' }, [
-        el('tbody', col.fields.map do |fld|
+      el('table', { class: 'table table-bordered table-striped forma-viewer' }, [
+        el('tbody', v.fields.map do |fld|
           newopts = opts.merge(model: v.model)
           rowparams = {}
           rowparams[:class] = 'forma-required' if ( opts[:required] || fld.required )
@@ -37,7 +28,5 @@ module Forma
     end
 
     module_function :viewer
-    module_function :columns_eval
-    module_function :column_eval
   end
 end
