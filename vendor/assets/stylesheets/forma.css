@@ -11,9 +11,9 @@ table.forma-table tbody td.forma-no-data:hover {
 .forma-editor tr.forma-required th {
   border-left: #cf0000 2px solid;
 }
-.forma-viewer th,
-.forma-editor th {
-  vertical-align: middle;
+.forma-viewer tbody th,
+.forma-editor tbody th {
+  vertical-align: middle !important;
 }
 .forma-viewer td .well,
 .forma-editor td .well {
