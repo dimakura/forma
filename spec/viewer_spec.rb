@@ -5,9 +5,11 @@ RSpec.describe Forma::Viewer do
   before(:all) do
     @user = User.new({ first_name: 'Dimitri', last_name: 'Kurashvili', age: 35 })
     @viewer = Forma::Viewer.new model: @user, label_width: 250
-    @viewer.text_field :first_name, after: '&mdash;', required: true
-    @viewer.text_field :last_name
-    @viewer.text_field :age
+    @viewer.with_fields do |v|
+      v.text_field :first_name, after: '&mdash;', required: true
+      v.text_field :last_name
+      v.text_field :age
+    end
     @html = @viewer.to_html
   end
 

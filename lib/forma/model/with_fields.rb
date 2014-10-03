@@ -5,10 +5,16 @@ module Forma
   class WithFields < Forma::AutoInitialize
     AUTO_PROPERTIES = [ 'required', 'readonly' ]
 
-    def fields; self.options[:fields] end
+    def fields
+      fields = ( self.options[:fields] ||= [] )
+      yield self if block_given?
+      fields
+    end
+
+    alias :with_fields :fields
 
     def add_field(fld)
-      self.options[:fields] = [] if self.options[:fields].blank?
+      self.options[:fields] ||= []
       self.options[:fields] << fld
       fld
     end
