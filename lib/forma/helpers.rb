@@ -16,7 +16,14 @@ module Forma
       viewer.to_html
     end
 
+    def editor_for(model, opts = {})
+      editor = Forma::Editor.new(opts.merge(model: model))
+      yield editor if block_given?
+      editor.to_html
+    end
+
     module_function :table_for
     module_function :viewer_for
+    module_function :editor_for
   end
 end

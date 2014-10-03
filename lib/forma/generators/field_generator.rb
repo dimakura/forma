@@ -202,15 +202,21 @@ module Forma
           # when 'complex' then editor_for_complex_eval(field, value, opts)
           # when 'array'   then editor_for_array_eval(field, value, opts)
           when 'text' then editor_for_text_eval(field, value, opts)
+          when 'password' then editor_for_password_eval(field, value, opts)
         end
       end
     end
 
     def editor_for_text_eval(field, value, opts)
-      el('input', { name: "#{model_name_eval(field, opts)}[#{field.name}]", val: value.to_s })
+      el('input', { name: "#{model_name_eval(field, opts)}[#{field.name}]", value: value.to_s, autofocus: field.autofocus, type: 'text' })
     end
+
+    def editor_for_password_eval(field, value, opts)
+      el('input', { name: "#{model_name_eval(field, opts)}[#{field.name}]", value: value.to_s, autofocus: field.autofocus, type: 'password' })
+    end    
 
     module_function :editor
     module_function :editor_for_text_eval
+    module_function :editor_for_password_eval
   end
 end
