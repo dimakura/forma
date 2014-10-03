@@ -207,16 +207,34 @@ module Forma
       end
     end
 
+    def editor_class_name_eval(field, opts)
+      viewer_class = viewer_class_name_eval(field, opts)
+      "#{viewer_class} form-control"
+    end
+
     def editor_for_text_eval(field, value, opts)
-      el('input', { name: "#{model_name_eval(field, opts)}[#{field.name}]", value: value.to_s, autofocus: field.autofocus, type: 'text' })
+      el('input', {
+        name: "#{model_name_eval(field, opts)}[#{field.name}]",
+        value: value.to_s,
+        autofocus: field.autofocus,
+        type: 'text',
+        class: editor_class_name_eval(field, opts)
+      })
     end
 
     def editor_for_password_eval(field, value, opts)
-      el('input', { name: "#{model_name_eval(field, opts)}[#{field.name}]", value: value.to_s, autofocus: field.autofocus, type: 'password' })
-    end    
+      el('input', {
+        name: "#{model_name_eval(field, opts)}[#{field.name}]",
+        value: value.to_s,
+        autofocus: field.autofocus,
+        type: 'password',
+        class: editor_class_name_eval(field, opts)
+      })
+    end
 
     module_function :editor
     module_function :editor_for_text_eval
     module_function :editor_for_password_eval
+    module_function :editor_class_name_eval
   end
 end
