@@ -23,7 +23,13 @@ module Forma
             el('th', [ Forma::FieldGenerator.label_eval(fld, newopts) ], { width: label_width }),
             el('td', [ fld.editor_html( newopts ) ])
           ])
-        end)
+        end),
+        el('tfoot', [ el('tr', [
+            el('td', { colspan: 2 }, [
+              el('button', { type: 'submit', class: 'btn btn-primary' }, [ opts[:submit] || e.submit || 'Save' ])
+            ])
+          ])
+        ]) #if e.submit != false
       ])
     end
 

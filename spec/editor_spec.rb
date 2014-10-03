@@ -17,6 +17,7 @@ RSpec.describe Forma::Editor do
       e.password_field :password
       e.text_field :last_name
       e.text_field :age
+      e.submit 'Register'
     end
     @html = @editor.to_html
   end
@@ -32,4 +33,5 @@ RSpec.describe Forma::Editor do
   specify { expect(@html).to include('value="secret"') }
   specify { expect(@html).to include('width="250"') }
   specify { expect(@html).to include('<tr class="forma-required">') }
+  specify { expect(@html).to include('<button type="submit" class="btn btn-primary">Register</button>') }
 end
