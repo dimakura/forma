@@ -10,7 +10,7 @@ RSpec.describe Forma::Editor do
       age: 35,
       password: 'secret'
     })
-    @editor = Forma::Editor.new model: @user, label_width: 250
+    @editor = Forma::Editor.new model: @user, label_width: 250, url: '/register'
     @editor.with_fields do |e|
       e.readonly_text_field :username
       e.required_text_field :first_name
@@ -34,4 +34,6 @@ RSpec.describe Forma::Editor do
   specify { expect(@html).to include('width="250"') }
   specify { expect(@html).to include('<tr class="forma-required">') }
   specify { expect(@html).to include('<button type="submit" class="btn btn-primary">Register</button>') }
+  specify { expect(@html).to include('method="post"') }
+  specify { expect(@html).to include('action="/register"') }
 end
