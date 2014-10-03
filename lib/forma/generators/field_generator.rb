@@ -7,13 +7,7 @@ module Forma
     extend Forma::Html
     extend Forma::Utils
 
-    def viewer_html(field, opts); viewer(field, opts) end
-    def editor_html(field, opts); '<p>editor</p>' end
-
-    module_function :viewer_html
-    module_function :editor_html
-
-## Viewer creation functions
+## Viewer
 
     def viewer(field, opts)
       tag = field.tag || 'span'
@@ -193,5 +187,30 @@ module Forma
     module_function :viewer_for_date_eval
     module_function :viewer_for_complex_eval
     module_function :viewer_for_array_eval
+
+## Editor
+
+    def editor(field, opts)
+      if opts[:readonly] or field.readonly
+        viewer(field, opts)
+      else
+        type = type_eval(field, opts)
+        value = value_eval(field, opts)
+        inner_html = case type
+          # when 'boolean' then editor_for_boolean_eval(field, value, opts)
+          # when 'date'    then editor_for_date_eval(field, value, opts)
+          # when 'complex' then editor_for_complex_eval(field, value, opts)
+          # when 'array'   then editor_for_array_eval(field, value, opts)
+          when 'text' then editor_for_text_eval(field, value, opts)
+        end
+      end
+    end
+
+    def editor_for_text_eval(field, value, opts)
+      el('input', { name: "#{model_name_eval(field, opts)}[#{field.name}]", val: value.to_s })
+    end
+
+    module_function :editor
+    module_function :editor_for_text_eval
   end
 end

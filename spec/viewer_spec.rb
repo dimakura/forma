@@ -6,7 +6,7 @@ RSpec.describe Forma::Viewer do
     @user = User.new({ first_name: 'Dimitri', last_name: 'Kurashvili', age: 35 })
     @viewer = Forma::Viewer.new model: @user, label_width: 250
     @viewer.with_fields do |v|
-      v.text_field :first_name, after: '&mdash;', required: true
+      v.required_text_field :first_name, after: '&mdash;'
       v.text_field :last_name
       v.text_field :age
     end
