@@ -16,3 +16,11 @@ table.forma-table tbody td.forma-no-data:hover {
 .forma-viewer td .well {
   margin: 0;
 }
+.forma-array-field .forma-array-field-child {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 3px;
+}
+.forma-array-field .forma-array-field-child:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
