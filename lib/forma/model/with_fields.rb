@@ -19,7 +19,7 @@ module Forma
         name = args[0]
         opts = args[1] || {}
         if type.index('required_')
-          type = type[8..-1]
+          type = type[9..-1]
           opts[:required] = true
         end
         fld = add_field Forma::Field.new(opts.merge(name: name, type: type))

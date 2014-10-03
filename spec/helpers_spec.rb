@@ -40,7 +40,7 @@ RSpec.describe Forma::Helpers do
       @viewer_html = Forma::Helpers.viewer_for(model) do |v|
         v.text_field 'first_name'
         v.text_field 'last_name'
-        v.boolean_field 'is_admin', true_text: 'user is admin', false_text: 'use is not admin'
+        v.required_boolean_field 'is_admin', true_text: 'user is admin', false_text: 'use is not admin'
         v.date_field 'birthdate', class_name: 'text-muted'
         v.text_field 'profile.total_followers'
         v.complex_field 'profile' do |p|
