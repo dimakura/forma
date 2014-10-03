@@ -16,11 +16,21 @@ module Forma
       action = opts[:url] || e.url
       method = opts[:http_method] || e.http_method || 'post'
       el('form', { class: 'forma-editor', action: action, method: method }, [
+        authtoken_eval(e, opts),
         el('table', { class: 'table table-bordered table-striped' }, [
           editor_fields_eval(e, opts),
           editor_bottom_eval(e, opts),
         ])
       ])
+    end
+
+    def authtoken_eval(e, opts)
+      auth_token = opts[:auth_token] || e.auth_token
+      if auth_token.present?
+        el({ style: 'padding:0;margin:0;height:0;width:0;display:"inline"' }, [
+          el('input', { type: 'hidden', name: 'authenticity_token', value: auth_token })
+        ])
+      end
     end
 
     def editor_fields_eval(e, opts)
@@ -50,5 +60,6 @@ module Forma
     module_function :editor
     module_function :editor_fields_eval
     module_function :editor_bottom_eval
+    module_function :authtoken_eval
   end
 end

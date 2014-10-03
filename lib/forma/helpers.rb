@@ -18,6 +18,7 @@ module Forma
 
     def editor_for(model, opts = {})
       editor = Forma::Editor.new(opts.merge(model: model))
+      editor.auth_token = form_authenticity_token if defined?(Rails)
       yield editor if block_given?
       editor.to_html
     end
