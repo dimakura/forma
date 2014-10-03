@@ -35,7 +35,12 @@ RSpec.describe Forma::Helpers do
           total_followers: 200,
           email: 'dimakura@gmail.com',
           mobile: '555666777'
-        )
+        ),
+        logs: [
+          UserLog.new(text: 'log message 1'),
+          UserLog.new(text: 'log message 2'),
+          UserLog.new(text: 'log message 3'),
+        ]
       )
       @viewer_html = Forma::Helpers.viewer_for(model) do |v|
         v.text_field 'first_name'
@@ -46,6 +51,12 @@ RSpec.describe Forma::Helpers do
         v.complex_field 'profile' do |p|
           p.text_field 'email', after: '&mdash;'.html_safe
           p.text_field 'mobile'
+        end
+        v.array_field 'logs' do |arr|
+          # arr.field do |fld|
+          #   fld.text_field 'text'
+          # end
+          arr.text_field 'text'
         end
       end
     end
@@ -60,6 +71,9 @@ RSpec.describe Forma::Helpers do
     specify { expect(@viewer_html).to include('class="forma-date-field text-muted"') }
     specify { expect(@viewer_html).to include('dimakura@gmail.com') }
     specify { expect(@viewer_html).to include('555666777') }
+    specify { expect(@viewer_html).to include('log message 1') }
+    specify { expect(@viewer_html).to include('log message 2') }
+    specify { expect(@viewer_html).to include('log message 3') }
   end
 
 end

@@ -88,11 +88,12 @@ module Forma
       type = type_eval(field, opts)
       url = url_eval(field, opts)
       value = value_eval(field, opts)
-      
+
       inner_html = case type
         when 'boolean' then viewer_for_boolean_eval(field, value, opts)
-        when 'date' then viewer_for_date_eval(field, value, opts)
+        when 'date'    then viewer_for_date_eval(field, value, opts)
         when 'complex' then viewer_for_complex_eval(field, value, opts)
+        when 'array'   then viewer_for_array_eval(field, value, opts)
         else value
       end
 
@@ -167,6 +168,14 @@ module Forma
       end.join(' ')
     end
 
+    def viewer_for_array_eval(field, values, opts)
+      values.map do |value|
+        el('div', { class: 'forma-array-field-child' }, field.fields.map do |fld|
+          viewer(fld, { model: value })
+        end)
+      end.join(' ')
+    end
+
     module_function :viewer
     module_function :viewer_body_eval
     module_function :after_eval
@@ -181,5 +190,6 @@ module Forma
     module_function :viewer_for_boolean_eval
     module_function :viewer_for_date_eval
     module_function :viewer_for_complex_eval
+    module_function :viewer_for_array_eval
   end
 end
