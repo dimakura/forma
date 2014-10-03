@@ -52,6 +52,8 @@ module Forma
     def value_eval(field, opts)
       if field.value then field.value
       elsif field.name then model_value( model_eval(field, opts), field.name )
+      # elsif field.type == 'complex' then opts[:model] || field.model
+      else opts[:model] || field.model
       end
     end
 

@@ -6,19 +6,23 @@ RSpec.describe Forma::Helpers do
   context 'table helper' do
     before(:all) do
       models = [
-        { first_name: 'Dimitri', last_name: 'Kurashvili', is_admin: true },
+        { first_name: 'Dimitri', last_name: 'Kurashvili', is_admin: true, email: 'dimakura@gmail.com' },
         { first_name: 'Misho', last_name: 'Kurashvili', is_admin: false }
       ]
       @table_html = Forma::Helpers.table_for(models) do |t|
         t.text_field 'first_name'
         t.text_field 'last_name'
         t.boolean_field 'is_admin', true_text: 'user is admin', false_text: 'user is not admin'
+        t.complex_field do |c|
+          c.text_field 'email'
+        end
       end
     end
 
     specify { expect(@table_html).to include('Dimitri') }
     specify { expect(@table_html).to include('Misho') }
     specify { expect(@table_html).to include('Kurashvili') }
+    specify { expect(@table_html).to include('dimakura@gmail.com') }
     specify { expect(@table_html).to include('user is admin') }
     specify { expect(@table_html).to include('user is not admin') }
   end
