@@ -7,7 +7,7 @@ RSpec.describe Forma::Viewer do
     @viewer = Forma::Viewer.new model: @user, label_width: 250
     @viewer.with_fields do |v|
       v.button_action '/edit', label: 'Edit User', icon: 'pencil'
-      v.action '/delete', method: 'delete', confirm: 'Are you sure?', label: 'Delete User', icon: 'remove'
+      v.action '/delete', http_method: 'delete', confirm: 'Are you sure?', label: 'Delete User', icon: 'remove'
       v.required_text_field :first_name, after: '&mdash;'
       v.text_field :last_name
       v.text_field :age
@@ -27,4 +27,9 @@ RSpec.describe Forma::Viewer do
   specify { expect(@html).to include('<tr class="forma-required">') }
 
   specify { expect(@viewer.actions.size).to eq(2) }
+  specify { expect(@html).to include('href="/edit"') }
+  specify { expect(@html).to include('data-method="delete"') }
+  specify { expect(@html).not_to include('data-method=""') }
+  specify { expect(@html).to include('<a href="/edit" class="forma-action btn btn-default"><i class="fa fa-pencil"/> Edit User</a>') }
+  specify { expect(@html).to include('Delete User') }
 end
