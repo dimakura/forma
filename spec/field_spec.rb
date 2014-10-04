@@ -13,6 +13,6 @@ RSpec.describe Forma::Field do
 
   specify{ expect(@field1.viewer_html).to eq('<span class="forma-text-field">Dimitri</span>') }
   specify{ expect(@field2.viewer_html).to eq('<span class="forma-text-field"><a href="http://mecniereba.org">Kurashvili</a></span>') }
-  specify{ expect(@field3.viewer_html).to eq('<code class="forma-text-field"><i class="fa fa-user"/> 33</code>') }
+  specify{ expect(@field3.viewer_html).to eq('<code class="forma-text-field"><i class="fa fa-user"></i> 33</code>') }
   specify{ expect(Forma::FieldGenerator.model_name_eval(@field4, {})).to eq('sys_user') }
 end

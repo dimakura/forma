@@ -30,10 +30,10 @@ RSpec.describe Forma::Viewer do
   specify { expect(@viewer.actions.size).to eq(3) }
   specify { expect(@html).to include('href="/edit"') }
   specify { expect(@html).not_to include('data-method=""') }
-  specify { expect(@html).to include('<a href="/edit" class="forma-action btn btn-default"><i class="fa fa-pencil"/> Edit User</a>') }
+  specify { expect(@html).to include('<a href="/edit" class="forma-action btn btn-default"><i class="fa fa-pencil"></i> Edit User</a>') }
 
   specify { expect(@html).to include('data-method="delete"') }
-  specify { expect(@html).to include('data-confirm="Are you sure?"') }  
+  specify { expect(@html).to include('data-confirm="Are you sure?"') }
   specify { expect(@html).to include('Delete User') }
 
   specify { expect(@html).to include('data-js="back"') }

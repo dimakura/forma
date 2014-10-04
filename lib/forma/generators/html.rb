@@ -2,6 +2,9 @@
 module Forma
   module Html
     class Element
+
+      TAGS_WITH_LONG_CLOSE = [ 'body', 'i' , 'a'  ]
+
       def initialize(tag, params, children)
         @tag = tag ; @params = params ; @children = children
       end
@@ -28,19 +31,22 @@ module Forma
         end
       end
 
+      def short_close?
+        return false if @children.any?
+        return false if TAGS_WITH_LONG_CLOSE.index(@tag)
+        return true
+      end
+
       def tag_open
         ary = ['<', @tag]
         ary << params
-        ary << '>' if @children.any?
+        ary << '>' unless short_close?
         ary.join('')
       end
 
       def tag_close
-        if @children.any?
-          '</' + @tag + '>'
-        else
-          '/>'
-        end
+        if short_close? then '/>'
+        else  '</' + @tag + '>' end
       end
     end
 
