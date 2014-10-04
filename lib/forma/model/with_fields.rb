@@ -14,9 +14,7 @@ module Forma
     alias :with_fields :fields
 
     def add_field(fld)
-      self.options[:fields] ||= []
-      self.options[:fields] << fld
-      fld
+      self.fields << fld ; fld
     end
 
     def method_missing(method_name, *args, &block)
