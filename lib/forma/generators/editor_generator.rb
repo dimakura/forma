@@ -1,5 +1,6 @@
 # -*- encoding : utf-8 -*-
 require 'forma/generators/html'
+require 'forma/generators/action_generator'
 require 'forma/generators/field_generator'
 
 module Forma
@@ -47,19 +48,28 @@ module Forma
     end
 
     def editor_bottom_eval(e, opts)
+      actions_html = actions_eval(e, {})
       el('tfoot', [
         el('tr', [
           el('td', { colspan: 2 }, [
-            el('button', { type: 'submit', class: 'btn btn-primary' }, [ opts[:submit] || e.submit || 'Save' ])
+            el('button', { type: 'submit', class: 'btn btn-primary' }, [ opts[:submit] || e.submit || 'Save' ]),
+            " #{actions_html}"
           ])
         ])
       ])
       # TODO: add bottom action!
     end
 
+    def actions_eval(e, opts)
+      (e.actions.map do |act|
+        Forma::ActionGenerator.to_html(act, opts)
+      end.join(' ')) if e.actions
+    end
+
     module_function :editor
     module_function :editor_fields_eval
     module_function :editor_bottom_eval
     module_function :authtoken_eval
+    module_function :actions_eval
   end
 end
