@@ -6,6 +6,7 @@ RSpec.describe Forma::Viewer do
     @user = User.new({ first_name: 'Dimitri', last_name: 'Kurashvili', age: 35 })
     @viewer = Forma::Viewer.new model: @user, label_width: 250
     @viewer.with_fields do |v|
+      v.action '/delete', method: 'delete', confirm: 'Are you sure?', label: 'Delete User', icon: 'remove'
       v.required_text_field :first_name, after: '&mdash;'
       v.text_field :last_name
       v.text_field :age
@@ -23,4 +24,6 @@ RSpec.describe Forma::Viewer do
   specify { expect(@html).to include('width="250"') }
   specify { expect(@html).to include('&mdash;') }
   specify { expect(@html).to include('<tr class="forma-required">') }
+
+  specify { expect(@viewer.actions.size).to eq(1) }
 end

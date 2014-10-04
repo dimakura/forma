@@ -1,4 +1,6 @@
 # -*- encoding : utf-8 -*-
+require 'forma/auto_initialize'
+
 module Forma
   module WithActions
     def actions
@@ -14,8 +16,10 @@ module Forma
     end
 
     def action(url, opts = {})
-      self.url = url
-      self.options.merge( opts )
+      act = Forma::AutoInitialize.new(opts)
+      act.url = url
+      self.actions << act
+      act
     end
   end
 end
