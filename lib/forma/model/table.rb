@@ -4,6 +4,7 @@ require 'forma/generators/table_generator'
 
 module Forma
   class Table < Forma::WithFields
+    include Forma::WithActions
 
     def viewer_html(opts={})
       raise 'no fields defined' unless self.fields
