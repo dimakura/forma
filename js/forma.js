@@ -1,9 +1,10 @@
 var editor = require('./editor');
+var actions = require('./actions');
 
 var startup = function(opts) {
 
-  // starting up editor
   editor.startup( opts );
+  actions.startup( opts );
 
 };
 

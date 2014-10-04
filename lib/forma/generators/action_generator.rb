@@ -7,6 +7,8 @@ module Forma
     extend Forma::Html
 
     def to_html(actionDef, opts = {})
+      # params
+
       url = opts[:url] || actionDef.url
       method = opts[:http_method] || actionDef.http_method
       confirm = opts[:confirm] || actionDef.confirm
@@ -19,6 +21,11 @@ module Forma
       case (opts[:as] || actionDef.as).to_s
       when 'button' then params[:class] += ' btn btn-default'
       end
+
+      js = opts[:js] || actionDef.js
+      params['data-js'] = js if js.present?
+
+      # label
 
       inner_html = opts[:label] || actionDef.label || ''
 

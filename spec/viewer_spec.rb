@@ -6,6 +6,7 @@ RSpec.describe Forma::Viewer do
     @user = User.new({ first_name: 'Dimitri', last_name: 'Kurashvili', age: 35 })
     @viewer = Forma::Viewer.new model: @user, label_width: 250
     @viewer.with_fields do |v|
+      v.action '#', js: 'back'
       v.button_action '/edit', label: 'Edit User', icon: 'pencil'
       v.action '/delete', http_method: 'delete', confirm: 'Are you sure?', label: 'Delete User', icon: 'remove'
       v.required_text_field :first_name, after: '&mdash;'
@@ -26,11 +27,14 @@ RSpec.describe Forma::Viewer do
   specify { expect(@html).to include('&mdash;') }
   specify { expect(@html).to include('<tr class="forma-required">') }
 
-  specify { expect(@viewer.actions.size).to eq(2) }
+  specify { expect(@viewer.actions.size).to eq(3) }
   specify { expect(@html).to include('href="/edit"') }
-  specify { expect(@html).to include('data-method="delete"') }
-  specify { expect(@html).to include('data-confirm="Are you sure?"') }
   specify { expect(@html).not_to include('data-method=""') }
   specify { expect(@html).to include('<a href="/edit" class="forma-action btn btn-default"><i class="fa fa-pencil"/> Edit User</a>') }
+
+  specify { expect(@html).to include('data-method="delete"') }
+  specify { expect(@html).to include('data-confirm="Are you sure?"') }  
   specify { expect(@html).to include('Delete User') }
+
+  specify { expect(@html).to include('data-js="back"') }
 end
