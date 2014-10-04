@@ -21,5 +21,11 @@ module Forma
       self.actions << act
       act
     end
+
+    alias :link_action :action
+
+    def button_action(url, opts = {})
+      action(url, opts.merge(as: 'button'))
+    end
   end
 end
