@@ -8,7 +8,7 @@ RSpec.describe Forma::Viewer do
     @viewer.with_fields do |v|
       v.action '#', js: 'back'
       v.button_action '/edit', label: 'Edit User', icon: 'pencil'
-      v.action '/delete', http_method: 'delete', confirm: 'Are you sure?', label: 'Delete User', icon: 'remove'
+      v.action '/delete', http_method: 'delete', confirm: 'Are you sure?', label: 'Delete User', icon: 'remove', button: 'danger'
       v.required_text_field :first_name, after: '&mdash;'
       v.text_field :last_name
       v.text_field :age
@@ -34,7 +34,7 @@ RSpec.describe Forma::Viewer do
 
   specify { expect(@html).to include('data-method="delete"') }
   specify { expect(@html).to include('data-confirm="Are you sure?"') }
-  specify { expect(@html).to include('Delete User') }
+  specify { expect(@html).to include('<a href="/delete" data-method="delete" data-confirm="Are you sure?" class="forma-action btn btn-danger"><i class="fa fa-remove"></i> Delete User</a>') }
 
   specify { expect(@html).to include('data-js="back"') }
 end

@@ -25,7 +25,7 @@ module Forma
     alias :link_action :action
 
     def button_action(url, opts = {})
-      action(url, opts.merge(as: 'button'))
+      action(url, opts.merge(button: 'default'))
     end
   end
 end
