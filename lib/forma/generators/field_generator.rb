@@ -83,7 +83,8 @@ module Forma
 
     def icon_eval(field, opts)
       icon = opts[:icon] || field.icon
-      Forma::IconGenerator.to_html(icon) if icon
+      model = model_eval(field, opts)
+      Forma::IconGenerator.to_html(icon, opts.merge(model: model)) if icon
     end
 
     def viewer_body_eval(field, opts)
