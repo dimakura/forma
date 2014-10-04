@@ -1,5 +1,6 @@
 # -*- encoding : utf-8 -*-
 require 'forma/generators/html'
+require 'forma/generators/icon_generator'
 require 'forma/generators/utils'
 
 module Forma
@@ -80,10 +81,16 @@ module Forma
       end
     end
 
+    def icon_eval(field, opts)
+      icon = opts[:icon] || field.icon
+      Forma::IconGenerator.to_html(icon) if icon
+    end
+
     def viewer_body_eval(field, opts)
       type = type_eval(field, opts)
       url = url_eval(field, opts)
       value = value_eval(field, opts)
+      icon = icon_eval(field, opts)
 
       inner_html = case type
         when 'boolean' then viewer_for_boolean_eval(field, value, opts)
@@ -93,9 +100,12 @@ module Forma
         else value
       end
 
-      if url then el('a', [ inner_html ], { href: url })
-      else inner_html
-      end
+      inner_html = (if url then el('a', [ inner_html ], { href: url })
+        else inner_html end)
+
+      inner_html = "#{icon} #{inner_html}" if icon
+
+      inner_html
     end
 
     def viewer_for_boolean_eval(field, value, opts)
@@ -187,6 +197,7 @@ module Forma
     module_function :viewer_for_date_eval
     module_function :viewer_for_complex_eval
     module_function :viewer_for_array_eval
+    module_function :icon_eval
 
 ## Editor
 
