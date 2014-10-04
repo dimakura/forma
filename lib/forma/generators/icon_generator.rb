@@ -5,13 +5,23 @@ module Forma
   module IconGenerator
     extend Forma::Html
 
-    def to_html(icon, opts={})
-      type = opts[:type] || (icon.respond_to?(:type) and icon.type) || 'fa'
+    def to_html(iconDef, opts = {})
+      icon = nil ; type = nil ; path = ''
+      if iconDef.instance_of?(Hash)
+        icon = iconDef[:icon]
+        type = iconDef[:type]
+        path = iconDef[:path] || '/'
+      else
+        icon = iconDef
+        type = 'fa'
+      end
+
+      icon = icon.call(opts[:model]) if icon.instance_of?(Proc)
+
       case type
       when 'fa' then
         el('i', { class: "fa fa-#{icon}" })
       else
-        path = opts[:path] || (icon.respond_to?(:path) and icon.path) || '/'
         el('img', { src: File.join(path, "#{icon}.#{type}") })
       end
     end
