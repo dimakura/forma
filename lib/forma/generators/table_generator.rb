@@ -58,7 +58,9 @@ module Forma
         model_name = opts[:model_name] || table.model_name
         el('thead', [
           el('tr', table.fields.map do |field|
-            el('th', [ Forma::FieldGenerator.label_eval(field, { model: first_model, model_name: model_name }) ])
+            width = opts[:width] || field.width
+            th_opts = { width: width } if width
+            el('th', th_opts, [ Forma::FieldGenerator.label_eval(field, { model: first_model, model_name: model_name }) ])
           end)
         ])
       end

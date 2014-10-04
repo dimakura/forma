@@ -4,7 +4,7 @@ require 'spec_helper'
 RSpec.describe Forma::Table do
 
   before(:all) do
-    fields = [ Forma::Field.new(name: 'first_name'),
+    fields = [ Forma::Field.new(name: 'first_name', width: 200),
                Forma::Field.new(name: 'last_name'),
                Forma::Field.new(name: 'age') ]
     @table = Forma::Table.new(fields: fields, models: [
@@ -18,7 +18,7 @@ RSpec.describe Forma::Table do
   end
 
   specify{ expect(@html).to include('<table class="forma-table table table-bordered table-striped table-hover">') }
-  specify{ expect(@html).to include('<th>First Name</th>') }
+  specify{ expect(@html).to include('<th width="200">First Name</th>') }
   specify{ expect(@html).to include('<th>Last Name</th>') }
   specify{ expect(@html).to include('<th>Age</th>') }
 
