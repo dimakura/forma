@@ -8,7 +8,8 @@ RSpec.describe Forma::Editor do
       first_name: 'Dimitri',
       last_name: 'Kurashvili',
       age: 35,
-      password: 'secret'
+      password: 'secret',
+      city: 'ABS'
     })
     @editor = Forma::Editor.new model: @user, label_width: 250, url: '/register'
     @editor.with_fields do |e|
@@ -17,6 +18,7 @@ RSpec.describe Forma::Editor do
       e.password_field :password
       e.text_field :last_name
       e.text_field :age
+      e.combo_field 'city', collection: { 'TBS' => 'Tbilisi', 'KTS' => 'Kutaisi', 'BTM' => 'Batumi', 'ABS' => 'Abasha' }
       e.submit 'Register'
     end
     @html = @editor.to_html
@@ -36,4 +38,7 @@ RSpec.describe Forma::Editor do
   specify { expect(@html).to include('<button type="submit" class="btn btn-primary">Register</button>') }
   specify { expect(@html).to include('method="post"') }
   specify { expect(@html).to include('action="/register"') }
+  specify { expect(@html).to include('<select name="user[city]">') }
+  specify { expect(@html).to include('<option selected value="ABS">Abasha</option>') }
+  specify { expect(@html).to include('<option value="TBS">Tbilisi</option>') }
 end

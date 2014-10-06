@@ -226,6 +226,7 @@ module Forma
           # when 'array'   then editor_for_array_eval(field, value, opts)
           when 'text' then editor_for_text_eval(field, value, opts)
           when 'password' then editor_for_password_eval(field, value, opts)
+          when 'combo' then editor_for_combo_eval(field, value, opts)
         end
       end
     end
@@ -255,9 +256,28 @@ module Forma
       })
     end
 
+    def editor_for_combo_eval(field, value, opts)
+      collection = field.collection
+      children = []
+
+      if collection.instance_of?(Hash)
+        children = collection.map do |key, val|
+          el('option', {
+            selected: (value.present? and key == value),
+            value: key
+          }, [ val ])
+        end
+      end
+
+      el('select', {
+        name: "#{model_name_eval(field, opts)}[#{field.name}]",
+      }, children)
+    end
+
     module_function :editor
     module_function :editor_for_text_eval
     module_function :editor_for_password_eval
     module_function :editor_class_name_eval
+    module_function :editor_for_combo_eval
   end
 end
