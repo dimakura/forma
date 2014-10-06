@@ -39,10 +39,17 @@ var initFormWaitOnSubmit = function() {
   });
 };
 
+var initSelect2ComboBoxes = function() {
+  $('.forma-combo2-field').select2({
+    allowClear: true
+  });
+};
+
 module.exports = {
   startup: function(opts) {
     initFormWaitOnSubmit();
-    // TODO: anything else?
+    initSelect2ComboBoxes();
+    // add other initializations above this line
   }
 };
 

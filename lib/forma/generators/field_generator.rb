@@ -277,11 +277,16 @@ module Forma
         end
       end
 
+      if field.placeholder.present?
+        children.insert(0, el('option'))
+      end
+
       as_select2 = (field.select2 != false)
 
       el('select', {
         class: as_select2 ? 'forma-combo2-field' : 'forma-combo-field',
         name: "#{model_name_eval(field, opts)}[#{field.name}]",
+        'data-placeholder' => field.placeholder
       }, children)
     end
 
