@@ -267,7 +267,7 @@ module Forma
             value: key
           }, [ val ])
         end
-      elsif collection.resonds_to?(:map) # array like
+      elsif collection.respond_to?(:map) # array like
         children = collection.map do |obj|
           key = obj.id ; val = obj.to_s
           el('option', {
@@ -277,7 +277,10 @@ module Forma
         end
       end
 
+      as_select2 = (field.select2 != false)
+
       el('select', {
+        class: as_select2 ? 'forma-combo2-field' : 'forma-combo-field',
         name: "#{model_name_eval(field, opts)}[#{field.name}]",
       }, children)
     end

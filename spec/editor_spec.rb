@@ -38,7 +38,7 @@ RSpec.describe Forma::Editor do
   specify { expect(@html).to include('<button type="submit" class="btn btn-primary">Register</button>') }
   specify { expect(@html).to include('method="post"') }
   specify { expect(@html).to include('action="/register"') }
-  specify { expect(@html).to include('<select name="user[city]">') }
+  specify { expect(@html).to include('<select class="forma-combo2-field" name="user[city]">') }
   specify { expect(@html).to include('<option selected value="ABS">Abasha</option>') }
   specify { expect(@html).to include('<option value="TBS">Tbilisi</option>') }
 end
