@@ -76,7 +76,7 @@ module Forma
       actions_html = ''
       if table.actions and table.actions.any?
         actions_html = actions_eval(table, {})
-        actions_html = el('tr', { class: 'forma-actions' }, [ el('td', { colspan: 2 }, [ actions_html ]) ])
+        actions_html = el('tr', { class: 'forma-actions' }, [ el('td', { colspan: col_count }, [ actions_html ]) ])
       end
 
       if header_html.present? or actions_html.present?
