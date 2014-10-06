@@ -11,7 +11,7 @@ module Forma
 ## Viewer
 
     def viewer(field, opts)
-      tag = field.tag || 'span'
+      tag = tag_eval(field, opts)
       value = value_eval(field, opts)
       unless value.nil? or value == ''
         [ before_eval(field, opts),
@@ -20,6 +20,16 @@ module Forma
         ].select{|x| x.present? }.join(' ')
       else
         el('span', [ '(empty)' ], { class: 'text-muted forma-empty-field' })
+      end
+    end
+
+    def tag_eval(field, opts)
+      tag = field.tag || 'span'
+      if tag.instance_of?(Proc)
+        model = model_eval(field, opts)
+        tag.call(model)
+      else
+        tag.to_s
       end
     end
 
@@ -199,6 +209,7 @@ module Forma
     module_function :viewer_for_complex_eval
     module_function :viewer_for_array_eval
     module_function :icon_eval
+    module_function :tag_eval
 
 ## Editor
 
