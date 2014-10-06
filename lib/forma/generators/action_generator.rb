@@ -26,6 +26,14 @@ module Forma
       js = opts[:js] || actionDef.js
       params['data-js'] = js if js.present?
 
+      # html parameters
+
+      if actionDef.html.present?
+        actionDef.html.each do |k,v|
+          params[k] = v
+        end
+      end
+
       # label
 
       inner_html = opts[:label] || actionDef.label || ''
