@@ -277,17 +277,15 @@ module Forma
         end
       end
 
+      params = {}
       if field.placeholder.present?
         children.insert(0, el('option'))
+        params['data-placeholder'] = field.placeholder
       end
+      params[:class] = (field.select2 != false) ? 'forma-combo2-field' : 'forma-combo-field'
+      params[:name] = "#{model_name_eval(field, opts)}[#{field.name}]"
 
-      as_select2 = (field.select2 != false)
-
-      el('select', {
-        class: as_select2 ? 'forma-combo2-field' : 'forma-combo-field',
-        name: "#{model_name_eval(field, opts)}[#{field.name}]",
-        'data-placeholder' => field.placeholder
-      }, children)
+      el('select', params, children)
     end
 
     module_function :editor
