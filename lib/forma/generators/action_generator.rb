@@ -23,9 +23,6 @@ module Forma
       params[:class] += " btn btn-#{button}" if button
       params[:class] += ' ' + class_name if class_name.present?
 
-      js = opts[:js] || actionDef.js
-      params['data-js'] = js if js.present?
-
       # html parameters
 
       if actionDef.html.present?

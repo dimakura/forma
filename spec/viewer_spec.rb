@@ -35,6 +35,4 @@ RSpec.describe Forma::Viewer do
   specify { expect(@html).to include('data-method="delete"') }
   specify { expect(@html).to include('data-confirm="Are you sure?"') }
   specify { expect(@html).to include('<a href="/delete" data-method="delete" data-confirm="Are you sure?" class="forma-action btn btn-danger"><i class="fa fa-remove"></i> Delete User</a>') }
-
-  specify { expect(@html).to include('data-js="back"') }
 end
