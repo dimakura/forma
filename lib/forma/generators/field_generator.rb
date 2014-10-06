@@ -263,8 +263,16 @@ module Forma
       if collection.instance_of?(Hash)
         children = collection.map do |key, val|
           el('option', {
-            selected: (value.present? and key == value),
+            selected: ( value.present? and key == value ),
             value: key
+          }, [ val ])
+        end
+      elsif collection.resonds_to?(:map) # array like
+        children = collection.map do |obj|
+          key = obj.id ; val = obj.to_s
+          el('option', {
+            selected: ( value.present? and key == value ),
+            value: key.to_s
           }, [ val ])
         end
       end
