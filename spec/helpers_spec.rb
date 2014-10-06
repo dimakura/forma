@@ -53,13 +53,10 @@ RSpec.describe Forma::Helpers do
         v.date_field 'birthdate', class_name: 'text-muted'
         v.text_field 'profile.total_followers'
         v.complex_field 'profile' do |p|
-          p.text_field 'email', after: '&mdash;'.html_safe
+          p.email_field 'email', after: '&mdash;'.html_safe
           p.text_field 'mobile'
         end
         v.array_field 'logs' do |arr|
-          # arr.field do |fld|
-          #   fld.text_field 'text'
-          # end
           arr.text_field 'text'
         end
       end
@@ -73,7 +70,7 @@ RSpec.describe Forma::Helpers do
     specify { expect(@viewer_html).not_to include('user is not admin') }
     specify { expect(@viewer_html).to include('4-Apr-1979 06:15') }
     specify { expect(@viewer_html).to include('class="forma-date-field text-muted"') }
-    specify { expect(@viewer_html).to include('dimakura@gmail.com') }
+    specify { expect(@viewer_html).to include('<a href="mailto:dimakura@gmail.com">dimakura@gmail.com</a>') }
     specify { expect(@viewer_html).to include('555666777') }
     specify { expect(@viewer_html).to include('log message 1') }
     specify { expect(@viewer_html).to include('log message 2') }

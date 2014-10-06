@@ -108,11 +108,12 @@ module Forma
         when 'date'    then viewer_for_date_eval(field, value, opts)
         when 'complex' then viewer_for_complex_eval(field, value, opts)
         when 'array'   then viewer_for_array_eval(field, value, opts)
+        when 'email'   then viewer_for_email_eval(field, value, opts)
         else value
       end
 
       inner_html = (if url then el('a', [ inner_html ], { href: url })
-        else inner_html end)
+                    else inner_html end)
 
       inner_html = "#{icon} #{inner_html}" if icon
 
@@ -193,6 +194,10 @@ module Forma
       end.join(' ')
     end
 
+    def viewer_for_email_eval(field, value, opts)
+      el('a', { href: "mailto:#{value}" }, [ value ])
+    end
+
     module_function :viewer
     module_function :viewer_body_eval
     module_function :after_eval
@@ -208,6 +213,7 @@ module Forma
     module_function :viewer_for_date_eval
     module_function :viewer_for_complex_eval
     module_function :viewer_for_array_eval
+    module_function :viewer_for_email_eval
     module_function :icon_eval
     module_function :tag_eval
 
