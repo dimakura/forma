@@ -314,7 +314,7 @@ module Forma
 
   class FieldGenerator
     extend Forma::HtmlMethods
-    extend Forma::Utils
+    extend Forma::UtilsMethods
     extend FieldGeneratorMethods_viewers
     extend FieldGeneratorMethods_editors
   end

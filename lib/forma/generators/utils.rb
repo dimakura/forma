@@ -1,7 +1,6 @@
 # -*- encoding : utf-8 -*-
 module Forma
-  module Utils
-
+  module UtilsMethods
     def model_value(model, name)
       name.to_s.split('.').each do |fld|
         if model.instance_of?(Hash)
@@ -12,8 +11,9 @@ module Forma
       end
       model
     end
+  end
 
-    module_function :model_value
-
+  class Utils
+    extend UtilsMethods
   end
 end

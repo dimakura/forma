@@ -17,7 +17,7 @@ module Forma
 
   module ManyGenerator
     extend Forma::HtmlMethods
-    extend Forma::Utils
+    extend Forma::UtilsMethods
     extend ManyGeneratorMethods
   end
 end
