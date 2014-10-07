@@ -233,6 +233,7 @@ module Forma
           when 'text' then editor_for_text_eval(field, value, opts)
           when 'password' then editor_for_password_eval(field, value, opts)
           when 'combo' then editor_for_combo_eval(field, value, opts)
+          when 'froala' then editor_for_froala_eval(field, value, opts)
         end
       end
     end
@@ -242,9 +243,13 @@ module Forma
       "#{viewer_class} form-control"
     end
 
+    def editor_field_name_eval(field, opts)
+      "#{model_name_eval(field, opts)}[#{field.name}]"
+    end
+
     def editor_for_text_eval(field, value, opts)
       el('input', {
-        name: "#{model_name_eval(field, opts)}[#{field.name}]",
+        name: editor_field_name_eval(field, opts),
         value: value.to_s,
         autofocus: (not not field.autofocus),
         type: 'text',
@@ -254,7 +259,7 @@ module Forma
 
     def editor_for_password_eval(field, value, opts)
       el('input', {
-        name: "#{model_name_eval(field, opts)}[#{field.name}]",
+        name: editor_field_name_eval(field, opts),
         value: value.to_s,
         autofocus: (not not field.autofocus),
         type: 'password',
@@ -289,16 +294,25 @@ module Forma
         params['data-placeholder'] = field.placeholder
       end
       params[:class] = (field.select2 != false) ? 'forma-combo2-field' : 'forma-combo-field'
-      params[:name] = "#{model_name_eval(field, opts)}[#{field.name}]"
+      params[:name] = editor_field_name_eval(field, opts)
 
       el('select', params, children)
     end
 
+    def editor_for_froala_eval(field, value, opts)
+      el('textarea', {
+        class: 'forma-floara-field',
+        name: editor_field_name_eval(field, opts),
+      }, [ value.to_s ])
+    end
+
     module_function :editor
+    module_function :editor_field_name_eval
     module_function :editor_for_text_eval
     module_function :editor_for_password_eval
     module_function :editor_class_name_eval
     module_function :editor_for_combo_eval
+    module_function :editor_for_froala_eval
 
 ## Field with label
 

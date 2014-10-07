@@ -3,7 +3,7 @@ module Forma
   module Html
     class Element
 
-      TAGS_WITH_LONG_CLOSE = [ 'body', 'i' , 'a'  ]
+      TAGS_WITH_LONG_CLOSE = [ 'body', 'i' , 'a', 'textarea'  ]
 
       def initialize(tag, params, children)
         @tag = tag ; @params = params ; @children = children
