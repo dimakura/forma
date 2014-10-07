@@ -4,14 +4,8 @@ require 'forma/generators/action_generator'
 require 'forma/generators/field_generator'
 
 module Forma
-  module TableGenerator
-    extend Forma::HtmlMethods
-
+  module TableGeneratorMethods
     def viewer_html(table, opts={}); viewer(table, opts) end
-
-    module_function :viewer_html
-
-## Viewer generator functions
 
     def viewer(table, opts)
       children = nil
@@ -101,16 +95,10 @@ module Forma
         Forma::ActionGenerator.to_html(act, opts)
       end.join(' ')) if table.actions
     end
+  end
 
-    module_function :viewer
-    module_function :models_eval
-    module_function :table_eval
-    module_function :class_name_eval
-    module_function :table_header_eval
-    module_function :table_body_eval
-    module_function :empty_table_eval
-    module_function :column_count_eval
-    module_function :hide_header_eval
-    module_function :actions_eval
+  class TableGenerator
+    extend Forma::HtmlMethods
+    extend TableGeneratorMethods
   end
 end
