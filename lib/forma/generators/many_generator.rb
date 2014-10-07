@@ -4,10 +4,7 @@ require 'forma/generators/icon_generator'
 require 'forma/generators/field_generator'
 
 module Forma
-  module ManyGenerator
-    extend Forma::HtmlMethods
-    extend Forma::Utils
-
+  module ManyGeneratorMethods
     def editor_for_many_eval(field, values, opts)
       name = Forma::FieldGenerator.model_name_eval(field, opts)
       newopts = opts.merge(name_prefix: name)
@@ -16,7 +13,11 @@ module Forma
         ##
       ])
     end
+  end
 
-    module_function :editor_for_many_eval
+  module ManyGenerator
+    extend Forma::HtmlMethods
+    extend Forma::Utils
+    extend ManyGeneratorMethods
   end
 end
