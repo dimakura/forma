@@ -30,9 +30,6 @@ RSpec.describe Forma::Editor do
       e.submit 'Register'
     end
     @html = @editor.to_html
-
-puts @html
-
   end
 
   specify { expect(@html).to include('forma-editor') }
@@ -52,4 +49,11 @@ puts @html
   specify { expect(@html).to include('<select class="forma-combo2-field" name="user[city]">') }
   specify { expect(@html).to include('<option selected value="ABS">Abasha</option>') }
   specify { expect(@html).to include('<option value="TBS">Tbilisi</option>') }
+
+  # many field
+  specify { expect(@html).to include('<div class="forma-many-field">') }
+  specify { expect(@html).to include('<input name="user[contacts][id]" value="1" type="hidden" class="forma-hidden-field form-control"/>') }
+  specify { expect(@html).to include('<input name="user[contacts][id]" value="2" type="hidden" class="forma-hidden-field form-control"/>') }
+  specify { expect(@html).to include('<input name="user[contacts][type]" value="email" type="text" class="forma-text-field form-control"/>') }
+  specify { expect(@html).to include('<input name="user[contacts][value]" value="555666777" type="text" class="forma-text-field form-control"/>') }
 end
