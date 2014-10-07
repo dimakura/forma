@@ -299,5 +299,26 @@ module Forma
     module_function :editor_for_password_eval
     module_function :editor_class_name_eval
     module_function :editor_for_combo_eval
+
+## Field with label
+
+    def fields_with_label(object, opts)
+      fields = object.fields ; model = opts[:model] || object.model
+      label_width = opts[:label_width] || object.label_width || 200
+      el('tbody', fields.map do |fld|
+        hide_label = opts[:label] == false || ( opts[:label].nil? && fld.label == false )
+        newopts = opts.merge(model: model)
+        rowparams = {} ; cellparams = {}
+        rowparams[:class] = 'forma-required' if ( fld.required )
+        cellparams[:colspan] = 2 if hide_label
+        fieldHtml = yield fld, newopts
+        el('tr', rowparams, [
+          ( el('th', [ label_eval(fld, newopts) ], { width: label_width }) unless hide_label ),
+          el('td', cellparams, [ fieldHtml ])
+        ])
+      end)
+    end
+
+    module_function :fields_with_label
   end
 end

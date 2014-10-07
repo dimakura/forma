@@ -14,21 +14,16 @@ module Forma
 ## Viewer generator functions
 
     def viewer(v, opts)
-      label_width = opts[:label_width] || v.label_width || 200
       actions_html = actions_eval(v, {})
       el('table', { class: 'table table-bordered table-striped forma-viewer' }, [
-        (el('thead', [ el('tr', { class: 'forma-actions' }, [ el('td', { colspan: 2 }, [ actions_html ]) ]) ]) if actions_html.present?),
-        el('tbody', v.fields.map do |fld|
-          hide_label = opts[:label] == false || ( opts[:label].nil? && fld.label == false )
-          newopts = opts.merge(model: v.model)
-          rowparams = {} ; cell_params = {}
-          rowparams[:class] = 'forma-required' if ( fld.required )
-          cell_params[:colspan] = 2 if hide_label
-          el('tr', rowparams, [
-            ( el('th', [ Forma::FieldGenerator.label_eval(fld, newopts) ], { width: label_width }) unless hide_label ),
-            el('td', cell_params, [ fld.viewer_html( newopts ) ])
+        (el('thead', [
+          el('tr', { class: 'forma-actions' }, [
+            el('td', { colspan: 2 }, [ actions_html ])
           ])
-        end)
+        ]) if actions_html.present?),
+        Forma::FieldGenerator.fields_with_label(v, opts) do |fld, newopts|
+          fld.viewer_html( newopts )
+        end
       ])
     end
 

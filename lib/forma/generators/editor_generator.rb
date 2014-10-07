@@ -35,16 +35,9 @@ module Forma
     end
 
     def editor_fields_eval(e, opts)
-      label_width = opts[:label_width] || e.label_width || 200
-      el('tbody', e.fields.map do |fld|
-        newopts = opts.merge(model: e.model)
-        rowparams = {}
-        rowparams[:class] = 'forma-required' if ( fld.required )
-        el('tr', rowparams, [
-          el('th', [ Forma::FieldGenerator.label_eval(fld, newopts) ], { width: label_width }),
-          el('td', [ fld.editor_html( newopts ) ])
-        ])
-      end)
+      Forma::FieldGenerator.fields_with_label(e, opts) do |fld, newopts|
+        fld.editor_html( newopts )
+      end
     end
 
     def editor_bottom_eval(e, opts)

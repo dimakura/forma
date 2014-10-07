@@ -15,7 +15,6 @@ RSpec.describe Forma::Viewer do
       v.text_field :description, label: false
     end
     @html = @viewer.to_html
-    puts @html
   end
 
   specify { expect(@html).to include('forma-viewer') }
