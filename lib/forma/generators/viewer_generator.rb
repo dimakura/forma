@@ -4,14 +4,8 @@ require 'forma/generators/action_generator'
 require 'forma/generators/field_generator'
 
 module Forma
-  module ViewerGenerator
-    extend Forma::HtmlMethods
-
+  module ViewerGeneratorMethods
     def to_html(v, opts={}); viewer(v, opts) end
-
-    module_function :to_html
-
-## Viewer generator functions
 
     def viewer(v, opts)
       actions_html = actions_eval(v, {})
@@ -32,8 +26,10 @@ module Forma
         Forma::ActionGenerator.to_html(act, opts)
       end.join(' ')) if v.actions
     end
+  end
 
-    module_function :viewer
-    module_function :actions_eval
+  class ViewerGenerator
+    extend Forma::HtmlMethods
+    extend ViewerGeneratorMethods
   end
 end
