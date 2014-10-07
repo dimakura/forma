@@ -248,23 +248,29 @@ module Forma
     end
 
     def editor_for_text_eval(field, value, opts)
-      el('input', {
+      params = {
         name: editor_field_name_eval(field, opts),
         value: value.to_s,
         autofocus: (not not field.autofocus),
         type: 'text',
         class: editor_class_name_eval(field, opts)
-      })
+      }
+      placeholder = opts[:placeholder] || field.placeholder
+      params[:placeholder] = placeholder if placeholder.present?
+      el('input', params)
     end
 
     def editor_for_password_eval(field, value, opts)
-      el('input', {
+      params = {
         name: editor_field_name_eval(field, opts),
         value: value.to_s,
         autofocus: (not not field.autofocus),
         type: 'password',
-        class: editor_class_name_eval(field, opts)
-      })
+        class: editor_class_name_eval(field, opts),
+      }
+      placeholder = opts[:placeholder] || field.placeholder
+      params[:placeholder] = placeholder if placeholder.present?
+      el('input', params)
     end
 
     def editor_for_combo_eval(field, value, opts)
@@ -300,10 +306,13 @@ module Forma
     end
 
     def editor_for_froala_eval(field, value, opts)
-      el('textarea', {
+      params = {
         class: 'forma-floara-field',
         name: editor_field_name_eval(field, opts),
-      }, [ value.to_s ])
+      }
+      placeholder = opts[:placeholder] || field.placeholder
+      params[:placeholder] = placeholder if placeholder.present?
+      el('textarea', params, [ value.to_s ])
     end
 
     module_function :editor
