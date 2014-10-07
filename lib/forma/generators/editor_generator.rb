@@ -50,7 +50,6 @@ module Forma
           ])
         ])
       ])
-      # TODO: add bottom action!
     end
 
     def actions_eval(e, opts)

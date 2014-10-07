@@ -246,7 +246,7 @@ module Forma
       el('input', {
         name: "#{model_name_eval(field, opts)}[#{field.name}]",
         value: value.to_s,
-        autofocus: field.autofocus,
+        autofocus: (not not field.autofocus),
         type: 'text',
         class: editor_class_name_eval(field, opts)
       })
@@ -256,7 +256,7 @@ module Forma
       el('input', {
         name: "#{model_name_eval(field, opts)}[#{field.name}]",
         value: value.to_s,
-        autofocus: field.autofocus,
+        autofocus: (not not field.autofocus),
         type: 'password',
         class: editor_class_name_eval(field, opts)
       })

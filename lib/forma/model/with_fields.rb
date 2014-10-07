@@ -3,7 +3,7 @@ require 'forma/auto_initialize'
 
 module Forma
   class WithFields < Forma::AutoInitialize
-    AUTO_PROPERTIES = [ 'required', 'readonly', 'autofocused' ]
+    AUTO_PROPERTIES = [ 'required', 'readonly', 'autofocus' ]
 
     def fields
       fields = ( self.options[:fields] ||= [] )
