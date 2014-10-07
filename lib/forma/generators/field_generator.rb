@@ -1,7 +1,8 @@
 # -*- encoding : utf-8 -*-
 require 'forma/generators/html'
-require 'forma/generators/icon_generator'
 require 'forma/generators/utils'
+require 'forma/generators/icon_generator'
+require 'forma/generators/many_generator'
 
 module Forma
   module FieldGenerator
@@ -234,6 +235,7 @@ module Forma
           when 'password' then editor_for_password_eval(field, value, opts)
           when 'combo' then editor_for_combo_eval(field, value, opts)
           when 'froala' then editor_for_froala_eval(field, value, opts)
+          when 'many' then Forma::ManyGenerator.editor_for_many_eval(field, value, opts)
         end
       end
     end

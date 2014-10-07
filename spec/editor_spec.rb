@@ -9,7 +9,11 @@ RSpec.describe Forma::Editor do
       last_name: 'Kurashvili',
       age: 35,
       password: 'secret',
-      city: 'ABS'
+      city: 'ABS',
+      contacts: [
+        { id: 1, type: 'email', value: 'dimakura@gmail.com' },
+        { id: 2, type: 'mobile', value: '555666777' },
+      ]
     })
     @editor = Forma::Editor.new model: @user, label_width: 250, url: '/register'
     @editor.with_fields do |e|
@@ -19,9 +23,16 @@ RSpec.describe Forma::Editor do
       e.text_field :last_name
       e.text_field :age
       e.combo_field 'city', collection: { 'TBS' => 'Tbilisi', 'KTS' => 'Kutaisi', 'BTM' => 'Batumi', 'ABS' => 'Abasha' }
+      e.many_field :contacts, add_text: 'New Contact' do |contacts_form|
+        contacts_form.text_field :type
+        contacts_form.text_field :value
+      end
       e.submit 'Register'
     end
     @html = @editor.to_html
+
+puts @html
+
   end
 
   specify { expect(@html).to include('forma-editor') }
