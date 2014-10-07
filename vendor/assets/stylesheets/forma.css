@@ -27,12 +27,29 @@ table.forma-table tbody td.forma-no-data:hover {
   border-bottom: 0;
   padding-bottom: 0;
 }
-.forma-many-field a.forma-many-add {
-  display: block;
-  padding: 16px;
-  text-align: center;
-  border: 1px solid #eee;
+.forma-many-fields {
+  /* a.forma-many-add {
+    display: block;
+    padding: 16px;
+    text-align: center;
+    border: 1px solid #eee;
+    &:hover {
+      background-color: #fafafa;
+    }
+  }*/
 }
-.forma-many-field a.forma-many-add:hover {
-  background-color: #fafafa;
+.forma-many-fields .forma-many-field {
+  background-color: #f6f6f6;
+  padding: 8px;
+  border: 1px solid #ddd;
+  margin-bottom: 8px;
+}
+.forma-many-fields .forma-many-field table.table {
+  background-color: transparent;
+  margin: 0;
+  border: 0;
+}
+.forma-many-fields .forma-many-field table.table td,
+.forma-many-fields .forma-many-field table.table th {
+  border: 0;
 }
