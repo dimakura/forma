@@ -6,7 +6,7 @@ require 'forma/generators/many_generator'
 
 module Forma
   module FieldGenerator
-    extend Forma::Html
+    extend Forma::HtmlMethods
     extend Forma::Utils
 
 ## Viewer

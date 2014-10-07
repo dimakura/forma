@@ -5,7 +5,7 @@ require 'forma/generators/field_generator'
 
 module Forma
   module TableGenerator
-    extend Forma::Html
+    extend Forma::HtmlMethods
 
     def viewer_html(table, opts={}); viewer(table, opts) end
 

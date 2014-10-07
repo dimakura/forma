@@ -26,7 +26,7 @@ module Forma
   end
 
   class IconGenerator
-    extend Forma::Html
+    extend Forma::HtmlMethods
     extend IconGeneratorMethods
   end
 end

@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 module Forma
-  module Html
+  module HtmlMethods
     class Element
 
       TAGS_WITH_LONG_CLOSE = [ 'body', 'i' , 'a', 'textarea'  ]
@@ -71,7 +71,9 @@ module Forma
 
       Element.new(tag, params, children).to_s.html_safe
     end
+  end
 
-    module_function :el
+  class Html
+    extend HtmlMethods
   end
 end

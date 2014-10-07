@@ -5,7 +5,7 @@ require 'forma/generators/field_generator'
 
 module Forma
   module ViewerGenerator
-    extend Forma::Html
+    extend Forma::HtmlMethods
 
     def to_html(v, opts={}); viewer(v, opts) end
 

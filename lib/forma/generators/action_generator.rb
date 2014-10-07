@@ -4,7 +4,7 @@ require 'forma/generators/icon_generator'
 
 module Forma
   module ActionGenerator
-    extend Forma::Html
+    extend Forma::HtmlMethods
 
     def to_html(actionDef, opts = {})
       # params

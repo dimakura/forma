@@ -5,7 +5,7 @@ require 'forma/generators/field_generator'
 
 module Forma
   module ManyGenerator
-    extend Forma::Html
+    extend Forma::HtmlMethods
     extend Forma::Utils
 
     def editor_for_many_eval(field, values, opts)
