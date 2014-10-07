@@ -12,13 +12,17 @@ RSpec.describe Forma::Viewer do
       v.required_text_field :first_name, after: '&mdash;'
       v.text_field :last_name
       v.text_field :age
+      v.text_field :description, label: false
     end
     @html = @viewer.to_html
+    puts @html
   end
 
   specify { expect(@html).to include('forma-viewer') }
   specify { expect(@html).to include('First Name') }
   specify { expect(@html).to include('Last Name') }
+  specify { expect(@html).not_to include('Description') }
+  specify { expect(@html).to include('<td colspan="2">') }
   specify { expect(@html).to include('Age') }
   specify { expect(@html).to include('Dimitri') }
   specify { expect(@html).to include('Kurashvili') }
