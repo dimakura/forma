@@ -2,9 +2,7 @@
 require 'forma/generators/html'
 
 module Forma
-  module IconGenerator
-    extend Forma::Html
-
+  module IconGeneratorMethods
     def to_html(iconDef, opts = {})
       icon = nil ; type = nil ; path = ''
       if iconDef.instance_of?(Hash)
@@ -25,7 +23,10 @@ module Forma
         el('img', { src: File.join(path, "#{icon}.#{type}") })
       end
     end
+  end
 
-    module_function :to_html
+  class IconGenerator
+    extend Forma::Html
+    extend IconGeneratorMethods
   end
 end
