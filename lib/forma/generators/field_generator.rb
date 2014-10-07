@@ -5,12 +5,7 @@ require 'forma/generators/icon_generator'
 require 'forma/generators/many_generator'
 
 module Forma
-  module FieldGenerator
-    extend Forma::HtmlMethods
-    extend Forma::Utils
-
-## Viewer
-
+  module FieldGeneratorMethods_viewers
     def viewer(field, opts)
       tag = tag_eval(field, opts)
       value = value_eval(field, opts)
@@ -47,6 +42,7 @@ module Forma
     end
 
     def type_eval(field, opts); field.type || 'text' end
+
     def model_eval(field, opts); opts[:model] || field.model end
 
     def viewer_class_name_eval(field, opts)
@@ -198,28 +194,9 @@ module Forma
     def viewer_for_email_eval(field, value, opts)
       el('a', { href: "mailto:#{value}" }, [ value ])
     end
+  end
 
-    module_function :viewer
-    module_function :viewer_body_eval
-    module_function :after_eval
-    module_function :before_eval
-    module_function :value_eval
-    module_function :type_eval
-    module_function :viewer_class_name_eval
-    module_function :url_eval
-    module_function :label_eval
-    module_function :model_eval
-    module_function :model_name_eval
-    module_function :viewer_for_boolean_eval
-    module_function :viewer_for_date_eval
-    module_function :viewer_for_complex_eval
-    module_function :viewer_for_array_eval
-    module_function :viewer_for_email_eval
-    module_function :icon_eval
-    module_function :tag_eval
-
-## Editor
-
+  module FieldGeneratorMethods_editors
     def editor(field, opts)
       if opts[:readonly] or field.readonly
         viewer(field, opts)
@@ -317,16 +294,6 @@ module Forma
       el('textarea', params, [ value.to_s ])
     end
 
-    module_function :editor
-    module_function :editor_field_name_eval
-    module_function :editor_for_text_eval
-    module_function :editor_for_password_eval
-    module_function :editor_class_name_eval
-    module_function :editor_for_combo_eval
-    module_function :editor_for_froala_eval
-
-## Field with label
-
     def fields_with_label(object, opts)
       fields = object.fields ; model = opts[:model] || object.model
       label_width = opts[:label_width] || object.label_width || 200
@@ -343,7 +310,12 @@ module Forma
         ])
       end)
     end
+  end
 
-    module_function :fields_with_label
+  class FieldGenerator
+    extend Forma::HtmlMethods
+    extend Forma::Utils
+    extend FieldGeneratorMethods_viewers
+    extend FieldGeneratorMethods_editors
   end
 end
