@@ -208,6 +208,7 @@ module Forma
           # when 'date'    then editor_for_date_eval(field, value, opts)
           # when 'complex' then editor_for_complex_eval(field, value, opts)
           # when 'array'   then editor_for_array_eval(field, value, opts)
+          when 'hidden' then editor_for_hidden_eval(field, value, opts)
           when 'text' then editor_for_text_eval(field, value, opts)
           when 'password' then editor_for_password_eval(field, value, opts)
           when 'combo' then editor_for_combo_eval(field, value, opts)
@@ -223,7 +224,20 @@ module Forma
     end
 
     def editor_field_name_eval(field, opts)
-      "#{model_name_eval(field, opts)}[#{field.name}]"
+      if opts[:name_prefix]
+        "#{opts[:name_prefix]}[#{field.name}]"
+      else
+        "#{model_name_eval(field, opts)}[#{field.name}]"
+      end
+    end
+
+    def editor_for_hidden_eval(field, value, opts)
+      el('input', {
+        name: editor_field_name_eval(field, opts),
+        value: value.to_s,
+        type: 'hidden',
+        class: editor_class_name_eval(field, opts)
+      })
     end
 
     def editor_for_text_eval(field, value, opts)
@@ -296,18 +310,23 @@ module Forma
 
     def fields_with_label(object, opts)
       fields = object.fields ; model = opts[:model] || object.model
+      newopts = opts.merge(model: model)
       label_width = opts[:label_width] || object.label_width || 200
       el('tbody', fields.map do |fld|
-        hide_label = opts[:label] == false || ( opts[:label].nil? && fld.label == false )
-        newopts = opts.merge(model: model)
-        rowparams = {} ; cellparams = {}
-        rowparams[:class] = 'forma-required' if ( fld.required )
-        cellparams[:colspan] = 2 if hide_label
-        fieldHtml = yield fld, newopts
-        el('tr', rowparams, [
-          ( el('th', [ label_eval(fld, newopts) ], { width: label_width }) unless hide_label ),
-          el('td', cellparams, [ fieldHtml ])
-        ])
+        if fld.hidden?
+          fieldHtml = yield fld, newopts.merge(type: 'text')
+          el('div', { style: 'display:none;' }, [ fieldHtml ])
+        else
+          hide_label = opts[:label] == false || ( opts[:label].nil? && fld.label == false )
+          rowparams = {} ; cellparams = {}
+          rowparams[:class] = 'forma-required' if ( fld.required )
+          cellparams[:colspan] = 2 if hide_label
+          fieldHtml = yield fld, newopts
+          el('tr', rowparams, [
+            ( el('th', [ label_eval(fld, newopts) ], { width: label_width }) unless hide_label ),
+            el('td', cellparams, [ fieldHtml ])
+          ])
+        end
       end)
     end
   end

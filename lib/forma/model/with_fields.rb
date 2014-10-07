@@ -17,6 +17,12 @@ module Forma
       self.fields << fld ; fld
     end
 
+    def add_fields(flds)
+      flds.each do |fld|
+        self.add_field(fld)
+      end
+    end
+
     def method_missing(method_name, *args, &block)
       method_str = method_name.to_s
       if method_str =~ /^(.)+_field$/

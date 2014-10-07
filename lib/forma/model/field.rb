@@ -6,5 +6,7 @@ module Forma
   class Field < Forma::WithFields
     def viewer_html(opts={}); Forma::FieldGenerator.viewer(self, opts) end
     def editor_html(opts={}); Forma::FieldGenerator.editor(self, opts) end
+
+    def hidden?; self.type == 'hidden' end
   end
 end
