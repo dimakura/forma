@@ -3,9 +3,7 @@ require 'forma/generators/html'
 require 'forma/generators/icon_generator'
 
 module Forma
-  module ActionGenerator
-    extend Forma::HtmlMethods
-
+  module ActionGeneratorMethods
     def to_html(actionDef, opts = {})
       # params
 
@@ -40,7 +38,10 @@ module Forma
 
       el('a', params, [ inner_html ] )
     end
+  end
 
-    module_function :to_html
+  class ActionGenerator
+    extend Forma::HtmlMethods
+    extend ActionGeneratorMethods
   end
 end
