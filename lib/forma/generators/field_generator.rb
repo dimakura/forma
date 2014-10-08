@@ -224,10 +224,11 @@ module Forma
     end
 
     def editor_field_name_eval(field, opts)
+      field_name = opts[:attributes] ? (field.name.to_s + '_attributes') : field.name
       if opts[:name_prefix]
-        "#{opts[:name_prefix]}[#{field.name}]"
+        "#{opts[:name_prefix]}[#{field_name}]"
       else
-        "#{model_name_eval(field, opts)}[#{field.name}]"
+        "#{model_name_eval(field, opts)}[#{field_name}]"
       end
     end
 

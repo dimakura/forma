@@ -30,6 +30,7 @@ RSpec.describe Forma::Editor do
       e.submit 'Register'
     end
     @html = @editor.to_html
+    #puts @html
   end
 
   specify { expect(@html).to include('forma-editor') }
@@ -52,11 +53,14 @@ RSpec.describe Forma::Editor do
 
   # many field
   specify { expect(@html).to include('<div class="forma-many-field">') }
-  specify { expect(@html).to include('<input name="user[contacts][id]" value="1" type="hidden" class="forma-hidden-field forma-id form-control"/>') }
-  specify { expect(@html).to include('<input name="user[contacts][id]" value="2" type="hidden" class="forma-hidden-field forma-id form-control"/>') }
-  specify { expect(@html).to include('<input name="user[contacts][_destroy]" value="" type="hidden" class="forma-hidden-field forma-destroy form-control"/>') }
-  specify { expect(@html).to include('<input name="user[contacts][type]" value="email" type="text" class="forma-text-field form-control"/>') }
-  specify { expect(@html).to include('<input name="user[contacts][value]" value="555666777" type="text" class="forma-text-field form-control"/>') }
+  specify { expect(@html).to include('<input name="user[contacts_attributes][0][id]" value="1" type="hidden" class="forma-hidden-field forma-id form-control"/>') }
+  specify { expect(@html).to include('<input name="user[contacts_attributes][1][id]" value="2" type="hidden" class="forma-hidden-field forma-id form-control"/>') }
+  specify { expect(@html).to include('<input name="user[contacts_attributes][0][_destroy]" value="" type="hidden" class="forma-hidden-field forma-destroy form-control"/>') }
+  specify { expect(@html).to include('<input name="user[contacts_attributes][1][_destroy]" value="" type="hidden" class="forma-hidden-field forma-destroy form-control"/>') }
+  specify { expect(@html).to include('<input name="user[contacts_attributes][0][type]" value="email" type="text" class="forma-text-field form-control"/>') }
+  specify { expect(@html).to include('<input name="user[contacts_attributes][0][value]" value="dimakura@gmail.com" type="text" class="forma-text-field form-control"/>') }
+  specify { expect(@html).to include('<input name="user[contacts_attributes][1][type]" value="mobile" type="text" class="forma-text-field form-control"/>') }
+  specify { expect(@html).to include('<input name="user[contacts_attributes][1][value]" value="555666777" type="text" class="forma-text-field form-control"/>') }
   specify { expect(@html).to include('<a class="forma-many-action" href="#">') }
   specify { expect(@html).to include 'New Contact' }
 end

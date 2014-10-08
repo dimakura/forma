@@ -16,13 +16,14 @@ module Forma
     end
 
     def editors_eval(field, values, opts)
-      values.map do |value|
-        single_editor_eval(field, value, opts)
+      values.each_with_index.map do |value, index|
+        single_editor_eval(field, value, index, opts)
       end.join
     end
 
-    def single_editor_eval(field, value, opts)
-      field_name = Forma::FieldGenerator.editor_field_name_eval(field, opts)
+    def single_editor_eval(field, value, index, opts)
+      field_name = Forma::FieldGenerator.editor_field_name_eval(field, opts.merge(attributes: true))
+      field_name = "#{field_name}[#{index}]"
       editor = Forma::Editor.new(field.options)
       newopts = opts.merge({ model: value, name_prefix: field_name })
       fields_html = Forma::EditorGenerator.editor_fields_eval(editor, newopts)
@@ -51,7 +52,7 @@ module Forma
 
     def action_script_eval(field, values, opts)
       el('script', { type: 'forma-script' }, [
-        single_editor_eval(field, {}, opts)
+        single_editor_eval(field, {}, 0, opts)
       ])
     end
   end
