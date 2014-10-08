@@ -58,21 +58,25 @@ var afterEditorAdded = function() {
 };
 
 var initManyAddItemAction = function() {
-  $('.forma-many-action').click(function() {
+  $('.forma-many-action').click(function(evt) {
+    evt.preventDefault();
+
     // appending new editor
     var html = $(this).children('script').html();
     var $manyFields = $($(this).parents('.forma-many-fields')[0]);
     var $manyEditors = $($manyFields.children('.forma-many-editors')[0]);
     $manyEditors.append( html );
 
-    // reinitialize listeners
+    // reinitialize listeners -- TODO: REMOVE THIS!!!
     afterEditorAdded.call(this);
   });
 };
 
 // remove action initialization
 var initManyRemoveItemAction = function(selector) {
-  $('.forma-many-fields').delegate('.forma-many-field-remove','click', function() {
+  $('.forma-many-fields').delegate('.forma-many-field-remove', 'click', function(evt) {
+    evt.preventDefault();
+
     $field = $(this).parents('.forma-many-field');
     var id = $field.find('.forma-id').val();
     if ( id ) {
