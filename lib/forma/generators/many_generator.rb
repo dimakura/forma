@@ -24,11 +24,21 @@ module Forma
     def single_editor_eval(field, value, opts)
       field_name = Forma::FieldGenerator.editor_field_name_eval(field, opts)
       editor = Forma::Editor.new(field.options)
-      editor.add_field Forma::Field.new(name: 'id', type: 'hidden')
       newopts = opts.merge({ model: value, name_prefix: field_name })
       fields_html = Forma::EditorGenerator.editor_fields_eval(editor, newopts)
       editor_html = el('table', { class: 'table table-condensed' }, [ fields_html ])
-      el('div', { class: 'forma-many-field' }, [ editor_html ])
+
+      id_field = Forma::Field.new(name: 'id', type: 'hidden', class_name: 'forma-id').editor_html(newopts)
+      destroy_field = Forma::Field.new(name: '_destroy', type: 'hidden', class_name: 'forma-destroy').editor_html(newopts)
+
+      actions_html = el('div', { class: 'forma-many-field-actions' }, [
+        el('a', { href: '#', class: 'forma-many-field-remove' }, [
+          [ Forma::IconGenerator.to_html('trash-o'),
+           (opts[:remove_text] || field.remove_text) ].join(' ').strip
+        ])
+      ])
+
+      el('div', { class: 'forma-many-field' }, [ editor_html, id_field, destroy_field, actions_html ])
     end
 
     def actions_eval(field, values, opts)

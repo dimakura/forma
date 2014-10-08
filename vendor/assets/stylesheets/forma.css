@@ -27,21 +27,11 @@ table.forma-table tbody td.forma-no-data:hover {
   border-bottom: 0;
   padding-bottom: 0;
 }
-.forma-many-fields {
-  /* a.forma-many-add {
-    display: block;
-    padding: 16px;
-    text-align: center;
-    border: 1px solid #eee;
-    &:hover {
-      background-color: #fafafa;
-    }
-  }*/
-}
 .forma-many-fields .forma-many-field {
   background-color: #f6f6f6;
-  padding: 8px;
-  border: 1px solid #ddd;
+  padding: 0;
+  border: 1px solid #ccc;
+  border-radius: 3px;
   margin-bottom: 8px;
 }
 .forma-many-fields .forma-many-field table.table {
@@ -52,12 +42,25 @@ table.forma-table tbody td.forma-no-data:hover {
 .forma-many-fields .forma-many-field table.table td,
 .forma-many-fields .forma-many-field table.table th {
   border: 0;
+  padding: 8px 8px 0 8px;
+}
+.forma-many-fields .forma-many-field .forma-many-field-actions {
+  background-color: white;
+  margin-top: 8px;
+  border-top: 1px solid #ddd;
+  padding: 4px 8px;
+  font-size: 12px;
+  text-align: center;
+}
+.forma-many-fields .forma-many-field .forma-many-field-actions .forma-many-field-remove {
+  color: #a94442;
+  text-decoration: none;
 }
 .forma-many-fields .forma-many-actions .forma-many-action {
   display: inline-block;
   width: 170px;
   padding: 8px;
-  border: 1px solid #eee;
+  border: 1px solid #ddd;
   text-align: center;
   text-decoration: none;
 }
