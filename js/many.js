@@ -8,6 +8,7 @@ var afterEditorAdded = function() {
 };
 
 var initManyAddItemAction = function() {
+  var lastId = 0;
   $('.forma-many-action').click(function(evt) {
     evt.preventDefault();
 
