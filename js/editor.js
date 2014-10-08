@@ -16,13 +16,15 @@ var initFormWaitOnSubmit = function() {
   });
 };
 
+var selectize2 = function(el) {
+  el.select2({ allowClear: true, minimumInputLength: 2 });
+};
+
 /**
  * Initialize Select2.
  */
 var initSelect2ComboBoxes = function() {
-  $('.forma-combo2-field').select2({
-    allowClear: true
-  });
+  selectize2( $('.forma-combo2-field') );
 };
 
 /**
@@ -39,5 +41,7 @@ module.exports = {
     initSelect2ComboBoxes();
     initFloaraEditor();
     // add other initializations above this line
-  }
+  },
+
+  selectize2: selectize2,
 };

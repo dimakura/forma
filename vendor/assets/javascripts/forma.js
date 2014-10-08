@@ -17,20 +17,23 @@ var initFormWaitOnSubmit = function() {
   });
 };
 
-var initSelect2ComboBoxes = function() {
-  $('.forma-combo2-field').select2({
-    allowClear: true
-  });
+var selectize2 = function(el) {
+  el.select2({ allowClear: true, minimumInputLength: 2 });
 };
 
+/**
+ * Initialize Select2.
+ */
+var initSelect2ComboBoxes = function() {
+  selectize2( $('.forma-combo2-field') );
+};
+
+/**
+ * Initialize Floara editor.
+ */
 var initFloaraEditor = function() {
   var fields = $('.forma-floara-field');
-  fields.editable({ inlineMode: false, sync: true });
-  // fields.keyup(function(evt) {
-  //   var text = $(this).editable('getHTML');
-  //   $('[for="'+this.id+'"]').val(text);
-  //   console.log(text);
-  // });
+  fields.editable({ inlineMode: false });
 };
 
 module.exports = {
@@ -39,18 +42,44 @@ module.exports = {
     initSelect2ComboBoxes();
     initFloaraEditor();
     // add other initializations above this line
+  },
+
+  selectize2: selectize2,
+};
+
+},{}],2:[function(require,module,exports){
+var editor = require('./editor');
+
+var initializeManyAction = function() {
+  $('.forma-many-action').click(function() {
+    // appending new editor
+    var html = $(this).children('script').html();
+    var $manyFields = $($(this).parents('.forma-many-fields')[0]);
+    var $manyEditors = $($manyFields.children('.forma-many-editors')[0]);
+    $manyEditors.append( html );
+    $manyEditors = $($manyFields.children('.forma-many-editors')[0]);
+    var $last = $manyEditors.find('.forma-many-field').last();
+    editor.selectize2( $last.find('.forma-combo2-field') );
+  });
+};
+
+module.exports = {
+  startup: function(opts) {
+    initializeManyAction();
   }
 };
 
-},{}],"forma":[function(require,module,exports){
+},{"./editor":1}],"forma":[function(require,module,exports){
 var editor = require('./editor');
+var many = require('./many');
 
 var startup = function(opts) {
   editor.startup( opts );
+  many.startup( opts );
 };
 
 module.exports = {
   startup: startup
 };
 
-},{"./editor":1}]},{},[]);
+},{"./editor":1,"./many":2}]},{},[]);

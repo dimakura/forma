@@ -53,3 +53,15 @@ table.forma-table tbody td.forma-no-data:hover {
 .forma-many-fields .forma-many-field table.table th {
   border: 0;
 }
+.forma-many-fields .forma-many-actions .forma-many-action {
+  display: inline-block;
+  width: 170px;
+  padding: 8px;
+  border: 1px solid #eee;
+  text-align: center;
+  text-decoration: none;
+}
+.forma-many-fields .forma-many-actions .forma-many-action:hover {
+  background-color: #d1e5ff;
+  border-color: #a3c8ff;
+}
