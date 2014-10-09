@@ -8,12 +8,13 @@ var afterEditorAdded = function() {
 };
 
 var initManyAddItemAction = function() {
-  var lastId = 0;
+  var lastId = 1000;
   $('.forma-many-action').click(function(evt) {
     evt.preventDefault();
 
     // appending new editor
     var html = $(this).children('script').html();
+    html = html.toString().replace(/\[0\]/g, '[' + (lastId++) + ']');
     var $manyFields = $($(this).parents('.forma-many-fields')[0]);
     var $manyEditors = $($manyFields.children('.forma-many-editors')[0]);
     $manyEditors.append( html );
