@@ -204,7 +204,7 @@ module Forma
         type = type_eval(field, opts)
         value = value_eval(field, opts)
         inner_html = case type
-          # when 'boolean' then editor_for_boolean_eval(field, value, opts)
+          when 'boolean' then editor_for_boolean_eval(field, value, opts)
           # when 'date'    then editor_for_date_eval(field, value, opts)
           # when 'complex' then editor_for_complex_eval(field, value, opts)
           # when 'array'   then editor_for_array_eval(field, value, opts)
@@ -230,6 +230,29 @@ module Forma
       else
         "#{model_name_eval(field, opts)}[#{field_name}]"
       end
+    end
+
+    def editor_for_boolean_eval(field, value, opts)
+      # e1 = el('input', attrs: { type: 'hidden',  name: parameter_name, value: "0"})
+      # e2 = el('input', attrs: { id: self.id, type: 'checkbox', name: parameter_name, checked: ('checked' if val), value: "1"})
+      # el('span', children: [ e1, e2 ])
+      parameter_name = editor_field_name_eval(field, opts)
+      if value.is_a?(Integer)
+        value = ( value == 1 )
+      end
+      el('span', [
+        el('input', {
+          type: 'hidden',
+          name: parameter_name,
+          value: '0'
+        }),
+        el('input', {
+          type: 'checkbox',
+          name: parameter_name,
+          checked: value,
+          value: '1'
+        })
+      ])
     end
 
     def editor_for_hidden_eval(field, value, opts)
