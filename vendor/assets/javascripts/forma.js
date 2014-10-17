@@ -32,8 +32,8 @@ var initSelect2ComboBoxes = function() {
  * Initialize Floara editor.
  */
 var initFloaraEditor = function() {
-  var fields = $('.forma-floara-field');
-  fields.editable({ inlineMode: false });
+  //var fields = $('.forma-floara-field');
+  //fields.editable({ inlineMode: false });
 };
 
 module.exports = {
