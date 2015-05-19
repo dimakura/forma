@@ -294,15 +294,22 @@ module Forma
       collection = field.collection
       children = []
 
+      if field.empty
+        empty_text = field.empty.is_a?(String) ? field.empty : '--'
+        children.push(el('option', {
+          selected: value.blank?
+        }, [ empty_text ]))
+      end
+
       if collection.instance_of?(Hash)
-        children = collection.map do |key, val|
+        children += collection.map do |key, val|
           el('option', {
             selected: ( value.present? and key == value ),
             value: key
           }, [ val ])
         end
       elsif collection.respond_to?(:map) # array like
-        children = collection.map do |obj|
+        children += collection.map do |obj|
           key = obj.id ; val = obj.to_s
           el('option', {
             selected: ( value.present? and key == value ),
