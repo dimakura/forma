@@ -310,7 +310,11 @@ module Forma
         end
       elsif collection.respond_to?(:map) # array like
         children += collection.map do |obj|
-          key = obj.id ; val = obj.to_s
+          if obj.is_a?(String)
+            key = val = obj
+          else
+            key = obj.id ; val = obj.to_s
+          end
           el('option', {
             selected: ( value.present? and key == value ),
             value: key.to_s
